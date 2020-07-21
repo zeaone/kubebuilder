@@ -1,0 +1,579 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- This file is modified just to include the logo on the menu bar and the right favicon -->
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Writing tests - The Kubebuilder Book</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="..//logos/favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../theme/css/markers.css">
+        
+        <link rel="stylesheet" href="../theme/css/custom.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../introduction.html">Introduction</a></li><li class="affix"><a href="../quick-start.html">Quick Start</a></li><li class="spacer"></li><li><a href="../cronjob-tutorial/cronjob-tutorial.html"><strong aria-hidden="true">1.</strong> Tutorial: Building CronJob</a></li><li><ol class="section"><li><a href="../cronjob-tutorial/basic-project.html"><strong aria-hidden="true">1.1.</strong> What's in a basic project?</a></li><li><a href="../cronjob-tutorial/empty-main.html"><strong aria-hidden="true">1.2.</strong> Every journey needs a start, every program a main</a></li><li><a href="../cronjob-tutorial/gvks.html"><strong aria-hidden="true">1.3.</strong> Groups and Versions and Kinds, oh my!</a></li><li><a href="../cronjob-tutorial/new-api.html"><strong aria-hidden="true">1.4.</strong> Adding a new API</a></li><li><a href="../cronjob-tutorial/api-design.html"><strong aria-hidden="true">1.5.</strong> Designing an API</a></li><li><ol class="section"><li><a href="../cronjob-tutorial/other-api-files.html"><strong aria-hidden="true">1.5.1.</strong> A Brief Aside: What's the rest of this stuff?</a></li></ol></li><li><a href="../cronjob-tutorial/controller-overview.html"><strong aria-hidden="true">1.6.</strong> What's in a controller?</a></li><li><a href="../cronjob-tutorial/controller-implementation.html"><strong aria-hidden="true">1.7.</strong> Implementing a controller</a></li><li><ol class="section"><li><a href="../cronjob-tutorial/main-revisited.html"><strong aria-hidden="true">1.7.1.</strong> You said something about main?</a></li></ol></li><li><a href="../cronjob-tutorial/webhook-implementation.html"><strong aria-hidden="true">1.8.</strong> Implementing defaulting/validating webhooks</a></li><li><a href="../cronjob-tutorial/running.html"><strong aria-hidden="true">1.9.</strong> Running and deploying the controller</a></li><li><ol class="section"><li><a href="../cronjob-tutorial/cert-manager.html"><strong aria-hidden="true">1.9.1.</strong> Deploying the cert manager</a></li><li><a href="../cronjob-tutorial/running-webhook.html"><strong aria-hidden="true">1.9.2.</strong> Deploying webhooks</a></li></ol></li><li><a href="../cronjob-tutorial/writing-tests.html" class="active"><strong aria-hidden="true">1.10.</strong> Writing tests</a></li><li><a href="../cronjob-tutorial/epilogue.html"><strong aria-hidden="true">1.11.</strong> Epilogue</a></li></ol></li><li><a href="../multiversion-tutorial/tutorial.html"><strong aria-hidden="true">2.</strong> Tutorial: Multi-Version API</a></li><li><ol class="section"><li><a href="../multiversion-tutorial/api-changes.html"><strong aria-hidden="true">2.1.</strong> Changing things up</a></li><li><a href="../multiversion-tutorial/conversion-concepts.html"><strong aria-hidden="true">2.2.</strong> Hubs, spokes, and other wheel metaphors</a></li><li><a href="../multiversion-tutorial/conversion.html"><strong aria-hidden="true">2.3.</strong> Implementing conversion</a></li><li><ol class="section"><li><a href="../multiversion-tutorial/webhooks.html"><strong aria-hidden="true">2.3.1.</strong> and setting up the webhooks</a></li></ol></li><li><a href="../multiversion-tutorial/deployment.html"><strong aria-hidden="true">2.4.</strong> Deployment and Testing</a></li><li class="spacer"></li></ol></li><li><a href="../migrations.html"><strong aria-hidden="true">3.</strong> Migrations</a></li><li><ol class="section"><li><a href="../migration/v1vsv2.html"><strong aria-hidden="true">3.1.</strong> Kubebuilder v1 vs v2</a></li><li><ol class="section"><li><a href="../migration/guide.html"><strong aria-hidden="true">3.1.1.</strong> Migration Guide</a></li></ol></li><li><a href="../migration/multi-group.html"><strong aria-hidden="true">3.2.</strong> Single Group to Multi-Group</a></li><li class="spacer"></li></ol></li><li><a href="../reference/reference.html"><strong aria-hidden="true">4.</strong> Reference</a></li><li><ol class="section"><li><a href="../reference/generating-crd.html"><strong aria-hidden="true">4.1.</strong> Generating CRDs</a></li><li><a href="../reference/using-finalizers.html"><strong aria-hidden="true">4.2.</strong> Using Finalizers</a></li><li><a href="../reference/kind.html"><strong aria-hidden="true">4.3.</strong> Kind cluster</a></li><li><a href="../reference/webhook-overview.html"><strong aria-hidden="true">4.4.</strong> What's a webhook?</a></li><li><ol class="section"><li><a href="../reference/admission-webhook.html"><strong aria-hidden="true">4.4.1.</strong> Admission webhook</a></li><li><a href="../reference/webhook-for-core-types.html"><strong aria-hidden="true">4.4.2.</strong> Webhooks for Core Types</a></li></ol></li><li><a href="../reference/markers.html"><strong aria-hidden="true">4.5.</strong> Markers for Config/Code Generation</a></li><li><ol class="section"><li><a href="../reference/markers/crd.html"><strong aria-hidden="true">4.5.1.</strong> CRD Generation</a></li><li><a href="../reference/markers/crd-validation.html"><strong aria-hidden="true">4.5.2.</strong> CRD Validation</a></li><li><a href="../reference/markers/crd-processing.html"><strong aria-hidden="true">4.5.3.</strong> CRD Processing</a></li><li><a href="../reference/markers/webhook.html"><strong aria-hidden="true">4.5.4.</strong> Webhook</a></li><li><a href="../reference/markers/object.html"><strong aria-hidden="true">4.5.5.</strong> Object/DeepCopy</a></li><li><a href="../reference/markers/rbac.html"><strong aria-hidden="true">4.5.6.</strong> RBAC</a></li></ol></li><li><a href="../reference/controller-gen.html"><strong aria-hidden="true">4.6.</strong> controller-gen CLI</a></li><li><a href="../reference/completion.html"><strong aria-hidden="true">4.7.</strong> completion</a></li><li><a href="../reference/artifacts.html"><strong aria-hidden="true">4.8.</strong> Artifacts</a></li><li><a href="../reference/writing-tests.html"><strong aria-hidden="true">4.9.</strong> Writing controller tests</a></li><li><a href="../reference/envtest.html"><strong aria-hidden="true">4.10.</strong> Using envtest in integration tests</a></li><li><a href="../reference/metrics.html"><strong aria-hidden="true">4.11.</strong> Metrics</a></li><li class="spacer"></li></ol></li><li><a href="../TODO.html">Appendix: The TODO Landing Page</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title"><img alt="The Kubebuilder Book" src="..//logos/logo-single-line.png"></h1>
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <header id="notice-bar">
+    <h2><a class="header" href="#black-lives-matter" id="black-lives-matter">Black lives matter.</a></h2>
+    <p>We stand in solidarity with the Black community.</p>
+    <p>Racism is unacceptable.</p>
+    <p>It conflicts with <a href="https://git.k8s.io/community/values.md">the core values of the Kubernetes project</a> and our community does not tolerate it.</p>
+    </p>
+</header>
+
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#writing-controller-tests" id="writing-controller-tests">Writing controller tests</a></h1>
+<p>Testing Kubernetes controllers is a big subject, and the boilerplate testing
+files generated for you by kubebuilder are fairly minimal.</p>
+<p>To walk you through integration testing patterns for Kubebuilder-generated controllers, we will revisit the CronJob we built in our first tutorial and write a simple test for it.</p>
+<p>The basic approach is that, in your generated <code>suite_test.go</code> file, you will use envtest to create a local Kubernetes API server, instantiate and run your controllers, and then write additional <code>*_test.go</code> files to test it using <a href="http://onsi.github.io/ginkgo">Ginko</a>.</p>
+<p>If you want to tinker with how your envtest cluster is configured, see section <a href="/reference/testing/envtest.html">Writing and Running Integration Tests</a> as well as the <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/envtest?tab=doc"><code>envtest docs</code></a>.</p>
+<h2><a class="header" href="#test-environment-setup" id="test-environment-setup">Test Environment Setup</a></h2>
+<div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/controllers/suite_test.go">../../cronjob-tutorial/testdata/project/controllers/suite_test.go</a></cite>
+<p>When we created the CronJob API with <code>kubebuilder create api</code> in a <a href="/cronjob-tutorial/new-api.html">previous chapter</a>, Kubebuilder already did some test work for you.
+Kubebuilder scaffolded a <code>controllers/suite_test.go</code> file that does the bare bones of setting up a test environment.</p>
+<p>First, it will contain the necessary imports.</p>
+<details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<pre><code>http://www.apache.org/licenses/LICENSE-2.0
+</code></pre>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+</details><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Imports</span></pre></summary>
+<pre><code class="language-go">package controllers
+
+import (
+	&quot;path/filepath&quot;
+	&quot;testing&quot;
+
+	. &quot;github.com/onsi/ginkgo&quot;
+	. &quot;github.com/onsi/gomega&quot;
+	&quot;k8s.io/client-go/kubernetes/scheme&quot;
+	&quot;k8s.io/client-go/rest&quot;
+	ctrl &quot;sigs.k8s.io/controller-runtime&quot;
+	&quot;sigs.k8s.io/controller-runtime/pkg/client&quot;
+	&quot;sigs.k8s.io/controller-runtime/pkg/envtest&quot;
+	logf &quot;sigs.k8s.io/controller-runtime/pkg/log&quot;
+	&quot;sigs.k8s.io/controller-runtime/pkg/log/zap&quot;
+
+	batchv1 &quot;tutorial.kubebuilder.io/project/api/v1&quot;
+	// +kubebuilder:scaffold:imports
+)
+
+// These tests use Ginkgo (BDD-style Go testing framework). Refer to
+// http://onsi.github.io/ginkgo/ to learn more about Ginkgo.
+</code></pre>
+</details>
+<p>Now, let’s go through the code generated.</p>
+<pre><code class="language-go">var cfg *rest.Config
+var k8sClient client.Client // You'll be using this client in your tests.
+var testEnv *envtest.Environment
+
+var _ = BeforeSuite(func(done Done) {
+	logf.SetLogger(zap.LoggerTo(GinkgoWriter, true))
+</code></pre>
+<p>First, the envtest cluster is configured to read CRDs from the CRD directory Kubebuilder scaffolds for you.</p>
+<pre><code class="language-go">	By(&quot;bootstrapping test environment&quot;)
+	testEnv = &amp;envtest.Environment{
+		CRDDirectoryPaths: []string{filepath.Join(&quot;..&quot;, &quot;config&quot;, &quot;crd&quot;, &quot;bases&quot;)},
+	}
+</code></pre>
+<p>Then, we start the envtest cluster.</p>
+<pre><code class="language-go">	var err error
+	cfg, err = testEnv.Start()
+	Expect(err).ToNot(HaveOccurred())
+	Expect(cfg).ToNot(BeNil())
+</code></pre>
+<p>The autogenerated test code will add the CronJob Kind schema to the default client-go k8s scheme.
+This ensures that the CronJob API/Kind will be used in our test controller.</p>
+<pre><code class="language-go">	err = batchv1.AddToScheme(scheme.Scheme)
+	Expect(err).NotTo(HaveOccurred())
+</code></pre>
+<p>After the schemas, you will see the following marker.
+This marker is what allows new schemas to be added here automatically when a new API is added to the project.</p>
+<pre><code class="language-go">	// +kubebuilder:scaffold:scheme
+</code></pre>
+<p>A client is created for our test CRUD operations.</p>
+<pre><code class="language-go">	k8sClient, err = client.New(cfg, client.Options{Scheme: scheme.Scheme})
+	Expect(err).ToNot(HaveOccurred())
+	Expect(k8sClient).ToNot(BeNil())
+</code></pre>
+<p>One thing that this autogenerated file is missing, however, is a way to actually start your controller.
+The code above will set up a client for interacting with your custom Kind,
+but will not be able to test your controller behavior.
+If you want to test your custom controller logic, you’ll need to add some familiar-looking manager logic
+to your BeforeSuite() function, so you can register your custom controller to run on this test cluster.</p>
+<p>You may notice that the code below runs your controller with nearly identical logic to your CronJob project’s main.go!
+The only difference is that the manager is started in a separate goroutine so it does not block the cleanup of envtest
+when you’re done running your tests.</p>
+<p>Once you’ve added the code below, you can actually delete the k8sClient above, because you can get k8sClient from the manager
+(as shown below).</p>
+<pre><code class="language-go">	k8sManager, err := ctrl.NewManager(cfg, ctrl.Options{
+		Scheme: scheme.Scheme,
+	})
+	Expect(err).ToNot(HaveOccurred())
+
+	err = (&amp;CronJobReconciler{
+		Client: k8sManager.GetClient(),
+		Log:    ctrl.Log.WithName(&quot;controllers&quot;).WithName(&quot;CronJob&quot;),
+	}).SetupWithManager(k8sManager)
+	Expect(err).ToNot(HaveOccurred())
+
+	go func() {
+		err = k8sManager.Start(ctrl.SetupSignalHandler())
+		Expect(err).ToNot(HaveOccurred())
+	}()
+
+	k8sClient = k8sManager.GetClient()
+	Expect(k8sClient).ToNot(BeNil())
+
+	close(done)
+}, 60)
+</code></pre>
+<p>Kubebuilder also generates boilerplate functions for cleaning up envtest and actually running your test files in your controllers/ directory.
+You won’t need to touch these.</p>
+<pre><code class="language-go">var _ = AfterSuite(func() {
+	By(&quot;tearing down the test environment&quot;)
+	err := testEnv.Stop()
+	Expect(err).ToNot(HaveOccurred())
+})
+
+func TestAPIs(t *testing.T) {
+	RegisterFailHandler(Fail)
+
+	RunSpecsWithDefaultAndCustomReporters(t,
+		&quot;Controller Suite&quot;,
+		[]Reporter{envtest.NewlineReporter{}})
+}
+</code></pre>
+<p>Now that you have your controller running on a test cluster and a client ready to perform operations on your CronJob, we can start writing integration tests!</p>
+</div>
+<h2><a class="header" href="#testing-your-controllers-behavior" id="testing-your-controllers-behavior">Testing your Controller’s Behavior</a></h2>
+<div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/controllers/cronjob_controller_test.go">../../cronjob-tutorial/testdata/project/controllers/cronjob_controller_test.go</a></cite>
+<p>Ideally, we should have one <code>&lt;kind&gt;_conroller_test.go</code> for each controller scaffolded and called in the <code>test_suite.go</code>.
+So, let’s write our example test for the CronJob controller (<code>cronjob_controller_test.go.</code>)</p>
+<details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<pre><code>http://www.apache.org/licenses/LICENSE-2.0
+</code></pre>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+</details><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Imports</span></pre></summary>
+<p>As usual, we start with the necessary imports. We also define some utility variables.</p>
+<pre><code class="language-go">package controllers
+
+import (
+	&quot;context&quot;
+	&quot;reflect&quot;
+	&quot;time&quot;
+
+	. &quot;github.com/onsi/ginkgo&quot;
+	. &quot;github.com/onsi/gomega&quot;
+	batchv1 &quot;k8s.io/api/batch/v1&quot;
+	batchv1beta1 &quot;k8s.io/api/batch/v1beta1&quot;
+	v1 &quot;k8s.io/api/core/v1&quot;
+	metav1 &quot;k8s.io/apimachinery/pkg/apis/meta/v1&quot;
+	&quot;k8s.io/apimachinery/pkg/types&quot;
+
+	cronjobv1 &quot;tutorial.kubebuilder.io/project/api/v1&quot;
+)
+</code></pre>
+</details>
+<p>The first step to writing a simple integration test is to actually create an instance of CronJob you can run tests against.
+Note that to create a CronJob, you’ll need to create a stub CronJob struct that contains your CronJob’s specifications.</p>
+<p>Note that when we create a stub CronJob, the CronJob also needs stubs of its required downstream objects.
+Without the stubbed Job template spec and the Pod template spec below, the Kubernetes API will not be able to
+create the CronJob.</p>
+<pre><code class="language-go">var _ = Describe(&quot;CronJob controller&quot;, func() {
+
+	// Define utility constants for object names and testing timeouts/durations and intervals.
+	const (
+		CronjobName      = &quot;test-cronjob&quot;
+		CronjobNamespace = &quot;test-cronjob-namespace&quot;
+		JobName          = &quot;test-job&quot;
+
+		timeout  = time.Second * 10
+		duration = time.Second * 10
+		interval = time.Millisecond * 250
+	)
+
+	Context(&quot;When updating CronJob Status&quot;, func() {
+		It(&quot;Should increase CronJob Status.Active count when new Jobs are created&quot;, func() {
+			By(&quot;By creating a new CronJob&quot;)
+			ctx := context.Background()
+			cronJob := &amp;cronjobv1.CronJob{
+				TypeMeta: metav1.TypeMeta{
+					APIVersion: &quot;batch.tutorial.kubebuilder.io/v1&quot;,
+					Kind:       &quot;CronJob&quot;,
+				},
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      CronjobName,
+					Namespace: CronjobNamespace,
+				},
+				Spec: cronjobv1.CronJobSpec{
+					Schedule: &quot;1 * * * *&quot;,
+					JobTemplate: batchv1beta1.JobTemplateSpec{
+						Spec: batchv1.JobSpec{
+							// For simplicity, we only fill out the required fields.
+							Template: v1.PodTemplateSpec{
+								Spec: v1.PodSpec{
+									// For simplicity, we only fill out the required fields.
+									Containers: []v1.Container{
+										{
+											Name:  &quot;test-container&quot;,
+											Image: &quot;test-image&quot;,
+										},
+									},
+									RestartPolicy: v1.RestartPolicyOnFailure,
+								},
+							},
+						},
+					},
+				},
+			}
+			Expect(k8sClient.Create(ctx, cronJob)).Should(Succeed())
+
+		
+</code></pre>
+<p>After creating this CronJob, let’s check that the CronJob’s Spec fields match what we passed in.
+Note that, because the k8s apiserver may not have finished creating a CronJob after our <code>Create()</code> call from earlier, we will use Gomega’s Eventually() testing function instead of Expect() to give the apiserver an opportunity to finish creating our CronJob.</p>
+<p><code>Eventually()</code> will repeatedly run the function provided as an argument every interval seconds until
+(a) the function’s output matches what’s expected in the subsequent <code>Should()</code> call, or
+(b) the number of attempts * interval period exceed the provided timeout value.</p>
+<p>In the examples below, timeout and interval are Go Duration values of our choosing.</p>
+<pre><code class="language-go">			cronjobLookupKey := types.NamespacedName{Name: CronjobName, Namespace: CronjobNamespace}
+			createdCronjob := &amp;cronjobv1.CronJob{}
+
+			// We'll need to retry getting this newly created CronJob, given that creation may not immediately happen.
+			Eventually(func() bool {
+				err := k8sClient.Get(ctx, cronjobLookupKey, createdCronjob)
+				if err != nil {
+					return false
+				}
+				return true
+			}, timeout, interval).Should(BeTrue())
+			// Let's make sure our Schedule string value was properly converted/handled.
+			Expect(createdCronjob.Spec.Schedule).Should(Equal(&quot;1 * * * *&quot;))
+		
+</code></pre>
+<p>Now that we’ve created a CronJob in our test cluster, the next step is to write a test that actually tests our CronJob controller’s behavior.
+Let’s test the CronJob controller’s logic responsible for updating CronJob.Status.Active with actively running jobs.
+We’ll verify that when a CronJob has a single active downstream Job, its CronJob.Status.Active field contains a reference to this Job.</p>
+<p>First, we should get the test CronJob we created earlier, and verify that it currently does not have any active jobs.
+We use Gomega’s <code>Consistently()</code> check here to ensure that the active job count remains 0 over a duration of time.</p>
+<pre><code class="language-go">			By(&quot;By checking the CronJob has zero active Jobs&quot;)
+			Consistently(func() (int, error) {
+				err := k8sClient.Get(ctx, cronjobLookupKey, createdCronjob)
+				if err != nil {
+					return -1, err
+				}
+				return len(createdCronjob.Status.Active), nil
+			}, duration, interval).Should(Equal(0))
+		
+</code></pre>
+<p>Next, we actually create a stubbed Job that will belong to our CronJob, as well as its downstream template specs.
+We set the Job’s status’s “Active” count to 2 to simulate the Job running two pods, which means the Job is actively running.</p>
+<p>We then take the stubbed Job and set its owner reference to point to our test CronJob.
+This ensures that the test Job belongs to, and is tracked by, our test CronJob.
+Once that’s done, we create our new Job instance.</p>
+<pre><code class="language-go">			By(&quot;By creating a new Job&quot;)
+			testJob := &amp;batchv1.Job{
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      JobName,
+					Namespace: CronjobNamespace,
+				},
+				Spec: batchv1.JobSpec{
+					Template: v1.PodTemplateSpec{
+						Spec: v1.PodSpec{
+							// For simplicity, we only fill out the required fields.
+							Containers: []v1.Container{
+								{
+									Name:  &quot;test-container&quot;,
+									Image: &quot;test-image&quot;,
+								},
+							},
+							RestartPolicy: v1.RestartPolicyOnFailure,
+						},
+					},
+				},
+				Status: batchv1.JobStatus{
+					Active: 2,
+				},
+			}
+
+			// Note that your CronJob’s GroupVersionKind is required to set up this owner reference.
+			kind := reflect.TypeOf(cronjobv1.CronJob{}).Name()
+			gvk := cronjobv1.GroupVersion.WithKind(kind)
+
+			controllerRef := metav1.NewControllerRef(createdCronjob, gvk)
+			testJob.SetOwnerReferences([]metav1.OwnerReference{*controllerRef})
+			Expect(k8sClient.Create(ctx, testJob)).Should(Succeed())
+		
+</code></pre>
+<p>Adding this Job to our test CronJob should trigger our controller’s reconciler logic.
+After that, we can write a test that evaluates whether our controller eventually updates our CronJob’s Status field as expected!</p>
+<pre><code class="language-go">			By(&quot;By checking that the CronJob has one active Job&quot;)
+			Eventually(func() ([]string, error) {
+				err := k8sClient.Get(ctx, cronjobLookupKey, createdCronjob)
+				if err != nil {
+					return nil, err
+				}
+
+				names := []string{}
+				for _, job := range createdCronjob.Status.Active {
+					names = append(names, job.Name)
+				}
+				return names, nil
+			}, timeout, interval).Should(ConsistOf(JobName), &quot;should list our active job %s in the active jobs list in status&quot;, JobName)
+		})
+	})
+
+})
+</code></pre>
+<p>After writing all this code, you can run <code>go test ./...</code> in your <code>controllers/</code> directory again to run your new test!</p>
+</div>
+<p>This Status update example above demonstrates a general testing strategy for a custom Kind with downstream objects. By this point, you hopefully have learned the following methods for testing your controller behavior:</p>
+<ul>
+<li>Setting up your controller to run on an envtest cluster</li>
+<li>Writing stubs for creating test objects</li>
+<li>Isolating changes to an object to test specific controller behavior</li>
+</ul>
+<h2><a class="header" href="#advanced-examples" id="advanced-examples">Advanced Examples</a></h2>
+<p>There are more involved examples of using envtest to rigorously test controller behavior. Examples include:</p>
+<ul>
+<li>Azure Databricks Operator: see their fully fleshed-out
+<a href="https://github.com/microsoft/azure-databricks-operator/blob/0f722a710fea06b86ecdccd9455336ca712bf775/controllers/suite_test.go"><code>suite_test.go</code></a>
+as well as any <code>*_test.go</code> file in that directory <a href="https://github.com/microsoft/azure-databricks-operator/blob/0f722a710fea06b86ecdccd9455336ca712bf775/controllers/secretscope_controller_test.go">like this
+one</a>.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../cronjob-tutorial/running-webhook.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../cronjob-tutorial/epilogue.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../cronjob-tutorial/running-webhook.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../cronjob-tutorial/epilogue.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-119864590-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+        
+
+        
+        
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
