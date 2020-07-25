@@ -159,33 +159,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#tutorial-multi-version-api" id="tutorial-multi-version-api">Tutorial: Multi-Version API</a></h1>
-<p>Most projects start out with an alpha API that changes release to release.
-However, eventually, most projects will need to move to a more stable API.
-Once your API is stable though, you can’t make breaking changes to it.
-That’s where API versions come into play.</p>
-<p>Let’s make some changes to the <code>CronJob</code> API spec and make sure all the
-different versions are supported by our CronJob project.</p>
-<p>If you haven’t already, make sure you’ve gone through the base <a href="/cronjob-tutorial/cronjob-tutorial.html">CronJob
-Tutorial</a>.</p>
+                        <h1><a class="header" href="#教程多版本-api" id="教程多版本-api">教程：多版本 API</a></h1>
+<p>大多数项目都是从一个 alpha API 开始的，这个 API 会随着发布版本的不同而变化。
+然后，最终，大多数项目将会转向更稳定的版本。一旦你的 API 足够的稳定，你就不能够对它做破坏性的修改。
+这就是 API 版本发挥作用的地方。</p>
+<p>让我们对 <code>CronJob</code> API spec 做一些改变，确保我们的 CronJob 项目支持所有不同的版本。</p>
+<p>如果你还没有准备好，确保你已经阅读过了基础的 <a href="/cronjob-tutorial/cronjob-tutorial.html">CronJob 教程</a>。</p>
 <aside class="note">
-<h1><a class="header" href="#following-along-vs-jumping-ahead" id="following-along-vs-jumping-ahead">Following Along vs Jumping Ahead</a></h1>
-<p>Note that most of this tutorial is generated from literate Go files that
-form a runnable project, and live in the book source directory:
-<a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/multiversion-tutorial/testdata/project">docs/book/src/multiversion-tutorial/testdata/project</a>.</p>
+<h1><a class="header" href="#跟随-vs-跳跃" id="跟随-vs-跳跃">跟随 vs 跳跃</a></h1>
+<p>注意本教程的大部分内容是由形成一个可运行的项目的 literate Go 文件生成的，并且放在了本书的下面源目录下 <a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/multiversion-tutorial/testdata/project">docs/book/src/multiversion-tutorial/testdata/project</a>。</p>
 </aside>
 <aside class="note warning">
-<h1><a class="header" href="#minimum-kubernetes-versions-incoming" id="minimum-kubernetes-versions-incoming">Minimum Kubernetes Versions Incoming!</a></h1>
-<p>CRD conversion support was introduced as an alpha feature in Kubernetes
-1.13 (which means it’s not on by default, and needs to be enabled via
-a <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/" title="Kubernetes Feature Gates">feature gate</a>), and became beta in Kubernetes 1.15
-(which means it’s on by default).</p>
-<p>If you’re on Kubernetes 1.13-1.14, make sure to enable the feature gate.
-If you’re on Kubernetes 1.12 or below, you’ll need a new cluster to use
-conversion. Check out the <a href="/reference/kind.html">KinD instructions</a> for
-instructions on how to set up a all-in-one cluster.</p>
+<h1><a class="header" href="#最小-kubernetes-版本来了" id="最小-kubernetes-版本来了">最小 kubernetes 版本来了！</a></h1>
+<p>CRD 转换在 Kubernetes 1.13 版本（也就是说它是默认关闭的，需要通过一个 <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/" title="Kubernetes Feature Gates">feature gate</a> 去打开）中作为一个 alpha 特性被引入支持，
+在 Kubernetes 1.15 版本（也就是说它是默认打开的）中变成了 beta 版。</p>
+<p>如果你的 Kubernetes 版本是 1.13-1.14，确保开启了特性开关。
+如果你的 Kubernetes 版本是 1.12 或者更低，你将需要一个新的集群去使用转换。
+查看 <a href="/reference/kind.html">Kind 说明</a> 去了解如果设置一个多功能的集群。</p>
 </aside>
-<p>Next, let’s figure out what changes we want to make...</p>
+<p>接下来，让我们弄清楚我们想要做哪些更改。..</p>
 
                     </main>
 
