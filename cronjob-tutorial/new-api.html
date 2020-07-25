@@ -159,25 +159,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#adding-a-new-api" id="adding-a-new-api">Adding a new API</a></h1>
-<p>To scaffold out a new Kind (you were paying attention to the <a href="./gvks.html#kinds-and-resources">last
-chapter</a>, right?) and corresponding
-controller, we can use <code>kubebuilder create api</code>:</p>
+                        <h1><a class="header" href="#添加一个新的-api" id="添加一个新的-api">添加一个新的 API</a></h1>
+<p>搭建一个新的 Kind （你刚在 <a href="./gvks.html#kinds-and-resources">上一章节</a> 中注意到的，是吗？) 和相应的控制器，我们可以用 <code>kubebuilder create api</code>:</p>
 <pre><code class="language-bash">kubebuilder create api --group batch --version v1 --kind CronJob
 </code></pre>
-<p>The first time we call this command for each group-version, it will create
-a directory for the new group-version.</p>
-<p>In this case, the
-<a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1"><code>api/v1/</code></a>
-directory is created, corresponding to the
-<code>batch.tutorial.kubebuilder.io/v1</code> (remember our <a href="cronjob-tutorial.html#scaffolding-out-our-project"><code>--domain</code>
-setting</a> from the
-beginning?).</p>
-<p>It has also added a file for our <code>CronJob</code> Kind,
-<code>api/v1/cronjob_types.go</code>.  Each time we call the command with a different
-kind, it’ll add a corresponding new file.</p>
-<p>Let’s take a look at what we’ve been given out of the box, then we can
-move on to filling it out.</p>
+<p>当第一次我们为每个组-版本调用这个命令的时候，它将会为新的组-版本创建一个目录。</p>
+<p>在这种情况下，对应于<code>batch.tutorial.kubebuilder.io/v1</code>（记得我们在开始时 <a href="cronjob-tutorial.html#scaffolding-out-our-project"><code>--domain</code></a> 的设置吗？) 的 <a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1"><code>api/v1/</code></a> 目录被创建了出来。</p>
+<p>它也为我们的<code>CronJob</code> Kind 添加了一个文件，<code>api/v1/cronjob_types.go</code>。每次当我们用不同的 kind 去调用这个命令，它将添加一个相应的新文件。</p>
+<p>让我们来看看我们得到了哪些东西，然后我们就可以开始去填写了。</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/emptyapi.go">emptyapi.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -190,53 +179,44 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 </details>
-<p>We start out simply enough: we import the <code>meta/v1</code> API group, which is not
-normally exposed by itself, but instead contains metadata common to all
-Kubernetes Kinds.</p>
+<p>我们非常简单地开始：我们导入<code>meta/v1</code> API 组，该组通常本身并不会被暴露，而是包含所有 Kubernetes 种类共有的元数据。</p>
 <pre><code class="language-go">package v1
 
 import (
 	metav1 &quot;k8s.io/apimachinery/pkg/apis/meta/v1&quot;
 )
 </code></pre>
-<p>Next, we define types for the Spec and Status of our Kind.  Kubernetes functions
-by reconciling desired state (<code>Spec</code>) with actual cluster state (other objects’
-<code>Status</code>) and external state, and then recording what it observed (<code>Status</code>).
-Thus, every <em>functional</em> object includes spec and status.  A few types, like
-<code>ConfigMap</code> don’t follow this pattern, since they don’t encode desired state,
-but most types do.</p>
-<pre><code class="language-go">// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+<p>下一步，我们为种类的 Spe c和 Status 定义类型。Kubernetes 功能通过使期待的状态(<code>Spec</code>)和实际集群状态(其他对象的
+<code>Status</code>)保持一致和外部状态，然后记录观察到的状态(<code>Status</code>)。
+因此，每个 <em>functional</em> 对象包括 spec 和 status 。很少的类型，像 <code>ConfigMap</code> 不需要遵从这个模式，因为它们不编码期待的状态，
+但是大部分类型需要做这一步。</p>
+<pre><code class="language-go">// 编辑这个文件！这是你拥有的脚手架！
+// 注意: json 标签是必需的。为了字段能够被序列化任何你添加的新的字段一定有json标签。
 
-// CronJobSpec defines the desired state of CronJob
+// CronJobSpec 定义了 CronJob 期待的状态
 type CronJobSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run &quot;make&quot; to regenerate code after modifying this file
+	// 插入额外的 SPEC 字段 - 集群期待的状态
+	// 重要：修改了这个文件之后运行&quot;make&quot;去重新生成代码
 }
 
-// CronJobStatus defines the observed state of CronJob
+// CronJobStatus 定义了 CronJob 观察的的状态
 type CronJobStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run &quot;make&quot; to regenerate code after modifying this file
+	// 插入额外的 STATUS 字段 - 定义集群观察的状态
+	// 重要：修改了这个文件之后运行&quot;make&quot;去重新生成代码
 }
 </code></pre>
-<p>Next, we define the types corresponding to actual Kinds, <code>CronJob</code> and <code>CronJobList</code>.
-<code>CronJob</code> is our root type, and describes the <code>CronJob</code> kind.  Like all Kubernetes objects, it contains
-<code>TypeMeta</code> (which describes API version and Kind), and also contains <code>ObjectMeta</code>, which holds things
-like name, namespace, and labels.</p>
-<p><code>CronJobList</code> is simply a container for multiple <code>CronJob</code>s.  It’s the Kind used in bulk operations,
-like LIST.</p>
-<p>In general, we never modify either of these -- all modifications go in either Spec or Status.</p>
-<p>That little <code>+kubebuilder:object:root</code> comment is called a marker.  We’ll see
-more of them in a bit, but know that they act as extra metadata, telling
-<a href="https://github.com/kubernetes-sigs/controller-tools">controller-tools</a> (our code and YAML generator) extra information.
-This particular one tells the <code>object</code> generator that this type represents
-a Kind.  Then, the <code>object</code> generator generates an implementation of the
-<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime?tab=doc#Object">runtime.Object</a> interface for us, which is the standard
-interface that all types representing Kinds must implement.</p>
+<p>下一步，我们定义与实际种类相对应的类型，<code>CronJob</code> 和 <code>CronJobList</code> 。
+<code>CronJob</code> 是一个根类型, 它描述了 <code>CronJob</code> 种类。像所有 Kubernetes 对象，它包含
+<code>TypeMeta</code> (描述了API版本和种类)，也包含其中拥有像名称,名称空间和标签的东西的 <code>ObjectMeta</code> 。</p>
+<p><code>CronJobList</code> 只是多个 <code>CronJob</code> 的容器。它是批量操作中使用的种类，像 LIST 。</p>
+<p>通常情况下，我们从不修改任何一个 -- 所有修改都要到 Spec 或者 Status 。</p>
+<p>那个小小的 <code>+kubebuilder:object:root</code> 注释被称为标记。我们将会看到更多的它们，但要知道它们充当额外的元数据，
+告诉<a href="https://github.com/kubernetes-sigs/controller-tools">controller-tools</a>(我们的代码和YAML生成器)额外的信息。
+这个特定的标签告诉 <code>object </code>生成器这个类型表示一个种类。然后，<code>object</code> 生成器为我们生成
+这个所有表示种类的类型一定要实现的<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime?tab=doc#Object">runtime.Object</a>接口的实现。</p>
 <pre><code class="language-go">// +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// CronJob is the Schema for the cronjobs API
+// CronJob 是 cronjobs API 的 Schema
 type CronJob struct {
 	metav1.TypeMeta   `json:&quot;,inline&quot;`
 	metav1.ObjectMeta `json:&quot;metadata,omitempty&quot;`
@@ -246,22 +226,20 @@ type CronJob struct {
 }
 
 // +kubebuilder:object:root=true
-
-// CronJobList contains a list of CronJob
+// CronJobList 包含了一个 CronJob 的列表
 type CronJobList struct {
 	metav1.TypeMeta `json:&quot;,inline&quot;`
 	metav1.ListMeta `json:&quot;metadata,omitempty&quot;`
 	Items           []CronJob `json:&quot;items&quot;`
 }
 </code></pre>
-<p>Finally, we add the Go types to the API group.  This allows us to add the
-types in this API group to any <a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime?tab=doc#Scheme">Scheme</a>.</p>
+<p>最后，我们将这个 Go 类型添加到 API 组中。这允许我们将这个 API 组中的类型可以添加到任何<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime?tab=doc#Scheme">Scheme</a>。</p>
 <pre><code class="language-go">func init() {
 	SchemeBuilder.Register(&amp;CronJob{}, &amp;CronJobList{})
 }
 </code></pre>
 </div>
-<p>Now that we’ve seen the basic structure, let’s fill it out!</p>
+<p>现在我们已经看到了基本的结构了，让我们开始去填写它吧！</p>
 
                     </main>
 
