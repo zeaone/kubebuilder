@@ -159,13 +159,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#whats-in-a-basic-project" id="whats-in-a-basic-project">What’s in a basic project?</a></h1>
-<p>When scaffolding out a new project, Kubebuilder provides us with a few
-basic pieces of boilerplate.</p>
-<h2><a class="header" href="#build-infrastructure" id="build-infrastructure">Build Infrastructure</a></h2>
-<p>First up, basic infrastructure for building your project:</p>
-<details> <summary>`go.mod`: A new Go module matching our project, with
-basic dependencies</summary>
+                        <h1><a class="header" href="#一个-kubebuilder-项目有哪些组件" id="一个-kubebuilder-项目有哪些组件">一个 kubebuilder 项目有哪些组件？</a></h1>
+<p>在脚手架生成新项目时，Kubebebuilder 为我们提供了一些基本的模板。</p>
+<h2><a class="header" href="#创建基础组件" id="创建基础组件">创建基础组件</a></h2>
+<p>首先是基本的项目文件初始化，为项目构建做好准备。</p>
+<details> <summary>`go.mod`: 我们的项目的 Go mod 配置文件，记录依赖库信息。</summary>
 <pre><code class="language-go">module tutorial.kubebuilder.io/project
 
 go 1.13
@@ -183,7 +181,7 @@ require (
 
 </code></pre>
 </details>
-<details><summary>`Makefile`: Make targets for building and deploying your controller</summary>
+<details><summary>`Makefile`: 用于控制器构建和部署的 Makefile 文件</summary>
 <pre><code class="language-makefile">
 # Image URL to use all building/pushing image targets
 IMG ?= controller:latest
@@ -251,38 +249,27 @@ endif
 
 </code></pre>
 </details>
-<details><summary>`PROJECT`: Kubebuilder metadata for scaffolding new components</summary>
+<details><summary>`PROJECT`: 用于生成组件的 Kubebuilder 元数据</summary>
 <pre><code class="language-yaml">version: &quot;2&quot;
 domain: tutorial.kubebuilder.io
 repo: tutorial.kubebuilder.io/project
 
 </code></pre>
 </details>
-<h2><a class="header" href="#launch-configuration" id="launch-configuration">Launch Configuration</a></h2>
-<p>We also get launch configurations under the
-<a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project/config"><code>config/</code></a>
-directory.  Right now, it just contains
-<a href="https://sigs.k8s.io/kustomize">Kustomize</a> YAML definitions required to
-launch our controller on a cluster, but once we get started writing our
-controller, it’ll also hold our CustomResourceDefinitions, RBAC
-configuration, and WebhookConfigurations.</p>
-<p><a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project/config/default"><code>config/default</code></a> contains a <a href="https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/cronjob-tutorial/testdata/project/config/default/kustomization.yaml">Kustomize base</a> for launching
-the controller in a standard configuration.</p>
-<p>Each other directory contains a different piece of configuration,
-refactored out into its own base:</p>
+<h2><a class="header" href="#启动配置" id="启动配置">启动配置</a></h2>
+<p>我们还可以在 <a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project/config"><code>config/</code></a> 目录下获得启动配置。现在，它只包含了在集群上启动控制器所需的 <a href="https://sigs.k8s.io/kustomize">Kustomize</a> YAML 定义，但一旦我们开始编写控制器，它还将包含我们的 CustomResourceDefinitions(CRD) 、RBAC 配置和 WebhookConfigurations 。</p>
+<p><a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project/config/default"><code>config/default</code></a> 在标准配置中包含 <a href="https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/cronjob-tutorial/testdata/project/config/default/kustomization.yaml">Kustomize base</a> ，它用于启动控制器。</p>
+<p>其他每个目录都包含一个不同的配置，重构为自己的基础。</p>
 <ul>
 <li>
-<p><a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project/config/manager"><code>config/manager</code></a>: launch your controllers as pods in the
-cluster</p>
+<p><a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project/config/manager"><code>config/manager</code></a>: 在集群中以 pod 的形式启动控制器</p>
 </li>
 <li>
-<p><a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project/config/rbac"><code>config/rbac</code></a>: permissions required to run your
-controllers under their own service account</p>
+<p><a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project/config/rbac"><code>config/rbac</code></a>: 在自己的账户下运行控制器所需的权限</p>
 </li>
 </ul>
-<h2><a class="header" href="#the-entrypoint" id="the-entrypoint">The Entrypoint</a></h2>
-<p>Last, but certainly not least, Kubebuilder scaffolds out the basic
-entrypoint of our project: <code>main.go</code>.  Let’s take a look at that next...</p>
+<h2><a class="header" href="#入口函数" id="入口函数">入口函数</a></h2>
+<p>最后，当然也是最重要的一点，生成项目的入口函数：<code>main.go</code>。接下来我们看看它。.....</p>
 
                     </main>
 

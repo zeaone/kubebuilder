@@ -159,60 +159,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#groups-and-versions-and-kinds-oh-my" id="groups-and-versions-and-kinds-oh-my">Groups and Versions and Kinds, oh my!</a></h1>
-<p>Actually, before we get started with our API, we should talk terminology
-a bit.</p>
-<p>When we talk about APIs in Kubernetes, we often use 4 terms: <em>groups</em>,
-<em>versions</em>, <em>kinds</em>, and <em>resources</em>.</p>
-<h2><a class="header" href="#groups-and-versions" id="groups-and-versions">Groups and Versions</a></h2>
-<p>An <em>API Group</em> in Kubernetes is simply a collection of related
-functionality.  Each group has one or more <em>versions</em>, which, as the name
-suggests, allow us to change how an API works over time.</p>
-<h2><a class="header" href="#kinds-and-resources" id="kinds-and-resources">Kinds and Resources</a></h2>
-<p>Each API group-version contains one or more API types, which we call
-<em>Kinds</em>.  While a Kind may change forms between versions, each form must
-be able to store all the data of the other forms, somehow (we can store
-the data in fields, or in annotations).  This means that using an older
-API version won’t cause newer data to be lost or corrupted.  See the
-<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md">Kubernetes API
-guidelines</a>
-for more information.</p>
-<p>You’ll also hear mention of <em>resources</em> on occasion.  A resource is simply
-a use of a Kind in the API.  Often, there’s a one-to-one mapping between
-Kinds and resources.  For instance, the <code>pods</code> resource corresponds to the
-<code>Pod</code> Kind.  However, sometimes, the same Kind may be returned by multiple
-resources.  For instance, the <code>Scale</code> Kind is returned by all scale
-subresources, like <code>deployments/scale</code> or <code>replicasets/scale</code>.  This is
-what allows the Kubernetes HorizontalPodAutoscaler to interact with
-different resources.  With CRDs, however, each Kind will correspond to
-a single resource.</p>
-<p>Notice that resources are always lowercase, and by convention are the
-lowercase form of the Kind.</p>
-<h2><a class="header" href="#so-how-does-that-correspond-to-go" id="so-how-does-that-correspond-to-go">So, how does that correspond to Go?</a></h2>
-<p>When we refer to a kind in a particular group-version, we’ll call it
-a <em>GroupVersionKind</em>, or GVK for short.  Same with resources and GVR. As
-we’ll see shortly, each GVK corresponds to a given root Go type in
-a package.</p>
-<p>Now that we have our terminology straight, we can <em>actually</em> create our
-API!</p>
-<h2><a class="header" href="#err-but-whats-that-scheme-thing" id="err-but-whats-that-scheme-thing">Err, but what’s that Scheme thing?</a></h2>
-<p>The <code>Scheme</code> we saw before is simply a way to keep track of what Go type
-corresponds to a given GVK (don’t be overwhelmed by its
-<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime?tab=doc#Scheme">godocs</a>).</p>
-<p>For instance, suppose we mark that the
-<code>&quot;tutorial.kubebuilder.io/api/v1&quot;.CronJob{}</code> type as being in the
-<code>batch.tutorial.kubebuilder.io/v1</code> API group (implicitly saying it has the
-Kind <code>CronJob</code>).</p>
-<p>Then, we can later construct a new <code>&amp;CronJob{}</code> given some JSON from the
-API server that says</p>
+                        <h1><a class="header" href="#gvk-介绍" id="gvk-介绍">GVK 介绍</a></h1>
+<p>在我们开始讲 API 之前，我们应该先介绍一下 Kubernetes 中 API 相关的术语。</p>
+<p>当我们在 Kubernetes 中谈论 API 时，我们经常会使用 4 个术语：<strong>groups</strong> 、<strong>versions</strong>、<strong>kinds</strong> 和 <strong>resources</strong>。</p>
+<h2><a class="header" href="#组和版本" id="组和版本">组和版本</a></h2>
+<p>Kubernetes 中的 <strong>API 组</strong>简单来说就是相关功能的集合。每个组都有一个或多个<strong>版本</strong>，顾名思义，它允许我们随着时间的推移改变 <strong>API</strong> 的职责。</p>
+<h2><a class="header" href="#类型和资源" id="类型和资源">类型和资源</a></h2>
+<p>每个 API 组-版本包含一个或多个 API 类型，我们称之为 <strong>Kinds</strong>。虽然一个 Kind 可以在不同版本之间改变表单内容，但每个表单必须能够以某种方式存储其他表单的所有数据（我们可以将数据存储在字段中，或者在注释中）。 这意味着，使用旧的 API 版本不会导致新的数据丢失或损坏。更多 API 信息，请参阅 <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md">Kubernetes API 指南</a>。</p>
+<p>你也会偶尔听到提到 <strong>resources</strong>。 resources（资源） 只是 API 中的一个 Kind 的使用方式。通常情况下，Kind 和 resources 之间有一个一对一的映射。 例如，<code>pods</code> 资源对应于 <code>Pod</code> 种类。但是有时，同一类型可能由多个资源返回。例如，<code>Scale</code> Kind 是由所有 <code>scale</code> 子资源返回的，如 <code>deployments/scale</code> 或 <code>replicasets/scale</code>。这就是允许 Kubernetes HorizontalPodAutoscaler(HPA) 与不同资源交互的原因。然而，使用 CRD，每个 Kind 都将对应一个 resources。</p>
+<p>注意：resources 总是用小写，按照惯例是 Kind 的小写形式。</p>
+<blockquote>
+<p>GVK = Group Version Kind
+GVR = Group Version Resources</p>
+</blockquote>
+<h2><a class="header" href="#那么这些术语如何对应到-golang-中的实现呢" id="那么这些术语如何对应到-golang-中的实现呢">那么，这些术语如何对应到 Golang 中的实现呢？</a></h2>
+<p>当我们在一个特定的群组版本 (Group-Version) 中提到一个 Kind 时，我们会把它称为 <strong>GroupVersionKind</strong>，简称 GVK。与 资源 (resources) 和 GVR 一样，我们很快就会看到，每个 GVK 对应 Golang 代码中的到对应生成代码中的 Go type。</p>
+<p>现在我们理解了这些术语，我们就可以<strong>真正</strong>地创建我们的 API！</p>
+<h2><a class="header" href="#scheme-是什么" id="scheme-是什么">Scheme 是什么？</a></h2>
+<p>我们之前看到的 <code>Scheme</code> 是一种追踪 Go Type 的方法，它对应于给定的 GVK（不要被它吓倒 <a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime#Scheme">godocs</a>）。</p>
+<p>例如，假设我们将 <code>&quot;tutorial.kubebuilder.io/api/v1&quot;.CronJob{}</code> 类型放置在 <code>batch.tutorial.kubebuilder.io/v1</code> API 组中（也就是说它有 <code>CronJob</code> Kind)。</p>
+<p>然后，我们便可以在 API server 给定的 json 数据构造一个新的 <code>&amp;CronJob{}</code>。</p>
 <pre><code class="language-json">{
     &quot;kind&quot;: &quot;CronJob&quot;,
     &quot;apiVersion&quot;: &quot;batch.tutorial.kubebuilder.io/v1&quot;,
     ...
 }
 </code></pre>
-<p>or properly look up the group-version when we go to submit a <code>&amp;CronJob{}</code>
-in an update.</p>
+<p>或当我们在一次变更中去更新或提交 <code>&amp;CronJob{}</code> 时，查找正确的组版本。</p>
 
                     </main>
 

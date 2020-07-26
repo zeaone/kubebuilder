@@ -159,7 +159,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#every-journey-needs-a-start-every-program-a-main" id="every-journey-needs-a-start-every-program-a-main">Every journey needs a start, every program a main</a></h1>
+                        <h1><a class="header" href="#每段旅程需要一个起点每个程序需要一个入口函数" id="每段旅程需要一个起点每个程序需要一个入口函数">每段旅程需要一个起点，每个程序需要一个入口函数</a></h1>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/emptymain.go">emptymain.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -172,10 +172,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 </details>
-<p>Our package starts out with some basic imports.  Particularly:</p>
+<p>我们的 main 文件最开始是 import 一些基本库，尤其是：</p>
 <ul>
-<li>The core <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime?tab=doc">controller-runtime</a> library</li>
-<li>The default controller-runtime logging, Zap (more on that a bit later)</li>
+<li>核心的 <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime?tab=doc">控制器运行时</a> 库</li>
+<li>默认的控制器运行时日志库-- Zap (后续会对它作更多的介绍)</li>
 </ul>
 <pre><code class="language-go">package main
 
@@ -192,11 +192,7 @@ import (
 	// +kubebuilder:scaffold:imports
 )
 </code></pre>
-<p>Every set of controllers needs a
-<a href="https://book.kubebuilder.io/cronjob-tutorial/gvks.html#err-but-whats-that-scheme-thing"><em>Scheme</em></a>,
-which provides mappings between Kinds and their corresponding Go types.  We’ll
-talk a bit more about Kinds when we write our API definition, so just keep this
-in mind for later.</p>
+<p>每一组控制器都需要一个 <a href="https://book.kubebuilder.io/cronjob-tutorial/gvks.html#err-but-whats-that-scheme-thing"><em>Scheme</em></a>，它提供了 Kinds 和相应的 Go 类型之间的映射。我们将在编写 API 定义的时候再谈一谈 Kinds，所以现在只需要记住它就好。</p>
 <pre><code class="language-go">var (
 	scheme   = runtime.NewScheme()
 	setupLog = ctrl.Log.WithName(&quot;setup&quot;)
@@ -207,28 +203,13 @@ func init() {
 	// +kubebuilder:scaffold:scheme
 }
 </code></pre>
-<p>At this point, our main function is fairly simple:</p>
+<p>这段代码的核心逻辑比较简单: </p>
 <ul>
-<li>
-<p>We set up some basic flags for metrics.</p>
-</li>
-<li>
-<p>We instantiate a
-<a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager?tab=doc#Manager"><em>manager</em></a>,
-which keeps track of running all of our controllers, as well as setting up
-shared caches and clients to the API server (notice we tell the manager about
-our Scheme).</p>
-</li>
-<li>
-<p>We run our manager, which in turn runs all of our controllers and webhooks.
-The manager is set up to run until it receives a graceful shutdown signal.
-This way, when we’re running on Kubernetes, we behave nicely with graceful
-pod termination.</p>
-</li>
+<li>我们通过 flag 库解析入参</li>
+<li>我们实例化了一个<a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Manager"><em>manager</em></a>，它记录着我们所有控制器的运行情况，以及设置共享缓存和API服务器的客户端（注意，我们把我们的 Scheme 的信息告诉了 manager）。</li>
+<li>运行 manager，它反过来运行我们所有的控制器和 webhooks。manager 状态被设置为运行中，直到它收到一个优雅停机 (graceful shutdown) 信号。这样一来，当我们在 Kubernetes 上运行时，我们就可以优雅地停止 pod。</li>
 </ul>
-<p>While we don’t have anything to run just yet, remember where that
-<code>+kubebuilder:scaffold:builder</code> comment is -- things’ll get interesting there
-soon.</p>
+<p>虽然我们现在还没有任何业务代码可供执行，但请记住 <code>+kubebuilder:scaffold:builder</code> 的注释 --- 事情很快就会变得有趣起来。</p>
 <pre><code class="language-go">func main() {
 	var metricsAddr string
 	flag.StringVar(&amp;metricsAddr, &quot;metrics-addr&quot;, &quot;:8080&quot;, &quot;The address the metric endpoint binds to.&quot;)
@@ -242,18 +223,15 @@ soon.</p>
 		os.Exit(1)
 	}
 </code></pre>
-<p>Note that the Manager can restrict the namespace that all controllers will watch for resources by:</p>
+<p>注意：Manager 可以通过以下方式限制控制器可以监听资源的命名空间。</p>
 <pre><code class="language-go">	mgr, err = ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:             scheme,
 		Namespace:          namespace,
 		MetricsBindAddress: metricsAddr,
 	})
 </code></pre>
-<p>The above example will change the scope of your project to a single Namespace. In this scenario,
-it is also suggested to restrict the provided authorization to this namespace by replacing the default
-ClusterRole and ClusterRoleBinding to Role and RoleBinding respectively
-For further information see the kubernetes documentation about Using <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">RBAC Authorization</a>.</p>
-<p>Also, it is possible to use the MultiNamespacedCacheBuilder to watch a specific set of namespaces:</p>
+<p>上面的例子将把你的项目改成只监听单一的命名空间。在这种情况下，建议通过将默认的 ClusterRole 和 ClusterRoleBinding 分别替换为 Role 和RoleBinding 来限制所提供给这个命名空间的授权。</p>
+<p>另外，也可以使用 <a href="https://pkg.go.dev/github.com/kubernetes-sigs/controller-runtime/pkg/cache#MultiNamespacedCacheBuilder">MultiNamespacedCacheBuilder</a> 来监听特定的命名空间。</p>
 <pre><code class="language-go">	var namespaces []string // List of Namespaces
 
 	mgr, err = ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
@@ -262,7 +240,7 @@ For further information see the kubernetes documentation about Using <a href="ht
 		MetricsBindAddress: fmt.Sprintf(&quot;%s:%d&quot;, metricsHost, metricsPort),
 	})
 </code></pre>
-<p>For further information see <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/cache?tab=doc#MultiNamespacedCacheBuilder">MultiNamespacedCacheBuilder</a></p>
+<p>更多信息请参见 <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/cache?tab=doc#MultiNamespacedCacheBuilder">MultiNamespacedCacheBuilder</a></p>
 <pre><code class="language-go">	// +kubebuilder:scaffold:builder
 
 	setupLog.Info(&quot;starting manager&quot;)
@@ -273,7 +251,7 @@ For further information see the kubernetes documentation about Using <a href="ht
 }
 </code></pre>
 </div>
-<p>With that out of the way, we can get on to scaffolding our API!</p>
+<p>说完这些，我们就可以开始创建我们的 API 了！</p>
 
                     </main>
 

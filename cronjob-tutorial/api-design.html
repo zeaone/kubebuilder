@@ -159,38 +159,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#designing-an-api" id="designing-an-api">Designing an API</a></h1>
-<p>In Kubernetes, we have a few rules for how we design APIs. Namely, all
-serialized fields <em>must</em> be <code>camelCase</code>, so we use JSON struct tags to
-specify this.  We can also use the <code>omitempty</code> struct tag to mark that
-a field should be omitted from serialization when empty.</p>
-<p>Fields may use most of the primitive types.  Numbers are the exception:
-for API compatibility purposes, we accept three forms of numbers: <code>int32</code>
-and <code>int64</code> for integers, and <code>resource.Quantity</code> for decimals.</p>
-<details><summary>Hold up, what's a Quantity?</summary>
-<p>Quantities are a special notation for decimal numbers that have an
-explicitly fixed representation that makes them more portable across
-machines.  You’ve probably noticed them when specifying resources requests
-and limits on pods in Kubernetes.</p>
-<p>They conceptually work similar to floating point numbers: they have
-a significand, base, and exponent. Their serializable and human readable format
-uses whole numbers and suffixes to specify values much the way we describe
-computer storage.</p>
-<p>For instance, the value <code>2m</code> means <code>0.002</code> in decimal notation.  <code>2Ki</code>
-means <code>2048</code> in decimal, while <code>2K</code> means <code>2000</code> in decimal.  If we want
-to specify fractions, we switch to a suffix that lets us use a whole
-number: <code>2.5</code> is <code>2500m</code>.</p>
-<p>There are two supported bases: 10 and 2 (called decimal and binary,
-respectively).  Decimal base is indicated with “normal” SI suffixes (e.g.
-<code>M</code> and <code>K</code>), while Binary base is specified in “mebi” notation (e.g. <code>Mi</code>
-and <code>Ki</code>).  Think <a href="https://en.wikipedia.org/wiki/Binary_prefix">megabytes vs
-mebibytes</a>.</p>
+                        <h1><a class="header" href="#设计一个-api" id="设计一个-api">设计一个 API</a></h1>
+<p>在 Kubernetes 中，我们对如何设计 API 有一些原则。也就是说，所有序列化的字段<strong>必须</strong>是 <code>驼峰式</code> ，所以我们使用的 JSON 标签需要遵循该格式。我们也可以使用<code>omitempty</code> 标签来标记一个字段在空的时候应该在序列化的时候省略。</p>
+<p>字段可以使用大多数的基本类型。数字是个例外：出于 API 兼容性的目的，我们只允许三种数字类型。对于整数，需要使用 <code>int32</code> 和 <code>int64</code> 类型；对于小数，使用 <code>resource.Quantity</code> 类型。</p>
+<details><summary>等等，什么是 `resource.Quantity`？</summary>
+<p><code>Quantity</code> 是十进制数的一种特殊符号，它有一个明确固定的表示方式，使它们在不同的机器上更具可移植性。 你可能在 Kubernetes 中指定资源请求和对 pods 的限制时已经注意到它们。</p>
+<p>它们在概念上的工作原理类似于浮点数：它们有一个 significand、基数和指数。它们的序列化和人类可读格式使用整数和后缀来指定值，就像我们描述计算机存储的方式一样。</p>
+<p>例如，值 <code>2m</code> 在十进制符号中表示 <code>0.002</code>。 <code>2Ki</code> 在十进制中表示 <code>2048</code> ，而 <code>2K</code> 在十进制中表示 <code>2000</code>。 如果我们要指定分数，我们就换成一个后缀，让我们使用一个整数：<code>2.5</code> 就是 <code>2500m</code>。</p>
+<p>有两个支持的基数：10 和 2（分别称为十进制和二进制）。十进制基数用 “普通的” SI 后缀表示（如 <code>M</code> 和 <code>K</code> ），而二进制基数用 “mebi” 符号表示（如 <code>Mi</code> 和 <code>Ki</code> ）。 对比 <a href="https://en.wikipedia.org/wiki/Binary_prefix">megabytes vs mebibytes</a>。</p>
 </details>
-<p>There’s one other special type that we use: <code>metav1.Time</code>.  This functions
-identically to <code>time.Time</code>, except that it has a fixed, portable
-serialization format.</p>
-<p>With that out of the way, let’s take a look at what our CronJob object
-looks like!</p>
+<p>还有一个我们使用的特殊类型：<code>metav1.Time</code>。 它有一个稳定的、可移植的序列化格式的功能，其他与 <code>time.Time</code> 相同。</p>
+<p>说完了这些，让我们来看看我们的 CronJob 对象是什么样子的吧！</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1/cronjob_types.go">project/api/v1/cronjob_types.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -215,29 +194,21 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 </code></pre>
 </details>
-<p>First, let’s take a look at our spec.  As we discussed before, spec holds
-<em>desired state</em>, so any “inputs” to our controller go here.</p>
-<p>Fundamentally a CronJob needs the following pieces:</p>
+<p>首先，让我们来看看 spec。正如我们之前讨论过的，spec 代表所期望的状态，所以控制器的任何 “输入” 都会在这里。</p>
+<p>通常来说，CronJob 由以下几部分组成：</p>
 <ul>
-<li>A schedule (the <em>cron</em> in CronJob)</li>
-<li>A template for the Job to run (the
-<em>job</em> in CronJob)</li>
+<li>一个时间表（ CronJob 中的 cron ）</li>
+<li>要运行的 Job 模板（ CronJob 中的 Job ）</li>
 </ul>
-<p>We’ll also want a few extras, which will make our users’ lives easier:</p>
+<p>当然 CronJob 还需要一些额外的东西，使得它更加易用</p>
 <ul>
-<li>A deadline for starting jobs (if we miss this deadline, we’ll just wait till
-the next scheduled time)</li>
-<li>What to do if multiple jobs would run at once (do we wait? stop the old one? run both?)</li>
-<li>A way to pause the running of a CronJob, in case something’s wrong with it</li>
-<li>Limits on old job history</li>
+<li>一个已经启动的 Job 的超时时间（如果该 Job 执行超时，那么我们会将在下次调度的时候重新执行该 Job）。</li>
+<li>如果多个 Job 同时运行，该怎么办（我们要等待吗？还是停止旧的 Job ？）</li>
+<li>暂停 CronJob 运行的方法，以防出现问题。</li>
+<li>对旧 Job 历史的限制</li>
 </ul>
-<p>Remember, since we never read our own status, we need to have some other way to
-keep track of whether a job has run.  We can use at least one old job to do
-this.</p>
-<p>We’ll use several markers (<code>// +comment</code>) to specify additional metadata.  These
-will be used by <a href="https://github.com/kubernetes-sigs/controller-tools">controller-tools</a> when generating our CRD manifest.
-As we’ll see in a bit, controller-tools will also use GoDoc to form descriptions for
-the fields.</p>
+<p>请记住，由于我们从不读取自己的状态，我们需要有一些其他的方法来跟踪一个 Job 是否已经运行。我们可以使用至少一个旧的 Job 来做这件事。</p>
+<p>我们将使用几个标记（<code>// +comment</code>）来指定额外的元数据。在生成 CRD 清单时，<a href="https://github.com/kubernetes-sigs/controller-tools">controller-tools</a> 将使用这些数据。我们稍后将看到，controller-tools 也将使用 GoDoc 来生成字段的描述。</p>
 <pre><code class="language-go">// CronJobSpec defines the desired state of CronJob
 type CronJobSpec struct {
 	// +kubebuilder:validation:MinLength=0
@@ -283,10 +254,7 @@ type CronJobSpec struct {
 	FailedJobsHistoryLimit *int32 `json:&quot;failedJobsHistoryLimit,omitempty&quot;`
 }
 </code></pre>
-<p>We define a custom type to hold our concurrency policy.  It’s actually
-just a string under the hood, but the type gives extra documentation,
-and allows us to attach validation on the type instead of the field,
-making the validation more easily reusable.</p>
+<p>我们定义了一个自定义类型来保存我们的并发策略。实际上，它的底层类型是 string，但该类型给出了额外的文档，并允许我们在类型上附加验证，而不是在字段上验证，使验证逻辑更容易复用。</p>
 <pre><code class="language-go">// ConcurrencyPolicy describes how the job will be handled.
 // Only one of the following concurrent policies may be specified.
 // If none of the following policies is specified, the default one
@@ -306,11 +274,8 @@ const (
 	ReplaceConcurrent ConcurrencyPolicy = &quot;Replace&quot;
 )
 </code></pre>
-<p>Next, let’s design our status, which holds observed state.  It contains any information
-we want users or other controllers to be able to easily obtain.</p>
-<p>We’ll keep a list of actively running jobs, as well as the last time that we successfully
-ran our job.  Notice that we use <code>metav1.Time</code> instead of <code>time.Time</code> to get the stable
-serialization, as mentioned above.</p>
+<p>接下来，让我们设计一下我们的 status，它表示实际看到的状态。它包含了我们希望用户或其他控制器能够轻松获得的任何信息。</p>
+<p>我们将保存一个正在运行的 Jobs，以及我们最后一次成功运行 Job 的时间。注意，我们使用 <code>metav1.Time</code> 而不是 <code>time.Time</code> 来保证序列化的兼容性以及稳定性，如上所述。</p>
 <pre><code class="language-go">// CronJobStatus defines the observed state of CronJob
 type CronJobStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
@@ -325,9 +290,7 @@ type CronJobStatus struct {
 	LastScheduleTime *metav1.Time `json:&quot;lastScheduleTime,omitempty&quot;`
 }
 </code></pre>
-<p>Finally, we have the rest of the boilerplate that we’ve already discussed.
-As previously noted, we don’t need to change this, except to mark that
-we want a status subresource, so that we behave like built-in kubernetes types.</p>
+<p>最后，CronJob 和 CronJobList 直接使用模板生成的即可。如前所述，我们不需要改变这个，除了标记我们想要一个有状态子资源，这样我们的行为就像内置的 kubernetes 类型。</p>
 <pre><code class="language-go">// +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 
@@ -356,8 +319,7 @@ func init() {
 }
 </code></pre>
 </details></div>
-<p>Now that we have an API, we’ll need to write a controller to actually
-implement the functionality.</p>
+<p>现在我们定义好了一个 API，我们需要编写一个控制器来实际实现这些功能。</p>
 
                     </main>
 
