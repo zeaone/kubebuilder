@@ -159,35 +159,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#changing-things-up" id="changing-things-up">Changing things up</a></h1>
-<p>A fairly common change in a Kubernetes API is to take some data that used
-to be unstructured or stored in some special string format, and change it
-to structured data.   Our <code>schedule</code> field fits the bill quite nicely for
-this -- right now, in <code>v1</code>, our schedules look like</p>
+                        <h1><a class="header" href="#修改" id="修改">修改</a></h1>
+<p>Kubernetes API 中一个相当常见的改变是获取一些非结构化的或者存储在一些特殊的字符串格式的数据，
+并将其修改为结构化的数据。我们的 <code>schedule</code> 字段非常适合这个案例 -- 现在，在 <code>v1</code> 中，我们的 schedules 是这样的</p>
 <pre><code class="language-yaml">schedule: &quot;*/1 * * * *&quot;
 </code></pre>
-<p>That’s a pretty textbook example of a special string format (it’s also
-pretty unreadable unless you’re a Unix sysadmin).</p>
-<p>Let’s make it a bit more structured.  According to the our <a href="/TODO.html">CronJob
-code</a>, we support “standard” Cron format.</p>
-<p>In Kubernetes, <strong>all versions must be safely round-tripable through each
-other</strong>.  This means that if we convert from version 1 to version 2, and
-then back to version 1, we must not lose information.  Thus, any change we
-make to our API must be compatible with whatever we supported in v1, and
-also need to make sure anything we add in v2 is supported in v1.  In some
-cases, this means we need to add new fields to v1, but in our case, we
-won’t have to, since we’re not adding new functionality.</p>
-<p>Keeping all that in mind, let’s convert our example above to be
-slightly more structured:</p>
+<p>这是一个非常典型的特殊字符串格式的例子（除非你是一个 Unix 系统管理员，否则非常难以理解它）。</p>
+<p>让我们来使它更结构化一点。根据我们 <a href="/TODO.html">CronJob 代码</a>，我们支持”standard” Cron 格式。</p>
+<p>在 Kubernetes 里，<strong>所有版本都必须通过彼此进行安全的往返</strong>。这意味着如果我们从版本 1 转换到版本 2，然后回退到版本 1，我们一定会失去一些信息。因此，我们对 API 所做的任何更改都必须与 v1 中所支持的内容兼容还需要确保我们添加到 v2 中的任何内容在 v1 中都得到支持。某些情况下，这意味着我们需要向 V1 中添加新的字段，但是在我们这个例子中，我们不会这么做，因为我们没有添加新的功能。</p>
+<p>记住这些，让我们将上面的示例转换为稍微更结构化一点：</p>
 <pre><code class="language-yaml">schedule:
   minute: */1
 </code></pre>
-<p>Now, at least, we’ve got labels for each of our fields, but we can still
-easily support all the different syntax for each field.</p>
-<p>We’ll need a new API version for this change.  Let’s call it v2:</p>
+<p>现在，至少我们每个字段都有了标签，但是我们仍然可以为每个字段轻松地支持所有不同的语法。</p>
+<p>对这个改变我们将需要一个新的 API 版本。我们称它为 v2:</p>
 <pre><code class="language-shell">kubebuilder create api --group batch --version v2 --kind CronJob
 </code></pre>
-<p>Now, let’s copy over our existing types, and make the change:</p>
+<p>现在，让我们复制已经存在的类型，并做一些改变：</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/api/v2/cronjob_types.go">project/api/v2/cronjob_types.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -200,9 +188,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 </details>
-<p>Since we’re in a v2 package, controller-gen will assume this is for the v2
-version automatically.  We could override that with the <a href="/reference/markers/crd.html"><code>+versionName</code>
-marker</a>.</p>
+<p>因为我们现在在v2 包中，controller-gen 将自动假设这是对于 v2 版本的。
+我们可以用<a href="/reference/markers/crd.html"><code>+versionName</code>marker</a>去重写它。</p>
 <pre><code class="language-go">package v2
 </code></pre>
 <details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Imports</span></pre></summary>
@@ -212,116 +199,110 @@ marker</a>.</p>
 	metav1 &quot;k8s.io/apimachinery/pkg/apis/meta/v1&quot;
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+// 编辑这个文件！这是你拥有的脚手架！
+// 注意: json 标签是必需的。为了字段能够被序列化任何你添加的新的字段一定有 json 标签。
 </code></pre>
 </details>
-<p>We’ll leave our spec largely unchanged, except to change the schedule field to a new type.</p>
-<pre><code class="language-go">// CronJobSpec defines the desired state of CronJob
+<p>除了将 schedule 字段更改为一个新类型外，我们将基本上保持 spec 不变。</p>
+<pre><code class="language-go">// CronJobSpec 定义了 CronJob 期待的状态
 type CronJobSpec struct {
-	// The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+	// Cron 格式的 schedule，详情请看https://en.wikipedia.org/wiki/Cron。
 	Schedule CronSchedule `json:&quot;schedule&quot;`
 </code></pre>
 <details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">The rest of Spec</span></pre></summary>
 <pre><code class="language-go">	// +kubebuilder:validation:Minimum=0
 
-	// Optional deadline in seconds for starting the job if it misses scheduled
-	// time for any reason.  Missed jobs executions will be counted as failed ones.
+	// 对于开始 job 以秒为单位的可选的并如果由于任何原因错失了调度的时间截止日期。未执行的
+	// job 将被统计为失败的 job 。
 	// +optional
 	StartingDeadlineSeconds *int64 `json:&quot;startingDeadlineSeconds,omitempty&quot;`
 
-	// Specifies how to treat concurrent executions of a Job.
-	// Valid values are:
-	// - &quot;Allow&quot; (default): allows CronJobs to run concurrently;
-	// - &quot;Forbid&quot;: forbids concurrent runs, skipping next run if previous run hasn't finished yet;
-	// - &quot;Replace&quot;: cancels currently running job and replaces it with a new one
+	// 指定如何处理job的并发执行。
+	// 有效的值是：
+	// - &quot;Allow&quot; (默认)： 允许 CronJobs 并发执行；
+	// - &quot;Forbid&quot;：禁止并发执行，如果之前运行的还没有完成，跳过下一次执行；
+	// - &quot;Replace&quot;： 取消当前正在运行的 job 并用新的 job 替换它
 	// +optional
 	ConcurrencyPolicy ConcurrencyPolicy `json:&quot;concurrencyPolicy,omitempty&quot;`
 
-	// This flag tells the controller to suspend subsequent executions, it does
-	// not apply to already started executions.  Defaults to false.
+	// 此标志告诉控制器暂停后续执行，它不会应用到已经开始执行的 job 。默认值是 false。
 	// +optional
 	Suspend *bool `json:&quot;suspend,omitempty&quot;`
 
-	// Specifies the job that will be created when executing a CronJob.
+	// 指定当执行一个 CronJob 时将会被创建的 job 。
 	JobTemplate batchv1beta1.JobTemplateSpec `json:&quot;jobTemplate&quot;`
 
 	// +kubebuilder:validation:Minimum=0
 
-	// The number of successful finished jobs to retain.
-	// This is a pointer to distinguish between explicit zero and not specified.
+	// 要保留的成功完成的 jobs 的数量。
+	// 这是一个用来区分明确 0 值和未指定的指针。
 	// +optional
 	SuccessfulJobsHistoryLimit *int32 `json:&quot;successfulJobsHistoryLimit,omitempty&quot;`
 
 	// +kubebuilder:validation:Minimum=0
 
-	// The number of failed finished jobs to retain.
-	// This is a pointer to distinguish between explicit zero and not specified.
+	// 要保留的失败的 jobs 的数量。
+	// 这是一个用来区分明确 0 值和未指定的指针。
 	// +optional
 	FailedJobsHistoryLimit *int32 `json:&quot;failedJobsHistoryLimit,omitempty&quot;`
 </code></pre>
 </details>
 <pre><code class="language-go">}
 </code></pre>
-<p>Next, we’ll need to define a type to hold our schedule.
-Based on our proposed YAML above, it’ll have a field for
-each corresponding Cron “field”.</p>
-<pre><code class="language-go">// describes a Cron schedule.
+<p>接下来，我们定义一个类型存储我们的 schedule 。
+基于我们上面提议的 YAML 格式，每个对应的 Cron “field” 都有一个字段。</p>
+<pre><code class="language-go">// 描述一个Cron schedule。
 type CronSchedule struct {
-	// specifies the minute during which the job executes.
+	// 指定 job 执行的分钟数。
 	// +optional
 	Minute *CronField `json:&quot;minute,omitempty&quot;`
-	// specifies the hour during which the job executes.
+	// 指定 job 执行的小时数。
 	// +optional
 	Hour *CronField `json:&quot;hour,omitempty&quot;`
-	// specifies the day of the month during which the job executes.
+	// 指定 job 执行的月的天数。
 	// +optional
 	DayOfMonth *CronField `json:&quot;dayOfMonth,omitempty&quot;`
-	// specifies the month during which the job executes.
+	// 指定 job 执行的月数。
 	// +optional
 	Month *CronField `json:&quot;month,omitempty&quot;`
-	// specifies the day of the week during which the job executes.
+	// 指定 job 执行的一周的天数。
 	// +optional
 	DayOfWeek *CronField `json:&quot;dayOfWeek,omitempty&quot;`
 }
 </code></pre>
-<p>Finally, we’ll define a wrapper type to represent a field.
-We could attach additional validation to this field,
-but for now we’ll just use it for documentation purposes.</p>
-<pre><code class="language-go">// represents a Cron field specifier.
+<p>最后，我们定义一个封装器类型来表示一个字段。
+我们可以为这个字段附加一些额外的验证，但是现在我们只仅仅用它做文档的目的。</p>
+<pre><code class="language-go">// 表示一个 Cron 字段说明符。
 type CronField string
 </code></pre>
 <details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Other Types</span></pre></summary>
-<p>All the other types will stay the same as before.</p>
-<pre><code class="language-go">// ConcurrencyPolicy describes how the job will be handled.
-// Only one of the following concurrent policies may be specified.
-// If none of the following policies is specified, the default one
-// is AllowConcurrent.
+<p>所有其他类型将保持与以前相同。</p>
+<pre><code class="language-go">// ConcurrencyPolicy 描述 job 将会被怎样处理。仅仅下面并发策略中的一种可以被指定。
+// 如果没有指定下面策略的任何一种，那么默认的一个是 AllowConcurrent 。
 // +kubebuilder:validation:Enum=Allow;Forbid;Replace
 type ConcurrencyPolicy string
 
 const (
-	// AllowConcurrent allows CronJobs to run concurrently.
+	// AllowConcurrent 允许 CronJobs 并发执行.
 	AllowConcurrent ConcurrencyPolicy = &quot;Allow&quot;
 
-	// ForbidConcurrent forbids concurrent runs, skipping next run if previous
-	// hasn't finished yet.
+	// ForbidConcurrent 禁止并发执行, 如果之前运行的还没有完成，跳过下一次执行
 	ForbidConcurrent ConcurrencyPolicy = &quot;Forbid&quot;
 
-	// ReplaceConcurrent cancels currently running job and replaces it with a new one.
+	// ReplaceConcurrent 取消当前正在运行的 job 并用新的 job 替换它。
 	ReplaceConcurrent ConcurrencyPolicy = &quot;Replace&quot;
 )
 
-// CronJobStatus defines the observed state of CronJob
+// CronJobStatus 定义了 CronJob 观察的的状态
 type CronJobStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run &quot;make&quot; to regenerate code after modifying this file
+	// 插入额外的 STATUS 字段 - 定义集群观察的状态
+	// 重要：修改了这个文件之后运行&quot;make&quot;去重新生成代码
 
-	// A list of pointers to currently running jobs.
+	// 一个存储当前正在运行 job 的指针列表。
 	// +optional
 	Active []corev1.ObjectReference `json:&quot;active,omitempty&quot;`
 
-	// Information when was the last time the job was successfully scheduled.
+	// 当 job 最后一次成功被调度的信息。
 	// +optional
 	LastScheduleTime *metav1.Time `json:&quot;lastScheduleTime,omitempty&quot;`
 }
@@ -329,7 +310,7 @@ type CronJobStatus struct {
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 
-// CronJob is the Schema for the cronjobs API
+// CronJob 是 cronjobs API 的 Schema
 type CronJob struct {
 	metav1.TypeMeta   `json:&quot;,inline&quot;`
 	metav1.ObjectMeta `json:&quot;metadata,omitempty&quot;`
@@ -340,7 +321,7 @@ type CronJob struct {
 
 // +kubebuilder:object:root=true
 
-// CronJobList contains a list of CronJob
+// CronJobList 包含了一个 CronJob 的列表
 type CronJobList struct {
 	metav1.TypeMeta `json:&quot;,inline&quot;`
 	metav1.ListMeta `json:&quot;metadata,omitempty&quot;`
@@ -352,7 +333,7 @@ func init() {
 }
 </code></pre>
 </details></div>
-<h2><a class="header" href="#storage-versions" id="storage-versions">Storage Versions</a></h2>
+<h2><a class="header" href="#存储版本" id="存储版本">存储版本</a></h2>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/api/v1/cronjob_types.go">project/api/v1/cronjob_types.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -374,101 +355,97 @@ limitations under the License.</p>
 	metav1 &quot;k8s.io/apimachinery/pkg/apis/meta/v1&quot;
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+// 编辑这个文件！这是你拥有的脚手架！
+// 注意: json 标签是必需的。为了字段能够被序列化任何你添加的新的字段一定有 json 标签。
 </code></pre>
 </details><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">old stuff</span></pre></summary>
-<pre><code class="language-go">// CronJobSpec defines the desired state of CronJob
+<pre><code class="language-go">// CronJobSpec 定义了 CronJob 期待的状态
 type CronJobSpec struct {
 	// +kubebuilder:validation:MinLength=0
 
-	// The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
+	// Cron 格式的 schedule，详情请看https://en.wikipedia.org/wiki/Cron。
 	Schedule string `json:&quot;schedule&quot;`
 
 	// +kubebuilder:validation:Minimum=0
 
-	// Optional deadline in seconds for starting the job if it misses scheduled
-	// time for any reason.  Missed jobs executions will be counted as failed ones.
+	// 对于开始 job 以秒为单位的可选的并如果由于任何原因错失了调度的时间截止日期。未执行的
+	// job 将被统计为失败的 job 。
 	// +optional
 	StartingDeadlineSeconds *int64 `json:&quot;startingDeadlineSeconds,omitempty&quot;`
 
-	// Specifies how to treat concurrent executions of a Job.
-	// Valid values are:
-	// - &quot;Allow&quot; (default): allows CronJobs to run concurrently;
-	// - &quot;Forbid&quot;: forbids concurrent runs, skipping next run if previous run hasn't finished yet;
-	// - &quot;Replace&quot;: cancels currently running job and replaces it with a new one
+	// 指定如何处理job的并发执行。
+	// 有效的值是：
+	// - &quot;Allow&quot; (默认)： 允许 CronJobs 并发执行；
+	// - &quot;Forbid&quot;：禁止并发执行，如果之前运行的还没有完成，跳过下一次执行；
+	// - &quot;Replace&quot;： 取消当前正在运行的 job 并用新的 job 替换它
 	// +optional
 	ConcurrencyPolicy ConcurrencyPolicy `json:&quot;concurrencyPolicy,omitempty&quot;`
 
-	// This flag tells the controller to suspend subsequent executions, it does
-	// not apply to already started executions.  Defaults to false.
+	// 此标志告诉控制器暂停后续执行，它不会应用到已经开始执行的 job 。默认值是 false。
 	// +optional
 	Suspend *bool `json:&quot;suspend,omitempty&quot;`
 
-	// Specifies the job that will be created when executing a CronJob.
+	// 指定当执行一个 CronJob 时将会被创建的 job 。
 	JobTemplate batchv1beta1.JobTemplateSpec `json:&quot;jobTemplate&quot;`
 
 	// +kubebuilder:validation:Minimum=0
 
-	// The number of successful finished jobs to retain.
-	// This is a pointer to distinguish between explicit zero and not specified.
+	// 要保留的成功完成的 jobs 的数量。
+	// 这是一个用来区分明确 0 值和未指定的指针。
 	// +optional
 	SuccessfulJobsHistoryLimit *int32 `json:&quot;successfulJobsHistoryLimit,omitempty&quot;`
 
 	// +kubebuilder:validation:Minimum=0
 
-	// The number of failed finished jobs to retain.
-	// This is a pointer to distinguish between explicit zero and not specified.
+	// 要保留的失败的 jobs 的数量。
+	// 这是一个用来区分明确 0 值和未指定的指针。
 	// +optional
 	FailedJobsHistoryLimit *int32 `json:&quot;failedJobsHistoryLimit,omitempty&quot;`
 }
 
-// ConcurrencyPolicy describes how the job will be handled.
-// Only one of the following concurrent policies may be specified.
-// If none of the following policies is specified, the default one
-// is AllowConcurrent.
+// ConcurrencyPolicy 描述 job 将会被怎样处理。仅仅下面并发策略中的一种可以被指定。
+// 如果没有指定下面策略的任何一种，那么默认的一个是 AllowConcurrent 。
 // +kubebuilder:validation:Enum=Allow;Forbid;Replace
 type ConcurrencyPolicy string
 
 const (
-	// AllowConcurrent allows CronJobs to run concurrently.
+	// AllowConcurrent 允许 CronJobs 并发执行.
 	AllowConcurrent ConcurrencyPolicy = &quot;Allow&quot;
 
-	// ForbidConcurrent forbids concurrent runs, skipping next run if previous
+	// ForbidConcurrent 禁止并发执行, 如果之前运行的还没有完成，跳过下一次执行
 	// hasn't finished yet.
 	ForbidConcurrent ConcurrencyPolicy = &quot;Forbid&quot;
 
-	// ReplaceConcurrent cancels currently running job and replaces it with a new one.
+	// ReplaceConcurrent 取消当前正在运行的 job 并用新的 job 替换它。
 	ReplaceConcurrent ConcurrencyPolicy = &quot;Replace&quot;
 )
 
-// CronJobStatus defines the observed state of CronJob
+// CronJobStatus 定义了 CronJob 观察的的状态
 type CronJobStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run &quot;make&quot; to regenerate code after modifying this file
+	// 插入额外的 STATUS 字段 - 定义集群观察的状态
+	// 重要：修改了这个文件之后运行&quot;make&quot;去重新生成代码
 
-	// A list of pointers to currently running jobs.
+	// 一个存储当前正在运行 job 的指针列表。
 	// +optional
 	Active []corev1.ObjectReference `json:&quot;active,omitempty&quot;`
 
-	// Information when was the last time the job was successfully scheduled.
+	// 当 job 最后一次成功被调度的信息。
 	// +optional
 	LastScheduleTime *metav1.Time `json:&quot;lastScheduleTime,omitempty&quot;`
 }
 </code></pre>
 </details>
-<p>Since we’ll have more than one version, we’ll need to mark a storage version.
-This is the version that the Kubernetes API server uses to store our data.
-We’ll chose the v1 version for our project.</p>
-<p>We’ll use the <a href="/reference/markers/crd.html"><code>+kubebuilder:storageversion</code></a> to do this.</p>
-<p>Note that multiple versions may exist in storage if they were written before
-the storage version changes -- changing the storage version only affects how
-objects are created/updated after the change.</p>
+<p>因为我们将有多个版本，我们将需要标记一个存储版本。
+这是一个 Kubernetes API 服务端使用存储我们数据的版本。
+我们将选择v1版本作为我们项目的版本。</p>
+<p>我们将用 <a href="/reference/markers/crd.html"><code>+kubebuilder:storageversion</code></a> 去做这件事。</p>
+<p>注意如果在存储版本改变之前它们已经被写入那么在仓库中可能存在多个版本 -- 改变存储版本仅仅影响
+在改变之后对象的创建/更新。</p>
 <pre><code class="language-go">// +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// CronJob is the Schema for the cronjobs API
+// CronJob 是 cronjobs API 的 Schema
 type CronJob struct {
 	metav1.TypeMeta   `json:&quot;,inline&quot;`
 	metav1.ObjectMeta `json:&quot;metadata,omitempty&quot;`
@@ -480,7 +457,7 @@ type CronJob struct {
 <details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">old stuff</span></pre></summary>
 <pre><code class="language-go">// +kubebuilder:object:root=true
 
-// CronJobList contains a list of CronJob
+// CronJobList 包含了一个 CronJob 的列表
 type CronJobList struct {
 	metav1.TypeMeta `json:&quot;,inline&quot;`
 	metav1.ListMeta `json:&quot;metadata,omitempty&quot;`
@@ -492,7 +469,7 @@ func init() {
 }
 </code></pre>
 </details></div>
-<p>Now that we’ve got our types in place, we’ll need to set up conversion...</p>
+<p>现在我们已经准备好了类型，接下来需要设置转换。</p>
 
                     </main>
 
