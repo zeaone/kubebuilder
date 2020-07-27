@@ -159,12 +159,12 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#添加一个新的-api" id="添加一个新的-api">添加一个新的 API</a></h1>
+                        <h1><a class="header" href="#创建一个-api" id="创建一个-api">创建一个 API</a></h1>
 <p>搭建一个新的 Kind （你刚在 <a href="./gvks.html#kinds-and-resources">上一章节</a> 中注意到的，是吗？) 和相应的控制器，我们可以用 <code>kubebuilder create api</code>:</p>
 <pre><code class="language-bash">kubebuilder create api --group batch --version v1 --kind CronJob
 </code></pre>
 <p>当第一次我们为每个组-版本调用这个命令的时候，它将会为新的组-版本创建一个目录。</p>
-<p>在这种情况下，对应于<code>batch.tutorial.kubebuilder.io/v1</code>（记得我们在开始时 <a href="cronjob-tutorial.html#scaffolding-out-our-project"><code>--domain</code></a> 的设置吗？) 的 <a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1"><code>api/v1/</code></a> 目录被创建了出来。</p>
+<p>在本案例中，创建了一个对应于<code>batch.tutorial.kubebuilder.io/v1</code>（记得我们在开始时 <a href="cronjob-tutorial.html#scaffolding-out-our-project"><code>--domain</code></a> 的设置吗？) 的 <a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1"><code>api/v1/</code></a> 目录。</p>
 <p>它也为我们的<code>CronJob</code> Kind 添加了一个文件，<code>api/v1/cronjob_types.go</code>。每次当我们用不同的 kind 去调用这个命令，它将添加一个相应的新文件。</p>
 <p>让我们来看看我们得到了哪些东西，然后我们就可以开始去填写了。</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/emptyapi.go">emptyapi.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
@@ -179,7 +179,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 </details>
-<p>我们非常简单地开始：我们导入<code>meta/v1</code> API 组，该组通常本身并不会被暴露，而是包含所有 Kubernetes 种类共有的元数据。</p>
+<p>我们非常简单地开始：我们导入<code>meta/v1</code> API 组，通常本身并不会暴露该组，而是包含所有 Kubernetes 种类共有的元数据。</p>
 <pre><code class="language-go">package v1
 
 import (
@@ -191,7 +191,7 @@ import (
 因此，每个 <em>functional</em> 对象包括 spec 和 status 。很少的类型，像 <code>ConfigMap</code> 不需要遵从这个模式，因为它们不编码期待的状态，
 但是大部分类型需要做这一步。</p>
 <pre><code class="language-go">// 编辑这个文件！这是你拥有的脚手架！
-// 注意: json 标签是必需的。为了字段能够被序列化任何你添加的新的字段一定有json标签。
+// 注意: json 标签是必需的。为了能够序列化字段，任何你添加的新的字段一定有json标签。
 
 // CronJobSpec 定义了 CronJob 期待的状态
 type CronJobSpec struct {
