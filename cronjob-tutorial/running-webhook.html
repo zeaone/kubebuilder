@@ -159,40 +159,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#deploying-admission-webhooks" id="deploying-admission-webhooks">Deploying Admission Webhooks</a></h1>
+                        <h1><a class="header" href="#部署-admission-webhooks" id="部署-admission-webhooks">部署 Admission Webhooks</a></h1>
 <h2><a class="header" href="#kind-cluster" id="kind-cluster">Kind Cluster</a></h2>
-<p>It is recommended to develop your webhook with a
-<a href="../reference/kind.html">kind</a> cluster for faster iteration.
-Why?</p>
+<p>建议使用 <a href="../reference/kind.html">kind</a> 集群来更快速的开发 webhook。
+为什么呢？</p>
 <ul>
-<li>You can bring up a multi-node cluster locally within 1 minute.</li>
-<li>You can tear it down in seconds.</li>
-<li>You don’t need to push your images to remote registry.</li>
+<li>你可以在 1 分钟内本地启动有多个节点的集群。</li>
+<li>你可以在几秒中内关闭它。</li>
+<li>你不需要把你的镜像推送到远程仓库。</li>
 </ul>
-<h2><a class="header" href="#cert-manager" id="cert-manager">Cert Manager</a></h2>
-<p>You need follow <a href="./cert-manager.html">this</a> to install the cert manager bundle.</p>
-<h2><a class="header" href="#build-your-image" id="build-your-image">Build your image</a></h2>
-<p>Run the following command to build your image locally.</p>
+<h2><a class="header" href="#证书管理" id="证书管理">证书管理</a></h2>
+<p>你要遵循<a href="./cert-manager.html">这个</a>来安装证书管理器。</p>
+<h2><a class="header" href="#构建你的镜像" id="构建你的镜像">构建你的镜像</a></h2>
+<p>运行下面的命令来本地构建你的镜像。</p>
 <pre><code class="language-bash">make docker-build
 </code></pre>
-<p>You don’t need to push the image to a remote container registry if you are using
-a kind cluster. You can directly load your local image to your kind cluster:</p>
+<p>如果你使用的是 kind 集群，那么你不需要把镜像推送到远程容器仓库。你可以直接加载你本地的镜像到你的 kind 集群：</p>
 <pre><code class="language-bash">kind load docker-image your-image-name:your-tag
 </code></pre>
-<h2><a class="header" href="#deploy-webhooks" id="deploy-webhooks">Deploy Webhooks</a></h2>
-<p>You need to enable the webhook and cert manager configuration through kustomize.
-<code>config/default/kustomization.yaml</code> should now look like the following:</p>
-<pre><code class="language-yaml"># Adds namespace to all resources.
+<h2><a class="header" href="#部署-webhooks" id="部署-webhooks">部署 Webhooks</a></h2>
+<p>你需要通过启用 webhook 和证书管理配置。<code>config/default/kustomization.yaml</code> 应该看起来是这样子的：</p>
+<pre><code class="language-yaml"># 为所有资源添加名字空间
 namespace: project-system
 
-# Value of this field is prepended to the
-# names of all resources, e.g. a deployment named
-# &quot;wordpress&quot; becomes &quot;alices-wordpress&quot;.
-# Note that it should also match with the prefix (text before '-') of the namespace
-# field above.
+# 这个字段的值会加在所有资源名字的前面，比如一个叫做 &quot;wordpress&quot; 的 deployment 会变成 &quot;alices-wordpress&quot;。
+# 注意它应该和上面名字空间字段的前缀匹配（'-' 之前的字符串）。
 namePrefix: project-
 
-# Labels to add to all resources and selectors.
+# 要给所有资源和选择器添加的标签。
 #commonLabels:
 #  someName: someValue
 
@@ -200,38 +194,35 @@ bases:
 - ../crd
 - ../rbac
 - ../manager
-# [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix including the one in
-# crd/kustomization.yaml
+# [WEBHOOK] 用于启用 webhook，取消注释所有有 [WEBHOOK] 前缀的字段，包括在 crd/kustomization.yaml 中的。
 - ../webhook
-# [CERTMANAGER] To enable cert-manager, uncomment all sections with 'CERTMANAGER'. 'WEBHOOK' components are required.
+# [CERTMANAGER] 用于启用证书管理，需要取消带有 'CERTMANAGER' 的所有字段的注释。'WEBHOOK' 组件是必须的。
 - ../certmanager
-# [PROMETHEUS] To enable prometheus monitor, uncomment all sections with 'PROMETHEUS'.
+# [PROMETHEUS] 用于启用 prometheus 监控，取消带有 'PROMETHEUS' 的左右字段的注释。
 #- ../prometheus
 
 patchesStrategicMerge:
-  # Protect the /metrics endpoint by putting it behind auth.
-  # If you want your controller-manager to expose the /metrics
-  # endpoint w/o any authn/z, please comment the following line.
+  # 通过给 /metrics 的 endpoint 加上认证来保护它。
+  # 如果你想你的 controller-manager 暴露 /metrics 的 endpoint 并且不需要任何授权，那么注释掉下面这行。
 - manager_auth_proxy_patch.yaml
 
-# [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix including the one in
-# crd/kustomization.yaml
+# [WEBHOOK] 用于启用 webhook，取消注释所有有 [WEBHOOK] 前缀的字段，包括在 crd/kustomization.yaml 中的。
 - manager_webhook_patch.yaml
 
-# [CERTMANAGER] To enable cert-manager, uncomment all sections with 'CERTMANAGER'.
-# Uncomment 'CERTMANAGER' sections in crd/kustomization.yaml to enable the CA injection in the admission webhooks.
-# 'CERTMANAGER' needs to be enabled to use ca injection
+# [CERTMANAGER] 用于启用证书管理，需要取消带有 'CERTMANAGER' 的所有字段的注释。
+# 取消在 crd/kustomization.yaml 中 'CERTMANAGER' 部分的注释可以在 admission webhook 中启用 CA 注入。
+# 需要启用 'CERTMANAGER' 来使用 ca 注入。
 - webhookcainjection_patch.yaml
 
-# the following config is for teaching kustomize how to do var substitution
+# 下面的配置是为了教授 kustomize 如何进行变量替换。
 vars:
-# [CERTMANAGER] To enable cert-manager, uncomment all sections with 'CERTMANAGER' prefix.
-- name: CERTIFICATE_NAMESPACE # namespace of the certificate CR
+# [CERTMANAGER] 用于启用证书管理，取消带有 'CERTMANAGER' 前缀的所有部分注释。
+- name: CERTIFICATE_NAMESPACE # CR 证书的命名空间
   objref:
     kind: Certificate
     group: cert-manager.io
     version: v1alpha2
-    name: serving-cert # this name should match the one in certificate.yaml
+    name: serving-cert # 这个名字应该和 certificate.yaml 文件中的一个名字相匹配
   fieldref:
     fieldpath: metadata.namespace
 - name: CERTIFICATE_NAME
@@ -239,8 +230,8 @@ vars:
     kind: Certificate
     group: cert-manager.io
     version: v1alpha2
-    name: serving-cert # this name should match the one in certificate.yaml
-- name: SERVICE_NAMESPACE # namespace of the service
+    name: serving-cert # 这个名字应该和 certificate.yaml 文件中的一个名字相匹配
+- name: SERVICE_NAMESPACE # service 的命名空间
   objref:
     kind: Service
     version: v1
@@ -254,25 +245,18 @@ vars:
     name: webhook-service
 
 </code></pre>
-<p>Now you can deploy it to your cluster by</p>
+<p>现在你可以通过下面的命令把它部署到你的集群中了：</p>
 <pre><code class="language-bash">make deploy IMG=&lt;some-registry&gt;/&lt;project-name&gt;:tag
 </code></pre>
-<p>Wait a while til the webhook pod comes up and the certificates are provisioned.
-It usually completes within 1 minute.</p>
-<p>Now you can create a valid CronJob to test your webhooks. The creation should
-successfully go through.</p>
+<p>等一会儿，webhook 的 pod 启动并且也提供了证书认证。这个过程通常需要 1 分钟。</p>
+<p>现在你可以创建一个有效的 CronJob 来测试你的 webhook。这个过程应该会顺利通过的。</p>
 <pre><code class="language-bash">kubectl create -f config/samples/batch_v1_cronjob.yaml
 </code></pre>
-<p>You can also try to create an invalid CronJob (e.g. use an ill-formatted
-schedule field). You should see a creation failure with a validation error.</p>
+<p>你也能试着创建一个无效的 CronJob（比如使用一个非法格式的调度字段）。你应该可以看到创建失败并且有验证错误信息。</p>
 <aside class="note warning">
-<h1><a class="header" href="#the-bootstrapping-problem" id="the-bootstrapping-problem">The Bootstrapping Problem</a></h1>
-<p>If you are deploying a webhook for pods in the same cluster, be
-careful about the bootstrapping problem, since the creation request of the
-webhook pod would be sent to the webhook pod itself, which hasn’t come up yet.</p>
-<p>To make it work, you can either use <a href="https://github.com/kubernetes/api/blob/kubernetes-1.14.5/admissionregistration/v1beta1/types.go#L189-L233">namespaceSelector</a> if your kubernetes
-version is 1.9+ or use <a href="https://github.com/kubernetes/api/blob/kubernetes-1.15.2/admissionregistration/v1beta1/types.go#L262-L274">objectSelector</a> if your kubernetes version is 1.15+ to
-skip itself.</p>
+<h1><a class="header" href="#启动问题" id="启动问题">启动问题</a></h1>
+<p>如果你在同一个集群为 pod 部署了一个 webhook，要留意以启动问题，因为创建 webhook pod 的请求可能会被发送到 webhook pod 它自己，而它自己还没有启动起来。</p>
+<p>为了让它能正常工作，你可以使用选择器来跳过它自己，如果你的 kubernetes 版本是 1.9+ 的可以使用 <a href="https://github.com/kubernetes/api/blob/kubernetes-1.14.5/admissionregistration/v1beta1/types.go#L189-L233">namespaceSelector</a>，如果你的 kubernetes 版本是 1.15+ 的使用 <a href="https://github.com/kubernetes/api/blob/kubernetes-1.15.2/admissionregistration/v1beta1/types.go#L262-L274">objectSelector</a>。</p>
 </aside>
 
                     </main>
