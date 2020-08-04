@@ -159,10 +159,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#you-said-something-about-main" id="you-said-something-about-main">You said something about main?</a></h1>
-<p>But first, remember how we said we’d <a href="/cronjob-tutorial/empty-main.html">come back to <code>main.go</code>
-again</a>? Let’s take a look and see what’s
-changed, and what we need to add.</p>
+                        <h1><a class="header" href="#你还记得关于-main-函数的一些要点吗" id="你还记得关于-main-函数的一些要点吗">你还记得关于 main 函数的一些要点吗？</a></h1>
+<p>但首先，还记得我们之前说过的 <a href="/cronjob-tutorial/empty-main.html">再次回顾 <code>main.go</code></a> 吗？让我们看一下哪些地方改变了，哪些是需要添加的。</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/main.go">project/main.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -193,11 +191,8 @@ import (
 )
 </code></pre>
 </details>
-<p>The first difference to notice is that kubebuilder has added the new API
-group’s package (<code>batchv1</code>) to our scheme.  This means that we can use those
-objects in our controller.</p>
-<p>If we would be using any other CRD we would have to add their scheme the same way.
-Builtin types such as Job have their scheme added by <code>clientgoscheme</code>.</p>
+<p>要注意的第一个区别是 kubebuilder 已经添加了一组新的 API 包（<code>batchv1</code>）到 scheme。这意味着可以在我们的控制器中使用这些对象。</p>
+<p>如果我们要使用任何其他的 CRD，我们必须用相同的方法添加它们的 scheme。内置的类型例如 Job 就添加了它自己的 scheme <code>clientgoscheme</code>。</p>
 <pre><code class="language-go">var (
 	scheme   = runtime.NewScheme()
 	setupLog = ctrl.Log.WithName(&quot;setup&quot;)
@@ -210,8 +205,7 @@ func init() {
 	// +kubebuilder:scaffold:scheme
 }
 </code></pre>
-<p>The other thing that’s changed is that kubebuilder has added a block calling our
-CronJob controller’s <code>SetupWithManager</code> method.</p>
+<p>另一个变化是 kubebuilder 已经添加了一个阻塞调用我们的 CornJob 控制器的 <code>SetupWithManager</code> 方法。</p>
 <pre><code class="language-go">func main() {
 </code></pre>
 <details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">old stuff</span></pre></summary>
@@ -245,11 +239,9 @@ CronJob controller’s <code>SetupWithManager</code> method.</p>
 		os.Exit(1)
 	}
 </code></pre>
-<p>We’ll also set up webhooks for our type, which we’ll talk about next.
-We just need to add them to the manager.  Since we might want to run
-the webhooks separately, or not run them when testing our controller
-locally, we’ll put them behind an environment variable.</p>
-<p>We’ll just make sure to set <code>ENABLE_WEBHOOKS=false</code> when we run locally.</p>
+<pre><code>我们也会为我们的类型设置 webhook，接下来我们会谈到它。我们只需要将他们添加到 manager。因为我们想分开运行 webhook，而不是在本地测试我们的控制器时运行它们，我们会将它们配置到环境变量中。
+</code></pre>
+<p>当我们本地运行的时候只需确保 <code>ENABLE_WEBHOOKS=false</code>。</p>
 <pre><code class="language-go">	if os.Getenv(&quot;ENABLE_WEBHOOKS&quot;) != &quot;false&quot; {
 		if err = (&amp;batchv1.CronJob{}).SetupWebhookWithManager(mgr); err != nil {
 			setupLog.Error(err, &quot;unable to create webhook&quot;, &quot;webhook&quot;, &quot;Captain&quot;)
@@ -269,7 +261,7 @@ locally, we’ll put them behind an environment variable.</p>
 <pre><code class="language-go">}
 </code></pre>
 </div>
-<p><em>Now</em> we can implement our controller.</p>
+<p><em>现在</em> 我们可以实现我们的控制器了。</p>
 
                     </main>
 
