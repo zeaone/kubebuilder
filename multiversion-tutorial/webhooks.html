@@ -159,15 +159,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#setting-up-the-webhooks" id="setting-up-the-webhooks">Setting up the webhooks</a></h1>
-<p>Our conversion is in place, so all that’s left is to tell
-controller-runtime about our conversion.</p>
-<p>Normally, we’d run</p>
+                        <h1><a class="header" href="#设置-webhook" id="设置-webhook">设置 webhook</a></h1>
+<p>我们的 conversion 已经就位，所以接下来就是告诉 controller-runtime 关于我们的 conversion。</p>
+<p>通常，我们通过运行</p>
 <pre><code class="language-shell">kubebuilder create webhook --group batch --version v1 --kind CronJob --conversion
 </code></pre>
-<p>to scaffold out the webhook setup.  However, we’ve already got webhook
-setup, from when we built our defaulting and validating webhooks!</p>
-<h2><a class="header" href="#webhook-setup" id="webhook-setup">Webhook setup...</a></h2>
+<p>来搭建起 webhook 设置。然而，当我们已经创建好默认和验证过的 webhook 时，我们就已经设置好 webhook。</p>
+<h2><a class="header" href="#webhook-设置" id="webhook-设置">Webhook 设置...</a></h2>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/api/v1/cronjob_webhook.go">project/api/v1/cronjob_webhook.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -197,11 +195,10 @@ import (
 </details>
 <pre><code class="language-go">var cronjoblog = logf.Log.WithName(&quot;cronjob-resource&quot;)
 </code></pre>
-<p>This setup is doubles as setup for our conversion webhooks: as long as our
-types implement the
-<a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/conversion?tab=doc#Hub">Hub</a> and
+<p>对于 conversion webhook 这项设置达成了两个目标：在我们的类型实现
+<a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/conversion?tab=doc#Hub">Hub</a> 和
 <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/conversion?tab=doc#Convertible">Convertible</a>
-interfaces, a conversion webhook will be registered.</p>
+接口的同时，一个 conversion webhook 会被成功注册。</p>
 <pre><code class="language-go">func (r *CronJob) SetupWebhookWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewWebhookManagedBy(mgr).
 		For(r).
@@ -211,7 +208,7 @@ interfaces, a conversion webhook will be registered.</p>
 <details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Existing Defaulting and Validation</span></pre></summary>
 <pre><code class="language-go">var _ webhook.Defaulter = &amp;CronJob{}
 
-// Default implements webhook.Defaulter so a webhook will be registered for the type
+// Default 实现 webhook.Defaulter 使这类型的 webhook 被成功注册
 func (r *CronJob) Default() {
 	cronjoblog.Info(&quot;default&quot;, &quot;name&quot;, r.Name)
 
@@ -231,30 +228,30 @@ func (r *CronJob) Default() {
 	}
 }
 
-// TODO(user): change verbs to &quot;verbs=create;update;delete&quot; if you want to enable deletion validation.
+// TODO(user): 修改 verbs 为 &quot;verbs=create;update;delete&quot;，如果你想允许删除验证。
 // +kubebuilder:webhook:verbs=create;update,path=/validate-batch-tutorial-kubebuilder-io-v1-cronjob,mutating=false,failurePolicy=fail,groups=batch.tutorial.kubebuilder.io,resources=cronjobs,versions=v1,name=vcronjob.kb.io
 
 var _ webhook.Validator = &amp;CronJob{}
 
-// ValidateCreate implements webhook.Validator so a webhook will be registered for the type
+// ValidateCreate 实现 webhook.Validator 使这类型的 webhook 被成功注册
 func (r *CronJob) ValidateCreate() error {
 	cronjoblog.Info(&quot;validate create&quot;, &quot;name&quot;, r.Name)
 
 	return r.validateCronJob()
 }
 
-// ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
+// ValidateUpdate 实现 webhook.Validator 使这类型的 webhook 被成功注册
 func (r *CronJob) ValidateUpdate(old runtime.Object) error {
 	cronjoblog.Info(&quot;validate update&quot;, &quot;name&quot;, r.Name)
 
 	return r.validateCronJob()
 }
 
-// ValidateDelete implements webhook.Validator so a webhook will be registered for the type
+// ValidateDelete 实现 webhook.Validator 使这类型的 webhook 被成功注册
 func (r *CronJob) ValidateDelete() error {
 	cronjoblog.Info(&quot;validate delete&quot;, &quot;name&quot;, r.Name)
 
-	// TODO(user): fill in your validation logic upon object deletion.
+	// TODO(user): 在对象删除之前填入你的验证逻辑
 	return nil
 }
 
@@ -276,8 +273,8 @@ func (r *CronJob) validateCronJob() error {
 }
 
 func (r *CronJob) validateCronJobSpec() *field.Error {
-	// The field helpers from the kubernetes API machinery help us return nicely
-	// structured validation errors.
+	// 来自 kubernetes API 的 field 帮助器帮助我们返回友好的
+	// 结构化的验证错误。
 	return validateScheduleFormat(
 		r.Spec.Schedule,
 		field.NewPath(&quot;spec&quot;).Child(&quot;schedule&quot;))
@@ -292,20 +289,20 @@ func validateScheduleFormat(schedule string, fldPath *field.Path) *field.Error {
 
 func (r *CronJob) validateCronJobName() *field.Error {
 	if len(r.ObjectMeta.Name) &gt; validationutils.DNS1035LabelMaxLength-11 {
-		// The job name length is 63 character like all Kubernetes objects
-		// (which must fit in a DNS subdomain). The cronjob controller appends
-		// a 11-character suffix to the cronjob (`-$TIMESTAMP`) when creating
-		// a job. The job name length limit is 63 characters. Therefore cronjob
-		// names must have length &lt;= 63-11=52. If we don't validate this here,
-		// then job creation will fail later.
+		// 和所有的 Kubernetes 对象一样 job 名称的长度是 63 个字符
+		// （它必须适合一个 DNS 子域名）。 当创建一个 job，cronjob 控制器在 
+		// cronjob 后附加一个 11 个字符的后缀 (`-$TIMESTAMP`) 。
+		// job 名称的长度限制是 63 个字符。因此 cronjob
+		// 名称的长度必须 &lt;= 63-11=52。如果这里我们不验证，
+		// 那么 job 的创建稍后将会失败。
 		return field.Invalid(field.NewPath(&quot;metadata&quot;).Child(&quot;name&quot;), r.Name, &quot;must be no more than 52 characters&quot;)
 	}
 	return nil
 }
 </code></pre>
 </details></div>
-<h2><a class="header" href="#and-maingo" id="and-maingo">...and <code>main.go</code></a></h2>
-<p>Similarly, our existing main file is sufficient:</p>
+<h2><a class="header" href="#以及-maingo" id="以及-maingo">...以及 <code>main.go</code></a></h2>
+<p>同样地，我们的 main 文件也已就绪：</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/main.go">project/main.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -346,7 +343,7 @@ import (
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 
-	_ = kbatchv1.AddToScheme(scheme) // we've added this ourselves
+	_ = kbatchv1.AddToScheme(scheme) // 我们自己添加的
 	_ = batchv1.AddToScheme(scheme)
 	_ = batchv2.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme
@@ -385,7 +382,7 @@ func init() {
 	}
 </code></pre>
 </details>
-<p>Our existing call to SetupWebhookWithManager registers our conversion webhooks with the manager, too.</p>
+<p>我们现在调用 SetupWebhookWithManager 来注册我们的 conversion webhook 到管理器，如此。</p>
 <pre><code class="language-go">	if err = (&amp;batchv1.CronJob{}).SetupWebhookWithManager(mgr); err != nil {
 		setupLog.Error(err, &quot;unable to create webhook&quot;, &quot;webhook&quot;, &quot;Captain&quot;)
 		os.Exit(1)
@@ -403,8 +400,7 @@ func init() {
 <pre><code class="language-go">}
 </code></pre>
 </div>
-<p>Everything’s set up and ready to go!  All that’s left now is to test out
-our webhooks.</p>
+<p>所有都已经设置准备好！接下来要做的只有测试我们的 webhook。</p>
 
                     </main>
 
