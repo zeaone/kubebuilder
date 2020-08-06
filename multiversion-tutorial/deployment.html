@@ -159,49 +159,38 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#deployment-and-testing" id="deployment-and-testing">Deployment and Testing</a></h1>
-<p>Before we can test out our conversion, we’ll need to enable them conversion in our CRD:</p>
-<p>Kubebuilder generates Kubernetes manifests under the <code>config</code> directory with webhook
-bits disabled.  To enable them, we need to:</p>
+                        <h1><a class="header" href="#部署和测试" id="部署和测试">部署和测试</a></h1>
+<p>在测试版本转换之前，我们需要在 CRD 中启用转换：</p>
+<p>Kubebuilder 在 <code>config</code> 目录下生成禁用 webhook bits 的 Kubernetes 清单。要启用它们，我们需要：</p>
 <ul>
 <li>
-<p>Enable <code>patches/webhook_in_&lt;kind&gt;.yaml</code> and
-<code>patches/cainjection_in_&lt;kind&gt;.yaml</code> in
-<code>config/crd/kustomization.yaml</code> file.</p>
+<p>在 <code>config/crd/kustomization.yaml</code> 文件启用 <code>patches/webhook_in_&lt;kind&gt;.yaml</code> 和
+<code>patches/cainjection_in_&lt;kind&gt;.yaml</code>。</p>
 </li>
 <li>
-<p>Enable <code>../certmanager</code> and <code>../webhook</code> directories under the
-<code>bases</code> section in <code>config/default/kustomization.yaml</code> file.</p>
+<p>在 <code>config/default/kustomization.yaml</code> 文件的 <code>bases</code> 部分下启用 <code>../certmanager</code> 和 <code>../webhook</code> 目录。</p>
 </li>
 <li>
-<p>Enable <code>manager_webhook_patch.yaml</code> under the <code>patches</code> section
-in <code>config/default/kustomization.yaml</code> file.</p>
+<p>在 <code>config/default/kustomization.yaml</code> 文件的 <code>patches</code> 部分下启用 <code>manager_webhook_patch.yaml</code>。</p>
 </li>
 <li>
-<p>Enable all the vars under the <code>CERTMANAGER</code> section in
-<code>config/default/kustomization.yaml</code> file.</p>
+<p>在 <code>config/default/kustomization.yaml</code> 文件的 <code>CERTMANAGER</code> 部分下启用所有变量。</p>
 </li>
 </ul>
-<p>Additionally, we’ll need to set the <code>CRD_OPTIONS</code> variable to just
-<code>&quot;crd&quot;</code>, removing the <code>trivialVersions</code> option (this ensures that we
-actually <a href="/reference/generating-crd.html#multiple-versions" title="Generating CRDs: Multiple Versions">generate validation for each version</a>, instead of
-telling Kubernetes that they’re the same):</p>
+<p>此外，我们需要将 <code>CRD_OPTIONS</code> 变量设置为 <code>&quot;crd&quot;</code>，删除 <code>trivialVersions</code> 选项（这确保我们实际 
+<a href="/reference/generating-crd.html#multiple-versions" title="Generating CRDs: Multiple Versions">为每个版本生成验证</a>，而不是告诉 Kubernetes 它们是一样的）：</p>
 <pre><code class="language-makefile">CRD_OPTIONS ?= &quot;crd&quot;
 </code></pre>
-<p>Now we have all our code changes and manifests in place, so let’s deploy it to
-the cluster and test it out.</p>
-<p>You’ll need <a href="../cronjob-tutorial/cert-manager.html">cert-manager</a> installed
-(version <code>0.9.0+</code>) unless you’ve got some other certificate management
-solution.  The Kubebuilder team has tested the instructions in this tutorial
-with
+<p>现在，我们已经完成了所有的代码更改和清单，让我们将其部署到集群并对其进行测试。</p>
+<p>你需要安装 <a href="../cronjob-tutorial/cert-manager.html">cert-manager</a>（<code>0.9.0+</code> 版本），
+除非你有其他证书管理解决方案。Kubebuilder 团队已在
 <a href="https://github.com/jetstack/cert-manager/releases/tag/v0.9.0-alpha.0">0.9.0-alpha.0</a>
-release.</p>
-<p>Once all our ducks are in a row with certificates, we can run <code>make install deploy</code> (as normal) to deploy all the bits (CRD,
-controller-manager deployment) onto the cluster.</p>
-<h2><a class="header" href="#testing" id="testing">Testing</a></h2>
-<p>Once all of the bits are up an running on the cluster with conversion enabled, we can test out our
-conversion by requesting different versions.</p>
-<p>We’ll make a v2 version based on our v1 version (put it under <code>config/samples</code>)</p>
+版本中测试了本教程中的指令。</p>
+<p>一旦所有的证书准备妥当后, 我们就可以运行 <code>make install deploy</code>（和平常一样）将所有的 bits（CRD,
+controller-manager deployment）部署到集群上。</p>
+<h2><a class="header" href="#测试" id="测试">测试</a></h2>
+<p>一旦启用了转换的所有 bits 都在群集上运行，我们就可以通过请求不同的版本来测试转换。</p>
+<p>我们将基于 v1 版本制作 v2 版本（将其放在 <code>config/samples</code> 下）</p>
 <pre><code class="language-yaml">apiVersion: batch.tutorial.kubebuilder.io/v2
 kind: CronJob
 metadata:
@@ -225,11 +214,10 @@ spec:
           restartPolicy: OnFailure
 
 </code></pre>
-<p>Then, we can create it on the cluster: </p>
+<p>然后，我们可以在集群中创建它：</p>
 <pre><code class="language-shell">kubectl apply -f config/samples/batch_v2_cronjob.yaml
 </code></pre>
-<p>If we’ve done everything correctly, it should create successfully,
-and we should be able to fetch it using both the v2 resource</p>
+<p>如果我们正确地完成了所有操作，那么它应该能够成功地创建，并且我们能够使用 v2 资源来获取它</p>
 <pre><code class="language-shell">kubectl get cronjobs.v2.batch.tutorial.kubebuilder.io -o yaml
 </code></pre>
 <pre><code class="language-yaml">apiVersion: batch.tutorial.kubebuilder.io/v2
@@ -255,7 +243,7 @@ spec:
           restartPolicy: OnFailure
 
 </code></pre>
-<p>and the v1 resource</p>
+<p>v1 资源</p>
 <pre><code class="language-shell">kubectl get cronjobs.v1.batch.tutorial.kubebuilder.io -o yaml
 </code></pre>
 <pre><code class="language-yaml">apiVersion: batch.tutorial.kubebuilder.io/v1
@@ -280,31 +268,24 @@ spec:
           restartPolicy: OnFailure
 
 </code></pre>
-<p>Both should be filled out, and look equivalent to our v2 and v1 samples,
-respectively.  Notice that each has a different API version.</p>
-<p>Finally, if we wait a bit, we should notice that our CronJob continues to
-reconcile, even though our controller is written against our v1 API version.</p>
+<p>两者都应填写，并分别看起来等同于的 v2 和 v1 示例。注意，每个都有不同的 API 版本。</p>
+<p>最后，如果稍等片刻，我们应该注意到，即使我们的控制器是根据 v1 API 版本编写的，我们的 CronJob 仍在继续协调。</p>
 <aside class="note">
-<h1><a class="header" href="#kubectl-and-preferred-versions" id="kubectl-and-preferred-versions">kubectl and Preferred Versions</a></h1>
-<p>When we access our API types from Go code, we ask for a specific version
-by using that version’s Go type (e.g. <code>batchv2.CronJob</code>).</p>
-<p>You might’ve noticed that the above invocations of kubectl looked
-a little different from what we usually do -- namely, they specify
-a <em>group-version-resource</em>, instead of just a resource.</p>
-<p>When we write <code>kubectl get cronjob</code>, kubectl needs to figure out which
-group-version-resource that maps to.  To do this, it uses the <em>discovery
-API</em> to figure out the preferred version of the <code>cronjob</code> resource.  For
-CRDs, this is more-or-less the latest stable version (see the <a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#version-priority" title="Versions in CustomResourceDefinitions">CRD
-docs</a> for specific details).</p>
-<p>With our updates to CronJob, this means that <code>kubectl get cronjob</code> fetches
-the <code>batch/v2</code> group-version.</p>
-<p>If we want to specify an exact version, we can use <code>kubectl get resource.version.group</code>, as we do above.</p>
-<p><em><strong>You should always use fully-qualified group-version-resource syntax in
-scripts</strong></em>.  <code>kubectl get resource</code> is for humans, self-aware robots, and
-other sentient beings that can figure out new versions.  <code>kubectl get resource.version.group</code> is for everything else.</p>
+<h1><a class="header" href="#kubectl-和首选版本" id="kubectl-和首选版本">kubectl 和首选版本</a></h1>
+<p>当我们从 Go 代码访问 API 类型时，我们会通过使用该版本的 Go 类型（例如 <code>batchv2.CronJob</code>）来请求特定版本。</p>
+<p>你可能已经注意到，上面对 kubectl 的调用与我们通常所做的看起来有些不同 —— 即，它指定了一个 
+<em>group-version-resource</em> 而不是一个资源。</p>
+<p>当我们运行 <code>kubectl get cronjob</code> 时, kubectl 需要弄清楚映射到哪个
+group-version-resource。为此，它使用 <em>discovery API</em> 来找出 <code>cronjob</code> 资源的首选版本。对于 CRD，
+这或多或少是最新的稳定版本（具体细节请参阅 <a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#version-priority" title="Versions in CustomResourceDefinitions">CRD 文档</a>)。</p>
+<p>随着我们对 CronJob 的更新, 意味着 <code>kubectl get cronjob</code> 将获取 <code>batch/v2</code> group-version。</p>
+<p>如果我们想指定一个确切的版本，可以像上面一样使用 <code>kubectl get resource.version.group</code>。</p>
+<p><em><strong>你应该始终在脚本中使用完全合格的 group-version-resource 语法</strong></em>。
+<code>kubectl get resource</code> 是为人类、有自我意识的机器人和其他能够理解新版本的众生设计的。
+<code>kubectl get resource.version.group</code> 用于其他的一切。</p>
 </aside>
-<h2><a class="header" href="#troubleshooting" id="troubleshooting">Troubleshooting</a></h2>
-<p><a href="/TODO.html">steps for troubleshooting</a></p>
+<h2><a class="header" href="#故障排除" id="故障排除">故障排除</a></h2>
+<p><a href="/TODO.html">故障排除的步骤</a></p>
 
                     </main>
 
