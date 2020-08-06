@@ -159,22 +159,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#生成-crds" id="生成-crds">生成 CRDs</a></h1>
-<p>KubeBuilder 用工具 <a href="https://sigs.k8s.io/controller-tools" title="Controller Tools"><code>controller-gen</code></a> 来生成功能代码和描述 Kubernetes 
-对象的 YAML 文件，比如 CustomResourceDefinitions。</p>
-<p>为此，它使用了特殊的“标记注释”(以 <code>// +</code> 为开头的注释)来表明与字段，类型和包有关的额外信息。
-对于 CRD 来讲，他们通常是从你的 <code>_types.go</code> 生成的。关于标记的更多详细信息，可以查看 <a href="./markers.html" title="Markers for Config/Code Generation">marker
-reference docs</a>。</p>
-<p>KubeBuilder 提供了一个能够运行 controller-gen 并生成 CRDs 的 <code>make</code> 命令: <code>make manifests</code>。</p>
-<p>当你运行 <code>make manifests</code> 命令时，你应该能在 <code>config/crd/bases</code> 目录下看到生成的CRDs。
-<code>make manifests</code> 命令还能够生成其他的制品--更多详情可以看 <a href="./markers.html" title="Markers for Config/Code Generation">marker reference docs</a> 。</p>
+                        <h1><a class="header" href="#生成-crd" id="生成-crd">生成 CRD</a></h1>
+<p>KubeBuilder 使用一个叫做 <a href="https://sigs.k8s.io/controller-tools" title="Controller Tools"><code>controller-gen</code></a> 的工具来生成工具代码和 Kubernetes 的 YAML 对象，比如 CustomResourceDefinitions。</p>
+<p>为了实现这种方式，它使用一种特殊的 “标记注释”（以 <code>// +</code> 开头）来表示这里要插入字段，类型和包相关的信息。如果是 CRD，那么这些信息通常是从以 <code>_types.go</code> 结尾的文件中产生的。更多关于标记的信息，可以看<a href="./markers.html" title="Markers for Config/Code Generation">标记相关文档</a>。</p>
+<p>KubeBuilder 提供了提供了一个 <code>make</code> 的命令来运行 controller-gen 并生成 CRD：<code>make manifests</code>。</p>
+<p>当运行 <code>make manifests</code> 的时候，在 <code>config/crd/bases</code> 目录下可以看到生成的 CRD。<code>make manifests</code> 可以生成许多其它的文件 -- 更多详情请查看<a href="./markers.html" title="Markers for Config/Code Generation">标记相关文档</a>。</p>
 <h2><a class="header" href="#验证" id="验证">验证</a></h2>
-<p>在验证章节，CRDs 支持用 <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#schemaObject" title="OpenAPI v3">OpenAPI
-v3 schema</a> 来支持验证 <a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#validation" title="Custom Resource Definitions: Validation">declarative validation</a>。</p>
-<p>通常， <a href="./markers/crd-validation.html">validation markers</a>  或许是和字段或者类型相关联的。
-如果你定义了复杂的验证，或者如果你需要重新验证，抑或你需要验证分片元素，最好的办法是定义一个
-新的类型来描述你的验证。</p>
-<p>比如:</p>
+<p>CRD 支持使用 <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#schemaObject" title="OpenAPI v3">OpenAPI v3 schema</a> 在 <code>validation</code> 段中进行<a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#validation" title="Custom Resource Definitions: Validation">声明式验证</a>。</p>
+<p>通常，<a href="./markers/crd-validation.html">验证标记</a>可能会关联到字段或者类型。如果你定义了复杂的验证，或者如果你需要重复使用验证，亦或者你需要验证切片元素，那么通常你最好定义一个新的类型来描述你的验证。</p>
+<p>例如：</p>
 <pre><code class="language-go">type ToySpec struct {
 	// +kubebuilder:validation:MaxLength=15
 	// +kubebuilder:validation:MinLength=1
@@ -198,13 +191,10 @@ type Alias string
 type Rank int32
 
 </code></pre>
-<h2><a class="header" href="#额外的列信息打印" id="额外的列信息打印">额外的列信息打印</a></h2>
-<p>从 Kubernetes 1.11 版本开始，<code>kubectl get</code> 可以告诉服务端如何进行行信息的显示。
-对于 CRDs 来讲， <code>kubectl get</code> 可以被用来提供一些有用的，特定类型的信息，类似于
-内置类型的信息展示。</p>
-<p>对于你的CRD，显示的信息可以用 [additionalPrinterColumns field][kube-additional-printer-columns] 
-来进行控制，这些 CRD 是被 <a href="./markers/crd.html" title="CRD Generation"><code>+kubebuilder:printcolumn</code></a> 之类的 Go 类型标记来控制的。</p>
-<p>例如，在随后的例子中，我们添加字段来显示 knights，rank 和 alias 字段的信息：</p>
+<h2><a class="header" href="#打印其它信息列" id="打印其它信息列">打印其它信息列</a></h2>
+<p>从 Kubernetes 1.11 开始，<code>kubectl get</code> 可以询问 Kubernetes 服务要展示哪些列。对于 CRD 来说，可以用 <code>kubectl get</code> 来提供展示有用的特定类型的信息，类似于为内置类型提供的信息。</p>
+<p>你 CRD 的 [additionalPrinterColumns 字段][kube-additional-printer-columns] 控制了要展示的信息，它是通过在给 CRD 的 Go 类型上标注 <a href="./markers/crd.html" title="CRD Generation"><code>+kubebuilder:printcolumn</code></a> 标签来控制要展示的信息。</p>
+<p>比如下面的验证例子，我们添加字段来显示 knights，rank 和 alias 字段的信息</p>
 <pre><code class="language-go">// +kubebuilder:printcolumn:name=&quot;Alias&quot;,type=string,JSONPath=`.spec.alias`
 // +kubebuilder:printcolumn:name=&quot;Rank&quot;,type=integer,JSONPath=`.spec.rank`
 // +kubebuilder:printcolumn:name=&quot;Bravely Run Away&quot;,type=boolean,JSONPath=`.spec.knights[?(@ == &quot;Sir Robin&quot;)]`,description=&quot;when danger rears its ugly head, he bravely turned his tail and fled&quot;,priority=10
@@ -219,14 +209,12 @@ type Toy struct {
 
 </code></pre>
 <h2><a class="header" href="#子资源" id="子资源">子资源</a></h2>
-<p>截止 Kubernetes 1.13 版本，可以选择实现 CRDs 的 <code>/status</code> 和 <code>/scale</code></p>
-<p>在所有具有 status 字段的资源中，我们推荐你使用 <code>/status</code> 子资源。</p>
-<p>所有的子资源都有一个相对应的 <a href="./markers/crd.html" title="CRD Generation">marker</a>。</p>
+<p>在 Kubernetes 1.13 中 CRD 可以选择实现 <code>/status</code> 和 <code>/scale</code> 这类<a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#status-subresource" title="Custom Resource Definitions: Status Subresource">子资源</a>。</p>
+<p>通常推荐你在所有资源上实现 <code>/status</code> 子资源的时候，要有一个状态字段。</p>
+<p>两个子资源都有对应的[标签][crd markers]。</p>
 <h3><a class="header" href="#状态" id="状态">状态</a></h3>
-<p>status 子资源可以通过 <code>+kubebuilder:subresource:status</code> 来进行启用。启用后，
-主资源的更新不会使子资源的状态发生变化。类似的，子资源的更新除了带来 status 
-字段的更新外，不会引起其他任何变化。</p>
-<p>比如:</p>
+<p>通过 <code>+kubebuilder:subresource:status</code> 设置子资源的状态。当时启用状态时，更新主资源不会修改它的状态。类似的，更新子资源状态也只是修改了状态字段。</p>
+<p>例如：</p>
 <pre><code class="language-go">// +kubebuilder:subresource:status
 type Toy struct {
 	metav1.TypeMeta   `json:&quot;,inline&quot;`
@@ -236,12 +224,9 @@ type Toy struct {
 	Status ToyStatus `json:&quot;status,omitempty&quot;`
 }
 </code></pre>
-<h3><a class="header" href="#伸缩" id="伸缩">伸缩</a></h3>
-<p>子资源的伸缩可以通过 <code>+kubebuilder:subresource:scale</code> 来启用。启用后，用户
-可以使用 <code>kubectl scale</code> 来对你的资源进行扩容或者缩容。如果 <code>selectorpath</code> 参数
-是指向一个  label selector 的字符格式， 那么 HorizontalPodAutoscaler 就会对你的资源
-进行自动扩容或者缩容。</p>
-<p>比如:</p>
+<h3><a class="header" href="#扩缩容" id="扩缩容">扩缩容</a></h3>
+<p>子资源的伸缩可以通过 <code>+kubebuilder:subresource:scale</code> 来启用。启用后，用户可以使用 <code>kubectl scale</code> 来对你的资源进行扩容或者缩容。如果 <code>selectorpath</code> 参数被指定为字符串形式的标签选择器，HorizontalPodAutoscaler 将可以自动扩容你的资源。</p>
+<p>例如：</p>
 <pre><code class="language-go">type CustomSetSpec struct {
 	Replicas *int32 `json:&quot;replicas&quot;`
 }
@@ -263,34 +248,22 @@ type CustomSet struct {
 }
 </code></pre>
 <h2><a class="header" href="#多版本" id="多版本">多版本</a></h2>
-<p>从 Kubernetes 1.13 开始，在你的 CRD 中定义的 Kind 可以有多个版本，可以用一个 
-webhook 来完成彼此的切换。</p>
-<p>关于这一点，更多的信息可以查看 <a href="/multiversion-tutorial/tutorial.html">multiversion
-tutorial</a>。</p>
-<p>默认的， KubeBuilder 禁用了为用户自定义 CRD 中的 Kind  的不同版本生成不同的验证，
-这样做是为了能兼容较老版本的 Kubernetes 。</p>
-<p>你可以通过把你 makefile 中的 <code>CRD_OPTIONS ?= &quot;crd:trivialVersions=true</code>
-改成 <code>CRD_OPTIONS ?= crd</code> 来启用这个功能。</p>
-<p>然后，你就可以用 <code>+kubebuilder:storageversion</code> <a href="./markers/crd.html" title="CRD Generation">marker</a> 来表明
-<a href="/cronjob-tutorial/gvks.html" title="Group-Version-Kind">GVK</a> 应该被用来存储 API server
-的数据。</p>
+<p>Kubernetes 1.13，你可以在你的 CRD 的同一个 Kind 中定义多个版本，并且使用一个 webhook 对它们进行互转。</p>
+<p>更多这部分相关的信息，请看<a href="/multiversion-tutorial/tutorial.html">多版本教程</a>。</p>
+<p>默认情况下，KubeBuilder 会禁止为你的 CRD 的不同版本产生不同的验证，这都是为了兼容老版本的 Kubernetes。</p>
+<p>如果需要，你要通过修改 makefile 中的命令：把 <code>CRD_OPTIONS ?= &quot;crd:trivialVersions=true</code> 修改为 <code>CRD_OPTIONS ?= crd</code>。</p>
+<p>这样，你就可以使用  <code>+kubebuilder:storageversion</code> <a href="./markers/crd.html" title="CRD Generation">标签</a> 来告知 <a href="/cronjob-tutorial/gvks.html" title="Group-Version-Kind">GVK</a> 这个字段应该被 API 服务来存储数据。</p>
 <h2><a class="header" href="#写在最后" id="写在最后">写在最后</a></h2>
-<p>KubeBuilder scaffolds out 使用一些规则来运行 <code>controller-gen</code>。如果在使用 Go 
-模块的 <code>go get</code> 所输出的路径中，没有找到 controller-gen ，那么这些规则将自动
-安装 controller-gen 。</p>
-<p>如果你想知道到底发生了什么，你还可以直接运行 <code>controller-gen</code> 。</p>
-<p>每一个 controller-gen “生成器” 都有一个 controller-gen 选项来控制，使用语法
-和 markers 是一样的。例如，为了用 “trivial versions” (没有版本转换 webhooks) 选项
-来生成 CRDs, 我们使用 <code>controller-gen crd:trivialVersions=true paths=./api/...</code> 。</p>
-<p>controller-gen 也支持不同的输出“规则”来控制输出如何运作以及在哪儿运作。
-注意 <code>manifests</code> 的 make 规则(仅仅用来生成 CRDs ):</p>
+<p>KubeBuilder 会制定规则来运行 <code>controller-gen</code>。如果 <code>controller-gen</code> 不在 <code>go get</code> 用来下载 Go 模块的路径下的时候，这些规则会自动的安装 <code>controller-gen</code>。</p>
+<p>如果你想知道它到底做了什么，你也可以直接运行 <code>controller-gen</code>。</p>
+<p>每一个 <code>controller-gen</code> “生成器” 都由 <code>controller-gen</code> 的一个参数选项控制，和标签的语法一样。比如，要生成带有 “trivial versions” 的 CRD（无版本转换的 webhook），我们可以执行 <code>controller-gen crd:trivialVersions=true paths=./api/...</code>。</p>
+<p><code>controller-gen</code> 也支持不同的输出“规则”，以此来控制如何及输出到哪里。注意 <code>manifests</code> 生成规则（是只生成 CRD 的简短写法）：</p>
 <pre><code class="language-makefile"># 生成 CRD 清单
 manifests: controller-gen
 	$(CONTROLLER_GEN) crd:trivialVersions=true paths=&quot;./...&quot; output:crd:artifacts:config=config/crd/bases
 </code></pre>
-<p>它使用 <code>output:crd:artifacts</code> 输出规则来表明与 CRD 相关的配置(非代码级别) 应该在 <code>config/crd/bases</code>
-目录下，而不是 <code>config/crd</code> 目录下。</p>
-<p>如果要查看 <code>controller-gen</code> 的其他使用选项，可以运行</p>
+<p>它使用了 <code>output:crd:artifacts</code>  输出规则来表示 CRD 关联的配置（非代码）应该在 <code>config/crd/bases</code> 目录下，而不是在 <code>config/crd</code> 下。</p>
+<p>运行如下命令可以看到 <code>controller-gen</code> 的所有支持参数：</p>
 <pre><code class="language-shell">$ controller-gen -h
 </code></pre>
 <p>或者，可以执行以下命令，获取更多详细信息:</p>
