@@ -160,19 +160,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#webhook" id="webhook">Webhook</a></h1>
-<p>Webhooks are requests for information sent in a blocking fashion. A web
-application implementing webhooks will send an HTTP request to other application
-when certain event happens.</p>
-<p>In the kubernetes world, there are 3 kinds of webhooks:
-<a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#admission-webhooks">admission webhook</a>,
-<a href="https://kubernetes.io/docs/reference/access-authn-authz/webhook/">authorization webhook</a> and
-<a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion">CRD conversion webhook</a>.</p>
-<p>In <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/webhook?tab=doc">controller-runtime</a>
-libraries, we support admission webhooks and CRD conversion webhooks.</p>
-<p>Kubernetes supports these dynamic admission webhooks as of version 1.9 (when the
-feature entered beta).</p>
-<p>Kubernetes supports the conversion webhooks as of version 1.15 (when the
-feature entered beta).</p>
+<p>Webhooks 是一种以阻塞方式发送的信息请求。实现 webhooks 的 web 应用程序将在特定事件发生时向其他应用程序发送 HTTP 请求。</p>
+<p>在 kubernetes 中，有下面三种 webhook：<a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#admission-webhooks">admission webhook</a>，
+<a href="https://kubernetes.io/docs/reference/access-authn-authz/webhook/">authorization webhook</a> 和 <a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion">CRD conversion webhook</a>。</p>
+<p>在 <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/webhook?tab=doc">controller-runtime</a> 库中，我们支持 admission webhooks 和 CRD conversion webhooks。</p>
+<p>Kubernetes 在 1.9 版本中（该特性进入 beta 版时）支持这些动态 admission webhooks。</p>
+<p>Kubernetes 在 1.15 版本（该特性进入 beta 版时）支持 conversion webhook。</p>
 
                     </main>
 
