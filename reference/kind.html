@@ -159,18 +159,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#kind-cluster" id="kind-cluster">Kind Cluster</a></h1>
-<p>This only cover the basics to use a kind cluster. You can find more details at
-<a href="https://kind.sigs.k8s.io/">kind documentation</a>.</p>
-<h2><a class="header" href="#installation" id="installation">Installation</a></h2>
-<p>You can follow <a href="https://kind.sigs.k8s.io/#installation-and-usage">this</a> to
-install <code>kind</code>.</p>
-<h2><a class="header" href="#create-a-cluster" id="create-a-cluster">Create a Cluster</a></h2>
-<p>You can simply create a <code>kind</code> cluster by</p>
+                        <h1><a class="header" href="#kind-集群" id="kind-集群">Kind 集群</a></h1>
+<p>这篇文章只涉及到使用一个 kind 集群的基础。你可以在 <a href="https://kind.sigs.k8s.io/">kind 文档</a> 中找到更详细的介绍。</p>
+<h2><a class="header" href="#安装" id="安装">安装</a></h2>
+<p>你可以按照<a href="https://kind.sigs.k8s.io/#installation-and-usage">这个文档</a>来安装 <code>kind</code>。</p>
+<h2><a class="header" href="#创建一个集群" id="创建一个集群">创建一个集群</a></h2>
+<p>你可以简单的通过下面的命令来创建一个 <code>kind</code> 集群。</p>
 <pre><code class="language-bash">kind create cluster
 </code></pre>
-<p>To customize your cluster, you can provide additional configuration.
-For example, the following is a sample <code>kind</code> configuration.</p>
+<p>要定制你的集群，你可以提供额外的配置。比如，下面的例子是一个 <code>kind</code> 配置的例子。</p>
 <pre><code class="language-yaml">kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
@@ -180,24 +177,20 @@ nodes:
   - role: worker
 
 </code></pre>
-<p>Using the configuration above, run the following command will give you a k8s
-v1.17.2 cluster with 1 master and 3 workers.</p>
+<p>使用上面的配置来运行下面的命令会创建一个 k8s v1.17.2 的集群，包含了 1 个 master 节点和 3 个 worker 节点。</p>
 <pre><code class="language-bash">kind create cluster --config hack/kind-config.yaml --image=kindest/node:v1.17.2
 </code></pre>
-<p>You can use <code>--image</code> flag to specify the cluster version you want, e.g.
-<code>--image=kindest/node:v1.17.2</code>, the supported version are listed
-<a href="https://hub.docker.com/r/kindest/node/tags">here</a></p>
-<h2><a class="header" href="#load-docker-image-into-the-cluster" id="load-docker-image-into-the-cluster">Load Docker Image into the Cluster</a></h2>
-<p>When developing with a local kind cluster, loading docker images to the cluster
-is a very useful feature. You can avoid using a container registry.</p>
+<p>你可以使用 <code>--image</code> 标记来指定你想创建集群的版本，比如：<code>--image=kindest/node:v1.17.2</code>，能支持的版本在<a href="https://hub.docker.com/r/kindest/node/tags">这里</a>。</p>
+<h2><a class="header" href="#加载-docker-镜像到集群" id="加载-docker-镜像到集群">加载 Docker 镜像到集群</a></h2>
+<p>当使用一个本地 kind 集群进行开发时，加载 docker 镜像到集群中是一个非常有用的功能。可以让你避免使用容器仓库。</p>
 <ul>
-<li><a href="https://kind.sigs.k8s.io/docs/user/quick-start/#loading-an-image-into-your-cluster">Load a local image into a kind cluster</a>.</li>
+<li><a href="https://kind.sigs.k8s.io/docs/user/quick-start/#loading-an-image-into-your-cluster">加载一个本地镜像到一个 kind 集群</a>。</li>
 </ul>
 <pre><code class="language-bash">kind load docker-image your-image-name:your-tag
 </code></pre>
-<h2><a class="header" href="#delete-a-cluster" id="delete-a-cluster">Delete a Cluster</a></h2>
+<h2><a class="header" href="#删除一个集群" id="删除一个集群">删除一个集群</a></h2>
 <ul>
-<li>Delete a kind cluster</li>
+<li>删除一个 kind 集群</li>
 </ul>
 <pre><code class="language-bash">kind delete cluster
 </code></pre>
