@@ -158,13 +158,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#implementing-conversion" id="implementing-conversion">Implementing conversion</a></h1>
-<p>With our model for conversion in place, it’s time to actually implement
-the conversion functions.  We’ll put them in a file called
-<code>cronjob_conversion.go</code> next to our <code>cronjob_types.go</code> file, to avoid
-cluttering up our main types file with extra functions.</p>
+                        <h1><a class="header" href="#实现转换" id="实现转换">实现转换</a></h1>
+<p>采用的转换模型已经就绪，就可以开始实现转换函数了。 我们将这些函数放置在 <code>cronjob_conversion.go</code> 文件中，<code>cronjob_conversion.go</code> 文件和 <code>cronjob_types.go</code> 文件同目录，以避免我们主要的类型文件和额外的方法产生混乱。</p>
 <h2><a class="header" href="#hub" id="hub">Hub...</a></h2>
-<p>First, we’ll implement the hub.  We’ll choose the v1 version as the hub:</p>
+<p>首先，我们需要实现 hub 接口。我们会选择 v1 版本作为 hub 的一个实现：</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/api/v1/cronjob_conversion.go">project/api/v1/cronjob_conversion.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -179,16 +176,13 @@ limitations under the License.</p>
 </details>
 <pre><code class="language-go">package v1
 </code></pre>
-<p>Implementing the hub method is pretty easy -- we just have to add an empty
-method called <code>Hub()</code> to serve as a
-<a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/conversion?tab=doc#Hub">marker</a>.
-We could also just put this inline in our <code>cronjob_types.go</code> file.</p>
-<pre><code class="language-go">// Hub marks this type as a conversion hub.
+<p>实现 hub 方法相当容易 -- 我们只需要添加一个叫做 <code>Hub()</code> 的空方法来作为一个 <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/conversion?tab=doc#Hub">标记</a>。我们也可以将这行代码放到 <code>cronjob_types.go</code> 文件中。</p>
+<pre><code class="language-go">// Hub 标记这个类型是一个用来转换的 hub。
 func (*CronJob) Hub() {}
 </code></pre>
 </div>
-<h2><a class="header" href="#-and-spokes" id="-and-spokes">... and Spokes</a></h2>
-<p>Then, we’ll implement our spoke, the v2 version:</p>
+<h2><a class="header" href="#-然后-spokes" id="-然后-spokes">... 然后 Spokes</a></h2>
+<p>然后，我们需要实现我们的 spoke 接口，例如 v2 版本：</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/api/v2/cronjob_conversion.go">project/api/v2/cronjob_conversion.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -218,13 +212,12 @@ standard packages.</p>
 )
 </code></pre>
 </details>
-<p>Our “spoke” versions need to implement the
+<p>我们的 “spoke” 版本需要实现
 <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/conversion?tab=doc#Convertible"><code>Convertible</code></a>
-interface.  Namely, they’ll need <code>ConvertTo</code> and <code>ConvertFrom</code> methods to convert to/from
-the hub version.</p>
-<p>ConvertTo is expected to modify its argument to contain the converted object.
-Most of the conversion is straightforward copying, except for converting our changed field.</p>
-<pre><code class="language-go">// ConvertTo converts this CronJob to the Hub version (v1).
+接口。顾名思义，它需要实现 <code>ConvertTo</code> 从（其它版本）向 hub 版本转换，<code>ConvertFrom</code> 实现从 hub 版本转换到（其他版本）。</p>
+<p>ConvertTo 期望修改其参数以包含转换后的对象。
+大部分转换都是直接赋值，除了那些发生变化的 field。</p>
+<pre><code class="language-go">// ConvertTo 转换 CronJob 到 Hub 版本 (v1).
 func (src *CronJob) ConvertTo(dstRaw conversion.Hub) error {
 	dst := dstRaw.(*v1.CronJob)
 
@@ -248,7 +241,7 @@ func (src *CronJob) ConvertTo(dstRaw conversion.Hub) error {
 	dst.Spec.Schedule = strings.Join(scheduleParts, &quot; &quot;)
 </code></pre>
 <details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">rote conversion</span></pre></summary>
-<p>The rest of the conversion is pretty rote.</p>
+<p>剩下的转换都相当机械。</p>
 <pre><code class="language-go">	// ObjectMeta
 	dst.ObjectMeta = src.ObjectMeta
 
@@ -268,9 +261,9 @@ func (src *CronJob) ConvertTo(dstRaw conversion.Hub) error {
 <pre><code class="language-go">	return nil
 }
 </code></pre>
-<p>ConvertFrom is expected to modify its receiver to contain the converted object.
-Most of the conversion is straightforward copying, except for converting our changed field.</p>
-<pre><code class="language-go">// ConvertFrom converts from the Hub version (v1) to this version.
+<p>ConvertFrom 期望修改其接收者以包含转换后的对象。
+大部分转换都是直接赋值，除了那些发生变化的 field。</p>
+<pre><code class="language-go">// ConvertFrom 从 Hub 版本 (v1) 转换到这个版本。
 func (dst *CronJob) ConvertFrom(srcRaw conversion.Hub) error {
 	src := srcRaw.(*v1.CronJob)
 
@@ -313,8 +306,7 @@ func (dst *CronJob) ConvertFrom(srcRaw conversion.Hub) error {
 }
 </code></pre>
 </div>
-<p>Now that we’ve got our conversions in place, all that we need to do is
-wire up our main to serve the webhook!</p>
+<p>现在我们的转换方法已经就绪，我们要做的就是启动我们的 main 方法来运行 webhook。</p>
 
                     </main>
 
