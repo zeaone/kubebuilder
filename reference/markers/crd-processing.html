@@ -129,8 +129,7 @@
                 </div>
 
                 <header id="notice-bar">
-    <h2><a class="header" href="#kubebuilder-官方文档中文翻译正在招募译者中欢迎踊跃报名" id="kubebuilder-官方文档中文翻译正在招募译者中欢迎踊跃报名">kubebuilder 官方文档中文翻译正在招募译者中，欢迎踊跃报名。</a></h2>
-    <p>详情请看 <a href="https://github.com/cloudnativeto/community/issues/21">这里</a>和<a href="https://github.com/cloudnativeto/kubebuilder/tree/zh/docs/book">翻译流程</a>。</p>
+    <h2>kubebuilder 中文文档由<a href="https://cloudnative.to/">云原生社区</a>主导翻译。任何问题可以在<a href="https://github.com/cloudnativeto/kubebuilder/issues">这儿</a>提issue。
     </p>
 </header>
 
@@ -164,13 +163,13 @@
 <p>作为例子可查看章节<a href="/reference/generating-crd.html">生成 CRDs</a>.</p>
 <div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CRD-processing"></input><label class="markers-summarize" for="markers-summarize-CRD-processing">Show Detailed Argument Help</label><dl class="markers"><div class="marker" data-target="field"><dt class="literal name">kubebuilder:pruning:PreserveUnknownFields</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">PreserveUnknownFields stops the apiserver from pruning fields which are not specified. </summary>
 <p>By default the apiserver drops unknown fields from the request payload during the decoding step. This marker stops the API server from doing so. It affects fields recursively, but switches back to normal pruning behaviour if nested  properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.</p>
-</details><dl class="args"></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:validation:XPreserveUnknownFields</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">PreserveUnknownFields stops the apiserver from pruning fields which are not specified. </summary>
-<p>By default the apiserver drops unknown fields from the request payload during the decoding step. This marker stops the API server from doing so. It affects fields recursively, but switches back to normal pruning behaviour if nested  properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.</p>
 </details><dl class="args"></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">kubebuilder:validation:XPreserveUnknownFields</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">PreserveUnknownFields stops the apiserver from pruning fields which are not specified. </summary>
 <p>By default the apiserver drops unknown fields from the request payload during the decoding step. This marker stops the API server from doing so. It affects fields recursively, but switches back to normal pruning behaviour if nested  properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.</p>
-</details><dl class="args"></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">listMapKey</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the keys to map listTypes. </summary>
+</details><dl class="args"></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:validation:XPreserveUnknownFields</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">PreserveUnknownFields stops the apiserver from pruning fields which are not specified. </summary>
+<p>By default the apiserver drops unknown fields from the request payload during the decoding step. This marker stops the API server from doing so. It affects fields recursively, but switches back to normal pruning behaviour if nested  properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.</p>
+</details><dl class="args"></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">listMapKey</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the keys to map listTypes. </summary>
 <p>It indicates the index of a map list. They can be repeated if multiple keys must be used. It can only be used when ListType is set to map, and the keys should be scalar types.</p>
-</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">listType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the type of data-structure that the list represents (map, set, atomic). </summary>
+</details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">listType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the type of data-structure that the list represents (map, set, atomic). </summary>
 <p>Possible data-structure types of a list are: </p>
 <ul>
 <li>“map“: it needs to have a key field, which will be used to build an   associative list. A typical example is a the pod container list,   which is indexed by the container name. </li>
@@ -183,13 +182,13 @@
 <li>“granular“: items in the map are independent of each other,   and can be manipulated by different actors.   This is the default behavior. </li>
 <li>“atomic“: all fields are treated as one unit.   Any changes have to replace the entire map.</li>
 </ul>
-</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">structType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the level of atomicity of the struct; i.e. whether each field in the struct is independent of the others, or all fields are treated as a single unit. </summary>
+</details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">structType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the level of atomicity of the struct; i.e. whether each field in the struct is independent of the others, or all fields are treated as a single unit. </summary>
 <p>Possible values: </p>
 <ul>
 <li>“granular“: fields in the struct are independent of each other,   and can be manipulated by different actors.   This is the default behavior. </li>
 <li>“atomic“: all fields are treated as one unit.   Any changes have to replace the entire struct.</li>
 </ul>
-</details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div></dl></div>
+</details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div></dl></div>
 
                     </main>
 
