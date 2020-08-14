@@ -158,24 +158,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#enabling-shell-autocompletion" id="enabling-shell-autocompletion">Enabling shell autocompletion</a></h1>
-<p>The Kubebuilder completion script for Bash can be generated with the command <code>kubebuilder completion bash</code> as the Kubebuilder completion script for Zsh can be generated with the command <code>kubebuilder completion zsh</code>. 
-Note that sourcing the completion script in your shell enables Kubebuilder autocompletion. </p>
+                        <h1><a class="header" href="#开启-shell-自动补全" id="开启-shell-自动补全">开启 shell 自动补全</a></h1>
+<p>Kubebuilder 的 Bash 补全脚本可以通过命令 <code>kubebuilder completion bash</code> 来自动生成，Kubebuilder 的 Zsh 补全脚本可以通过命令 <code>kubebuilder completion zsh</code> 来自动生成。需要注意的是在你的 shell 环境中用 source 运行一下补全脚本就会开启 Kubebuilder 自动补全。</p>
 <aside class="note">
-<h1><a class="header" href="#prerequisites-for-bash" id="prerequisites-for-bash">Prerequisites for Bash</a></h1>
-<p>The completion Bash script depends on <a href="https://github.com/scop/bash-completion">bash-completion</a>, which means that you have to install this software first (you can test if you have bash-completion already installed). Also, ensure that your Bash version is 4.1+. </p>
+<h1><a class="header" href="#bash-前提条件" id="bash-前提条件">Bash 前提条件</a></h1>
+<p>Bash 脚本补全依赖于<a href="https://github.com/scop/bash-completion">bash-completion</a>，这也就意味着你不得不首先安装此软件（如果你已经安装了 bash 补全，你可以进行测试）。此外，确保你的 Bash 版本是 4.1+。</p>
 </aside>
 <ul>
 <li>
-<p>Once installed, go ahead and add the path <code>/usr/local/bin/bash</code> in the  <code>/etc/shells</code>.</p>
+<p>一旦安装完成，要在 <code>/etc/shells</code> 中添加路径 <code>/usr/local/bin/bash</code>。</p>
 <p><code>echo “/usr/local/bin/bash” &gt; /etc/shells</code></p>
 </li>
 <li>
-<p>Make sure to use installed shell by current user.</p>
+<p>确保使用当前用户安装的 shell。</p>
 <p><code>chsh -s /usr/local/bin/bash</code></p>
 </li>
 <li>
-<p>Add following content in /.bash_profile or ~/.bashrc</p>
+<p>在 /.bash_profile 或 ~/.bashrc 中添加以下内容：</p>
 </li>
 </ul>
 <pre><code># kubebuilder autocompletion
@@ -185,11 +184,11 @@ fi
 . &lt;(kubebuilder completion)
 </code></pre>
 <ul>
-<li>Restart terminal for the changes to be reflected.</li>
+<li>重启终端以便让修改生效。</li>
 </ul>
 <aside class="note">
 <h1><a class="header" href="#zsh" id="zsh">Zsh</a></h1>
-Follow a similar protocol for `zsh` completion.
+`zsh` 补全可以参考上述流程。
 </aside>
 
                     </main>
