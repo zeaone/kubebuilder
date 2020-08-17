@@ -158,80 +158,62 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#markers-for-configcode-generation" id="markers-for-configcode-generation">Markers for Config/Code Generation</a></h1>
-<p>KubeBuilder makes use of a tool called
-<a href="/reference/controller-gen.html">controller-gen</a> for
-generating utility code and Kubernetes YAML.  This code and config
-generation is controlled by the presence of special “marker comments” in
-Go code.</p>
-<p>Markers are single-line comments that start with a plus, followed by
-a marker name, optionally followed by some marker specific configuration:</p>
+                        <h1><a class="header" href="#configcode-生成标记" id="configcode-生成标记">Config/Code 生成标记</a></h1>
+<p>Kubebuilder 利用一个叫做<a href="/reference/controller-gen.html">controller-gen</a>的工具来生成公共的代码和 Kubernetes YAML 文件。
+这些代码和配置的生成是由 Go 代码中特殊存在的“标记注释”来控制的。</p>
+<p>标记都是以加号开头的单行注释，后面跟着一个标记名称，而跟随的关于标记的特定配置则是可选的。</p>
 <pre><code class="language-go">// +kubebuilder:validation:Optional
 // +kubebuilder:validation:MaxItems=2
 // +kubebuilder:printcolumn:JSONPath=&quot;.status.replicas&quot;,name=Replicas,type=string
 </code></pre>
-<p>See each subsection for information about different types of code and YAML
-generation.</p>
-<h2><a class="header" href="#generating-code--artifacts-in-kubebuilder" id="generating-code--artifacts-in-kubebuilder">Generating Code &amp; Artifacts in KubeBuilder</a></h2>
-<p>KubeBuilder projects have two <code>make</code> targets that make use of
-controller-gen:</p>
+<p>关于不同类型的代码和 YAML 生成可以查看每一小节来获取详细信息。</p>
+<h2><a class="header" href="#在-kubebuilder-中生成代码--制品" id="在-kubebuilder-中生成代码--制品">在 KubeBuilder 中生成代码 &amp; 制品</a></h2>
+<p>Kubebuilder 项目有两个 <code>make</code> 命令用到了 controller-gen：</p>
 <ul>
 <li>
-<p><code>make manifests</code> generates Kubernetes object YAML, like
-<a href="./markers/crd.html">CustomResourceDefinitions</a>,
-<a href="./markers/webhook.html">WebhookConfigurations</a>, and <a href="./markers/rbac.html">RBAC
-roles</a>.</p>
+<p><code>make manifests</code> 用来生成 Kubernetes 对象的 YAML 文件，像<a href="./markers/crd.html">CustomResourceDefinitions</a>，<a href="./markers/webhook.html">WebhookConfigurations</a> 和 <a href="./markers/rbac.html">RBAC
+roles</a>。</p>
 </li>
 <li>
-<p><code>make generate</code> generates code, like <a href="./markers/object.html">runtime.Object/DeepCopy
-implementations</a>.</p>
+<p><code>make generate</code> 用来生成代码，像<a href="./markers/object.html">runtime.Object/DeepCopy
+implementations</a>。</p>
 </li>
 </ul>
-<p>See <a href="./generating-crd.html">Generating CRDs</a> for a comprehensive overview.</p>
-<h2><a class="header" href="#marker-syntax" id="marker-syntax">Marker Syntax</a></h2>
-<p>Exact syntax is described in the <a href="https://pkg.go.dev/sigs.k8s.io/controller-tools/pkg/markers?tab=doc">godocs for
-controller-tools</a>.</p>
-<p>In general, markers may either be:</p>
+<p>查看[生成 CRDs]来获取综合描述。</p>
+<h2><a class="header" href="#标记语法" id="标记语法">标记语法</a></h2>
+<p>准确的语法在<a href="https://pkg.go.dev/sigs.k8s.io/controller-tools/pkg/markers?tab=doc">godocs for
+controller-tools</a>有描述。</p>
+<p>通常，标记可以是：</p>
 <ul>
 <li>
-<p><strong>Empty</strong> (<code>+kubebuilder:validation:Optional</code>): empty markers are like boolean flags on the command line
--- just specifying them enables some behavior.</p>
+<p><strong>Empty</strong> (<code>+kubebuilder:validation:Optional</code>)：空标记像命令行中的布尔标记位-- 仅仅是指定他们来开启某些行为。</p>
 </li>
 <li>
-<p><strong>Anonymous</strong> (<code>+kubebuilder:validation:MaxItems=2</code>): anonymous markers take
-a single value as their argument.</p>
+<p><strong>Anonymous</strong> (<code>+kubebuilder:validation:MaxItems=2</code>)：匿名标记使用单个值作为参数。</p>
 </li>
 <li>
 <p><strong>Multi-option</strong>
-(<code>+kubebuilder:printcolumn:JSONPath=&quot;.status.replicas&quot;,name=Replicas,type=string</code>): multi-option
-markers take one or more named arguments.  The first argument is
-separated from the name by a colon, and latter arguments are
-comma-separated.  Order of arguments doesn’t matter.  Some arguments may
-be optional.</p>
+(<code>+kubebuilder:printcolumn:JSONPath=&quot;.status.replicas&quot;,name=Replicas,type=string</code>)：多选项标记使用一个或多个命名参数。第一个参数与名称之间用冒号隔开，而后面的参数使用逗号隔开。参数的顺序没有关系。有些参数是可选的。</p>
 </li>
 </ul>
 <p>Marker arguments may be strings, ints, bools, slices, or maps thereof.
 Strings, ints, and bools follow their Go syntax:</p>
+<p>标记的参数可以是字符，整数，布尔，切片，或者 map 类型。
+字符，整数，和布尔都应该符合 Go 语法：</p>
 <pre><code class="language-go">// +kubebuilder:validation:ExclusiveMaximum=false
 // +kubebuilder:validation:Format=&quot;date-time&quot;
 // +kubebuilder:validation:Maximum=42
 </code></pre>
-<p>For convenience, in simple cases the quotes may be omitted from strings,
-although this is not encouraged for anything other than single-word
-strings:</p>
+<p>为了方便，在简单的例子中字符的引号可以被忽略，尽管这种做法在任何时候都是不被鼓励使用的，即便是单个字符：</p>
 <pre><code class="language-go">// +kubebuilder:validation:Type=string
 </code></pre>
-<p>Slices may be specified either by surrounding them with curly braces and
-separating with commas:</p>
+<p>切片可以用大括号和逗号分隔来指定。</p>
 <pre><code class="language-go">// +kubebuilder:webhooks:Enum={&quot;crackers, Gromit, we forgot the crackers!&quot;,&quot;not even wensleydale?&quot;}
 </code></pre>
-<p>or, in simple cases, by separating with semicolons:</p>
+<p>或者，在简单的例子中，用分号来隔开。</p>
 <pre><code class="language-go">// +kubebuilder:validation:Enum=Wallace;Gromit;Chicken
 </code></pre>
-<p>Maps are specified with string keys and values of any type (effectively
-<code>map[string]interface{}</code>). A map is surrounded by curly braces (<code>{}</code>),
-each key and value is separated by a colon (<code>:</code>), and each key-value
-pair is separated by a comma:</p>
+<p>Maps 是用字符类型的键和任意类型的值（有效地<code>map[string]interface{}</code>）来指定的。一个 map 是由大括号（<code>{}</code>）包围起来的，每一个键和每一个值是用冒号（<code>:</code>）隔开的，每一个键值对是由逗号隔开的。</p>
 <pre><code class="language-go">// +kubebuilder:validation:Default={magic: {numero: 42, stringified: forty-two}}
 </code></pre>
 
