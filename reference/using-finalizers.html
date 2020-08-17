@@ -158,25 +158,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#using-finalizers" id="using-finalizers">Using Finalizers</a></h1>
-<p><code>Finalizers</code> allow controllers to implement asynchronous pre-delete hooks. Let’s
-say you create an external resource (such as a storage bucket) for each object of
-your API type, and you want to delete the associated external resource
-on object’s deletion from Kubernetes, you can use a finalizer to do that.</p>
-<p>You can read more about the finalizers in the <a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers">Kubernetes reference docs</a>. The section below demonstrates how to register and trigger pre-delete hooks
-in the <code>Reconcile</code> method of a controller.</p>
-<p>The key point to note is that a finalizer causes “delete” on the object to become 
-an “update” to set deletion timestamp. Presence of deletion timestamp on the object
-indicates that it is being deleted. Otherwise, without finalizers, a delete
-shows up as a reconcile where the object is missing from the cache.</p>
-<p>Highlights:</p>
+                        <h1><a class="header" href="#使用-finalizers" id="使用-finalizers">使用 Finalizers</a></h1>
+<p><code>Finalizers</code> 允许控制器实现异步预删除挂钩。假设你为 API 类型的每个对象创建了一个外部资源（例如存储桶），并且想要从 Kubernetes 中删除对象同时删除关联的外部资源，则可以使用 finalizers 来实现。</p>
+<p>您可以在<a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers">Kubernetes参考文档中</a>阅读有关 finalizers 的更多信息。以下部分演示了如何在控制器的 <code>Reconcile</code> 方法中注册和触发预删除挂钩。</p>
+<p>要注意的关键点是 finalizers 使对象上的“删除”成为设置删除时间戳的“更新”。对象上存在删除时间戳记表明该对象正在被删除。否则，在没有 finalizers 的情况下，删除将显示为协调，缓存中缺少该对象。</p>
+<p>注意：</p>
 <ul>
-<li>If the object is not being deleted and does not have the finalizer registered,
-then add the finalizer and update the object in Kubernetes.</li>
-<li>If object is being deleted and the finalizer is still present in finalizers list,
-then execute the pre-delete logic and remove the finalizer and update the
-object.</li>
-<li>Ensure that the pre-delete logic is idempotent.</li>
+<li>如果未删除对象并且未注册 finalizers ，则添加 finalizers 并在 Kubernetes 中更新对象。</li>
+<li>如果要删除对象，但 finalizers 列表中仍存在 finalizers ，请执行预删除逻辑并移除 finalizers 并更新对象。</li>
+<li>确保预删除逻辑是幂等的。</li>
 </ul>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/finalizer_example.go">../../cronjob-tutorial/testdata/finalizer_example.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
@@ -214,20 +204,19 @@ import (
 	var cronJob *batchv1.CronJob
 	if err := r.Get(ctx, req.NamespacedName, cronJob); err != nil {
 		log.Error(err, &quot;unable to fetch CronJob&quot;)
-		// we'll ignore not-found errors, since they can't be fixed by an immediate
-		// requeue (we'll need to wait for a new notification), and we can get them
-		// on deleted requests.
+		// 在我们删除一个不存在的对象的时，我们会遇到not-found errors这样的报错
+	        // 我们将暂时忽略，因为不能通过重新加入队列的方式来修复这些错误
+	        //（我们需要等待新的通知），而且我们可以根据删除的请求来获取它们
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	// name of our custom finalizer
+	// 自定义 finalizer 的名字
 	myFinalizerName := &quot;storage.finalizers.tutorial.kubebuilder.io&quot;
 
-	// examine DeletionTimestamp to determine if object is under deletion
+	// 检查 DeletionTimestamp 以确定对象是否在删除中
 	if cronJob.ObjectMeta.DeletionTimestamp.IsZero() {
-		// The object is not being deleted, so if it does not have our finalizer,
-		// then lets add the finalizer and update the object. This is equivalent
-		// registering our finalizer.
+		// 如果当前对象没有 finalizer， 说明其没有处于正被删除的状态。
+		// 接着让我们添加 finalizer 并更新对象，相当于注册我们的 finalizer。
 		if !containsString(cronJob.ObjectMeta.Finalizers, myFinalizerName) {
 			cronJob.ObjectMeta.Finalizers = append(cronJob.ObjectMeta.Finalizers, myFinalizerName)
 			if err := r.Update(context.Background(), cronJob); err != nil {
@@ -235,23 +224,23 @@ import (
 			}
 		}
 	} else {
-		// The object is being deleted
+		// 这个对象将要被删除
 		if containsString(cronJob.ObjectMeta.Finalizers, myFinalizerName) {
-			// our finalizer is present, so lets handle any external dependency
+			// 我们的 finalizer 就在这, 接下来就是处理外部依赖
 			if err := r.deleteExternalResources(cronJob); err != nil {
-				// if fail to delete the external dependency here, return with error
-				// so that it can be retried
+				// 如果无法在此处删除外部依赖项，则返回错误
+				// 以便可以重试
 				return ctrl.Result{}, err
 			}
 
-			// remove our finalizer from the list and update it.
+			// 从列表中删除我们的 finalizer 并进行更新。
 			cronJob.ObjectMeta.Finalizers = removeString(cronJob.ObjectMeta.Finalizers, myFinalizerName)
 			if err := r.Update(context.Background(), cronJob); err != nil {
 				return ctrl.Result{}, err
 			}
 		}
 
-		// Stop reconciliation as the item is being deleted
+		// 当它们被删除的时候停止 reconciliation
 		return ctrl.Result{}, nil
 	}
 
@@ -261,14 +250,12 @@ import (
 }
 
 func (r *Reconciler) deleteExternalResources(cronJob *batch.CronJob) error {
-	//
-	// delete any external resources associated with the cronJob
-	//
-	// Ensure that delete implementation is idempotent and safe to invoke
-	// multiple times for same object.
+
+	// 删除与 cronJob 相关的任何外部资源
+	// 确保删除是幂等性操作且可以安全调用同一对象多次。
 }
 
-// Helper functions to check and remove string from a slice of strings.
+// 辅助函数用于检查并从字符串切片中删除字符串。
 func containsString(slice []string, s string) bool {
 	for _, item := range slice {
 		if item == s {
