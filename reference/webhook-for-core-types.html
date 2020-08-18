@@ -158,18 +158,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#admission-webhook-for-core-types" id="admission-webhook-for-core-types">Admission Webhook for Core Types</a></h1>
-<p>It is very easy to build admission webhooks for CRDs, which has been covered in
-the CronJob tutorial. Given that kubebuilder doesn’t support webhook scaffolding
-for core types, you have to use the library from controller-runtime to handle it.
-There is an <a href="https://github.com/kubernetes-sigs/controller-runtime/tree/master/examples/builtins">example</a>
-in controller-runtime.</p>
-<p>It is suggested to use kubebuilder to initialize a project, and then you can
-follow the steps below to add admission webhooks for core types.</p>
-<h2><a class="header" href="#implement-your-handler" id="implement-your-handler">Implement Your Handler</a></h2>
-<p>You need to have your handler implements the
-<a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/webhook/admission?tab=doc#Handler">admission.Handler</a>
-interface.</p>
+                        <h1><a class="header" href="#核心类型的准入-webhook" id="核心类型的准入-webhook">核心类型的准入 Webhook</a></h1>
+<p>为 CRD 构建准入 webhook 非常容易，这在 CronJob 教程中已经介绍过了。由于 kubebuilder 不支持核心类型的 webhook 自动生成，您必须使用 controller-runtime 的库来处理它。这里可以参考 controller-runtime 的一个 <a href="https://github.com/kubernetes-sigs/controller-runtime/tree/master/examples/builtins">示例</a>。</p>
+<p>建议使用 kubebuilder 初始化一个项目，然后按照下面的步骤为核心类型添加准入 webhook。</p>
+<h2><a class="header" href="#实现处理程序" id="实现处理程序">实现处理程序</a></h2>
+<p>你需要用自己的处理程序去实现 <a href="https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/webhook/admission?tab=doc#Handler">admission.Handler</a> 接口。</p>
 <pre><code class="language-go">type podAnnotator struct {
 	Client  client.Client
 	decoder *admission.Decoder
@@ -182,7 +175,7 @@ func (a *podAnnotator) Handle(ctx context.Context, req admission.Request) admiss
 		return admission.Errored(http.StatusBadRequest, err)
 	}
 
-	// mutate the fields in pod
+	//在 pod 中修改字段
 
 	marshaledPod, err := json.Marshal(pod)
 	if err != nil {
@@ -191,29 +184,27 @@ func (a *podAnnotator) Handle(ctx context.Context, req admission.Request) admiss
 	return admission.PatchResponseFromRaw(req.Object.Raw, marshaledPod)
 }
 </code></pre>
-<p>If you need a client, just pass in the client at struct construction time.</p>
-<p>If you add the <code>InjectDecoder</code> method for your handler, a decoder will be
-injected for you.</p>
+<p>如果需要客户端，只需在结构构建时传入客户端。</p>
+<p>如果你为你的处理程序添加了 <code>InjectDecoder</code> 方法，将会注入一个解码器。</p>
 <pre><code class="language-go">func (a *podAnnotator) InjectDecoder(d *admission.Decoder) error {
 	a.decoder = d
 	return nil
 }
 </code></pre>
-<p><strong>Note</strong>: in order to have controller-gen generate the webhook configuration for
-you, you need to add markers. For example,
+<p><strong>注意</strong>: 为了使得 controller-gen 能够为你生成 webhook 配置，你需要添加一些标记。例如，
 <code>// +kubebuilder:webhook:path=/mutate-v1-pod,mutating=true,failurePolicy=fail,groups=&quot;&quot;,resources=pods,verbs=create;update,versions=v1,name=mpod.kb.io</code></p>
-<h2><a class="header" href="#update-maingo" id="update-maingo">Update main.go</a></h2>
-<p>Now you need to register your handler in the webhook server.</p>
+<h2><a class="header" href="#更新-maingo" id="更新-maingo">更新 main.go</a></h2>
+<p>现在你需要在 webhook 服务端中注册你的处理程序。</p>
 <pre><code class="language-go">mgr.GetWebhookServer().Register(&quot;/mutate-v1-pod&quot;, &amp;webhook.Admission{Handler: &amp;podAnnotator{Client: mgr.GetClient()}})
 </code></pre>
-<p>You need to ensure the path here match the path in the marker.</p>
-<h2><a class="header" href="#deploy" id="deploy">Deploy</a></h2>
-<p>Deploying it is just like deploying a webhook server for CRD. You need to</p>
+<p>您需要确保这里的路径与标记中的路径相匹配。</p>
+<h2><a class="header" href="#部署" id="部署">部署</a></h2>
+<p>部署它就像为 CRD 部署 webhook 服务端一样。你需要</p>
 <ol>
-<li>provision the serving certificate</li>
-<li>deploy the server</li>
+<li>提供服务证书</li>
+<li>部署服务端</li>
 </ol>
-<p>You can follow the <a href="/cronjob-tutorial/running.html">tutorial</a>.</p>
+<p>你可以参考 <a href="/cronjob-tutorial/running.html">教程</a>。</p>
 
                     </main>
 
