@@ -41,7 +41,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -49,11 +49,9 @@
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
-
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
                 }
-
                 if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
                     localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
                 }
@@ -86,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="../introduction.html">引言</a></li><li class="affix"><a href="../quick-start.html">快速入门</a></li><li class="spacer"></li><li><a href="../cronjob-tutorial/cronjob-tutorial.html"><strong aria-hidden="true">1.</strong> 教程：构建 CronJob</a></li><li><ol class="section"><li><a href="../cronjob-tutorial/basic-project.html" class="active"><strong aria-hidden="true">1.1.</strong> 基本项目中有什么？</a></li><li><a href="../cronjob-tutorial/empty-main.html"><strong aria-hidden="true">1.2.</strong> 每一个旅程都需要一个起点，每个程序都需要一个 main 入口</a></li><li><a href="../cronjob-tutorial/gvks.html"><strong aria-hidden="true">1.3.</strong> Groups、Versions 和 Kinds 之间的关系</a></li><li><a href="../cronjob-tutorial/new-api.html"><strong aria-hidden="true">1.4.</strong> 创建一个API</a></li><li><a href="../cronjob-tutorial/api-design.html"><strong aria-hidden="true">1.5.</strong> 设计一个API</a></li><li><ol class="section"><li><a href="../cronjob-tutorial/other-api-files.html"><strong aria-hidden="true">1.5.1.</strong> 简要说明：剩下文件的作用？</a></li></ol></li><li><a href="../cronjob-tutorial/controller-overview.html"><strong aria-hidden="true">1.6.</strong> controller 中有什么？</a></li><li><a href="../cronjob-tutorial/controller-implementation.html"><strong aria-hidden="true">1.7.</strong> 实现一个 controller</a></li><li><ol class="section"><li><a href="../cronjob-tutorial/main-revisited.html"><strong aria-hidden="true">1.7.1.</strong> main 的修改？</a></li></ol></li><li><a href="../cronjob-tutorial/webhook-implementation.html"><strong aria-hidden="true">1.8.</strong> 实现 defaulting/validating webhooks</a></li><li><a href="../cronjob-tutorial/running.html"><strong aria-hidden="true">1.9.</strong> 运行和部署 controller</a></li><li><ol class="section"><li><a href="../cronjob-tutorial/cert-manager.html"><strong aria-hidden="true">1.9.1.</strong> 部署 cert manager</a></li><li><a href="../cronjob-tutorial/running-webhook.html"><strong aria-hidden="true">1.9.2.</strong> 部署 webhooks</a></li></ol></li><li><a href="../cronjob-tutorial/writing-tests.html"><strong aria-hidden="true">1.10.</strong> 编写测试</a></li><li><a href="../cronjob-tutorial/epilogue.html"><strong aria-hidden="true">1.11.</strong> 结语</a></li></ol></li><li><a href="../multiversion-tutorial/tutorial.html"><strong aria-hidden="true">2.</strong> 教程: Multi-Version API</a></li><li><ol class="section"><li><a href="../multiversion-tutorial/api-changes.html"><strong aria-hidden="true">2.1.</strong> Changing things up</a></li><li><a href="../multiversion-tutorial/conversion-concepts.html"><strong aria-hidden="true">2.2.</strong> Hubs, spokes, and other wheel metaphors</a></li><li><a href="../multiversion-tutorial/conversion.html"><strong aria-hidden="true">2.3.</strong> 实现 conversion</a></li><li><ol class="section"><li><a href="../multiversion-tutorial/webhooks.html"><strong aria-hidden="true">2.3.1.</strong> 配置 webhooks</a></li></ol></li><li><a href="../multiversion-tutorial/deployment.html"><strong aria-hidden="true">2.4.</strong> Deployment 和 Testing</a></li><li class="spacer"></li></ol></li><li><a href="../migrations.html"><strong aria-hidden="true">3.</strong> 迁移</a></li><li><ol class="section"><li><a href="../migration/v1vsv2.html"><strong aria-hidden="true">3.1.</strong> Kubebuilder 从 v1 迁移到 v2 </a></li><li><ol class="section"><li><a href="../migration/guide.html"><strong aria-hidden="true">3.1.1.</strong> 迁移指南</a></li></ol></li><li><a href="../migration/multi-group.html"><strong aria-hidden="true">3.2.</strong> Single Group 到 Multi-Group</a></li><li class="spacer"></li></ol></li><li><a href="../reference/reference.html"><strong aria-hidden="true">4.</strong> 参考</a></li><li><ol class="section"><li><a href="../reference/generating-crd.html"><strong aria-hidden="true">4.1.</strong> 生成 CRDs</a></li><li><a href="../reference/using-finalizers.html"><strong aria-hidden="true">4.2.</strong> 使用 Finalizers</a></li><li><a href="../reference/kind.html"><strong aria-hidden="true">4.3.</strong> Kind 集群</a></li><li><a href="../reference/webhook-overview.html"><strong aria-hidden="true">4.4.</strong> webhook 是什么?</a></li><li><ol class="section"><li><a href="../reference/admission-webhook.html"><strong aria-hidden="true">4.4.1.</strong> 准入 webhook</a></li><li><a href="../reference/webhook-for-core-types.html"><strong aria-hidden="true">4.4.2.</strong> 核心类型的 Webhooks</a></li></ol></li><li><a href="../reference/markers.html"><strong aria-hidden="true">4.5.</strong> 用于配置/代码生成的标记</a></li><li><ol class="section"><li><a href="../reference/markers/crd.html"><strong aria-hidden="true">4.5.1.</strong> CRD 生成</a></li><li><a href="../reference/markers/crd-validation.html"><strong aria-hidden="true">4.5.2.</strong> CRD 验证</a></li><li><a href="../reference/markers/crd-processing.html"><strong aria-hidden="true">4.5.3.</strong> CRD 处理</a></li><li><a href="../reference/markers/webhook.html"><strong aria-hidden="true">4.5.4.</strong> Webhook</a></li><li><a href="../reference/markers/object.html"><strong aria-hidden="true">4.5.5.</strong> Object/DeepCopy</a></li><li><a href="../reference/markers/rbac.html"><strong aria-hidden="true">4.5.6.</strong> RBAC</a></li></ol></li><li><a href="../reference/controller-gen.html"><strong aria-hidden="true">4.6.</strong> controller-gen 命令行界面</a></li><li><a href="../reference/completion.html"><strong aria-hidden="true">4.7.</strong> shell 自动补全</a></li><li><a href="../reference/artifacts.html"><strong aria-hidden="true">4.8.</strong> 制品包</a></li><li><a href="../reference/envtest.html"><strong aria-hidden="true">4.9.</strong> 在集成测试中使用 envtest</a></li><li><a href="../reference/metrics.html"><strong aria-hidden="true">4.10.</strong> 指标</a></li><li class="spacer"></li></ol></li><li><a href="../TODO.html">附录: TODO 界面</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">引言</a></li><li class="chapter-item expanded affix "><a href="../quick-start.html">快速入门</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/cronjob-tutorial.html"><strong aria-hidden="true">1.</strong> 教程：构建 CronJob</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cronjob-tutorial/basic-project.html" class="active"><strong aria-hidden="true">1.1.</strong> 基本项目中有什么？</a></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/empty-main.html"><strong aria-hidden="true">1.2.</strong> 每一个旅程都需要一个起点，每个程序都需要一个 main 入口</a></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/gvks.html"><strong aria-hidden="true">1.3.</strong> Groups、Versions 和 Kinds 之间的关系</a></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/new-api.html"><strong aria-hidden="true">1.4.</strong> 创建一个API</a></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/api-design.html"><strong aria-hidden="true">1.5.</strong> 设计一个API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cronjob-tutorial/other-api-files.html"><strong aria-hidden="true">1.5.1.</strong> 简要说明：剩下文件的作用？</a></li></ol></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/controller-overview.html"><strong aria-hidden="true">1.6.</strong> controller 中有什么？</a></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/controller-implementation.html"><strong aria-hidden="true">1.7.</strong> 实现一个 controller</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cronjob-tutorial/main-revisited.html"><strong aria-hidden="true">1.7.1.</strong> main 的修改？</a></li></ol></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/webhook-implementation.html"><strong aria-hidden="true">1.8.</strong> 实现 defaulting/validating webhooks</a></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/running.html"><strong aria-hidden="true">1.9.</strong> 运行和部署 controller</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cronjob-tutorial/cert-manager.html"><strong aria-hidden="true">1.9.1.</strong> 部署 cert manager</a></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/running-webhook.html"><strong aria-hidden="true">1.9.2.</strong> 部署 webhooks</a></li></ol></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/writing-tests.html"><strong aria-hidden="true">1.10.</strong> 编写测试</a></li><li class="chapter-item expanded "><a href="../cronjob-tutorial/epilogue.html"><strong aria-hidden="true">1.11.</strong> 结语</a></li></ol></li><li class="chapter-item expanded "><a href="../multiversion-tutorial/tutorial.html"><strong aria-hidden="true">2.</strong> 教程: Multi-Version API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../multiversion-tutorial/api-changes.html"><strong aria-hidden="true">2.1.</strong> Changing things up</a></li><li class="chapter-item expanded "><a href="../multiversion-tutorial/conversion-concepts.html"><strong aria-hidden="true">2.2.</strong> Hubs, spokes, and other wheel metaphors</a></li><li class="chapter-item expanded "><a href="../multiversion-tutorial/conversion.html"><strong aria-hidden="true">2.3.</strong> 实现 conversion</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../multiversion-tutorial/webhooks.html"><strong aria-hidden="true">2.3.1.</strong> 配置 webhooks</a></li></ol></li><li class="chapter-item expanded "><a href="../multiversion-tutorial/deployment.html"><strong aria-hidden="true">2.4.</strong> Deployment 和 Testing</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../migrations.html"><strong aria-hidden="true">3.</strong> 迁移</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../migration/v1vsv2.html"><strong aria-hidden="true">3.1.</strong> Kubebuilder 从 v1 迁移到 v2 </a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../migration/guide.html"><strong aria-hidden="true">3.1.1.</strong> 迁移指南</a></li></ol></li><li class="chapter-item expanded "><a href="../migration/multi-group.html"><strong aria-hidden="true">3.2.</strong> Single Group 到 Multi-Group</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../reference/reference.html"><strong aria-hidden="true">4.</strong> 参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/generating-crd.html"><strong aria-hidden="true">4.1.</strong> 生成 CRDs</a></li><li class="chapter-item expanded "><a href="../reference/using-finalizers.html"><strong aria-hidden="true">4.2.</strong> 使用 Finalizers</a></li><li class="chapter-item expanded "><a href="../reference/kind.html"><strong aria-hidden="true">4.3.</strong> Kind 集群</a></li><li class="chapter-item expanded "><a href="../reference/webhook-overview.html"><strong aria-hidden="true">4.4.</strong> webhook 是什么?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/admission-webhook.html"><strong aria-hidden="true">4.4.1.</strong> 准入 webhook</a></li><li class="chapter-item expanded "><a href="../reference/webhook-for-core-types.html"><strong aria-hidden="true">4.4.2.</strong> 核心类型的 Webhooks</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/markers.html"><strong aria-hidden="true">4.5.</strong> 用于配置/代码生成的标记</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/markers/crd.html"><strong aria-hidden="true">4.5.1.</strong> CRD 生成</a></li><li class="chapter-item expanded "><a href="../reference/markers/crd-validation.html"><strong aria-hidden="true">4.5.2.</strong> CRD 验证</a></li><li class="chapter-item expanded "><a href="../reference/markers/crd-processing.html"><strong aria-hidden="true">4.5.3.</strong> CRD 处理</a></li><li class="chapter-item expanded "><a href="../reference/markers/webhook.html"><strong aria-hidden="true">4.5.4.</strong> Webhook</a></li><li class="chapter-item expanded "><a href="../reference/markers/object.html"><strong aria-hidden="true">4.5.5.</strong> Object/DeepCopy</a></li><li class="chapter-item expanded "><a href="../reference/markers/rbac.html"><strong aria-hidden="true">4.5.6.</strong> RBAC</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/controller-gen.html"><strong aria-hidden="true">4.6.</strong> controller-gen 命令行界面</a></li><li class="chapter-item expanded "><a href="../reference/completion.html"><strong aria-hidden="true">4.7.</strong> shell 自动补全</a></li><li class="chapter-item expanded "><a href="../reference/artifacts.html"><strong aria-hidden="true">4.8.</strong> 制品包</a></li><li class="chapter-item expanded "><a href="../reference/envtest.html"><strong aria-hidden="true">4.9.</strong> 在集成测试中使用 envtest</a></li><li class="chapter-item expanded "><a href="../reference/metrics.html"><strong aria-hidden="true">4.10.</strong> 指标</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../TODO.html">附录: TODO 界面</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -165,19 +163,18 @@
 <details> <summary>`go.mod`: 我们的项目的 Go mod 配置文件，记录依赖库信息。</summary>
 <pre><code class="language-go">module tutorial.kubebuilder.io/project
 
-go 1.13
+go 1.15
 
 require (
 	github.com/go-logr/logr v0.1.0
-	github.com/onsi/ginkgo v1.11.0
-	github.com/onsi/gomega v1.8.1
+	github.com/onsi/ginkgo v1.12.1
+	github.com/onsi/gomega v1.10.1
 	github.com/robfig/cron v1.2.0
-	k8s.io/api v0.18.2
-	k8s.io/apimachinery v0.18.2
-	k8s.io/client-go v0.18.2
-	sigs.k8s.io/controller-runtime v0.6.0
+	k8s.io/api v0.18.6
+	k8s.io/apimachinery v0.18.6
+	k8s.io/client-go v0.18.6
+	sigs.k8s.io/controller-runtime v0.6.2
 )
-
 </code></pre>
 </details>
 <details><summary>`Makefile`: 用于控制器构建和部署的 Makefile 文件</summary>
@@ -187,32 +184,50 @@ IMG ?= controller:latest
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= &quot;crd:trivialVersions=true&quot;
 
+# Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
+ifeq (,$(shell go env GOBIN))
+GOBIN=$(shell go env GOPATH)/bin
+else
+GOBIN=$(shell go env GOBIN)
+endif
+
 all: manager
 
 # Run tests
+ENVTEST_ASSETS_DIR=$(shell pwd)/testbin
 test: generate fmt vet manifests
-	go test ./api/... ./controllers/... -coverprofile cover.out
+	mkdir -p ${ENVTEST_ASSETS_DIR}
+	test -f ${ENVTEST_ASSETS_DIR}/setup-envtest.sh || curl -sSLo ${ENVTEST_ASSETS_DIR}/setup-envtest.sh https://raw.githubusercontent.com/kubernetes-sigs/controller-runtime/master/hack/setup-envtest.sh
+	source ${ENVTEST_ASSETS_DIR}/setup-envtest.sh; fetch_envtest_tools $(ENVTEST_ASSETS_DIR); setup_envtest_env $(ENVTEST_ASSETS_DIR); go test ./... -coverprofile cover.out
 
 # Build manager binary
 manager: generate fmt vet
 	go build -o bin/manager main.go
 
 # Run against the configured Kubernetes cluster in ~/.kube/config
-run: generate fmt vet
+run: generate fmt vet manifests
 	go run ./main.go
 
 # Install CRDs into a cluster
-install: manifests
-	kubectl apply -f config/crd/bases
+install: manifests kustomize
+	$(KUSTOMIZE) build config/crd | kubectl apply -f -
+
+# Uninstall CRDs from a cluster
+uninstall: manifests kustomize
+	$(KUSTOMIZE) build config/crd | kubectl delete -f -
 
 # Deploy controller in the configured Kubernetes cluster in ~/.kube/config
-deploy: manifests
-	kubectl apply -f config/crd/bases
-	kustomize build config/default | kubectl apply -f -
+deploy: manifests kustomize
+	cd config/manager &amp;&amp; $(KUSTOMIZE) edit set image controller=${IMG}
+	$(KUSTOMIZE) build config/default | kubectl apply -f -
+
+# UnDeploy controller from the configured Kubernetes cluster in ~/.kube/config
+undeploy:
+	$(KUSTOMIZE) build config/default | kubectl delete -f -
 
 # Generate manifests e.g. CRD, RBAC etc.
 manifests: controller-gen
-	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=manager-role webhook paths=&quot;./api/...;./controllers/...&quot; output:crd:artifacts:config=config/crd/bases
+	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=manager-role webhook paths=&quot;./...&quot; output:crd:artifacts:config=config/crd/bases
 
 # Run go fmt against code
 fmt:
@@ -224,13 +239,11 @@ vet:
 
 # Generate code
 generate: controller-gen
-	$(CONTROLLER_GEN) object:headerFile=./hack/boilerplate.go.txt paths=./api/...
+	$(CONTROLLER_GEN) object:headerFile=&quot;hack/boilerplate.go.txt&quot; paths=&quot;./...&quot;
 
 # Build the docker image
 docker-build: test
 	docker build . -t ${IMG}
-	@echo &quot;updating kustomize image patch file for manager resource&quot;
-	sed -i'' -e 's@image: .*@image: '&quot;${IMG}&quot;'@' ./config/default/manager_image_patch.yaml
 
 # Push the docker image
 docker-push:
@@ -240,19 +253,45 @@ docker-push:
 # download controller-gen if necessary
 controller-gen:
 ifeq (, $(shell which controller-gen))
-	go get sigs.k8s.io/controller-tools/cmd/controller-gen@v0.2.0-rc.0
-CONTROLLER_GEN=$(shell go env GOPATH)/bin/controller-gen
+	@{ \
+	set -e ;\
+	CONTROLLER_GEN_TMP_DIR=$$(mktemp -d) ;\
+	cd $$CONTROLLER_GEN_TMP_DIR ;\
+	go mod init tmp ;\
+	go get sigs.k8s.io/controller-tools/cmd/controller-gen@v0.3.0 ;\
+	rm -rf $$CONTROLLER_GEN_TMP_DIR ;\
+	}
+CONTROLLER_GEN=$(GOBIN)/controller-gen
 else
 CONTROLLER_GEN=$(shell which controller-gen)
 endif
 
+kustomize:
+ifeq (, $(shell which kustomize))
+	@{ \
+	set -e ;\
+	KUSTOMIZE_GEN_TMP_DIR=$$(mktemp -d) ;\
+	cd $$KUSTOMIZE_GEN_TMP_DIR ;\
+	go mod init tmp ;\
+	go get sigs.k8s.io/kustomize/kustomize/v3@v3.5.4 ;\
+	rm -rf $$KUSTOMIZE_GEN_TMP_DIR ;\
+	}
+KUSTOMIZE=$(GOBIN)/kustomize
+else
+KUSTOMIZE=$(shell which kustomize)
+endif
 </code></pre>
 </details>
 <details><summary>`PROJECT`: 用于生成组件的 Kubebuilder 元数据</summary>
-<pre><code class="language-yaml">version: &quot;2&quot;
-domain: tutorial.kubebuilder.io
+<pre><code class="language-yaml">domain: tutorial.kubebuilder.io
+layout: go.kubebuilder.io/v3-alpha
+projectName: project
 repo: tutorial.kubebuilder.io/project
-
+resources:
+- group: batch
+  kind: CronJob
+  version: v1
+version: 3-alpha
 </code></pre>
 </details>
 <h2><a class="header" href="#启动配置" id="启动配置">启动配置</a></h2>
@@ -313,7 +352,6 @@ repo: tutorial.kubebuilder.io/project
         <!-- Google Analytics Tag -->
         <script type="text/javascript">
             var localAddrs = ["localhost", "127.0.0.1", ""];
-
             // make sure we don't activate google analytics if the developer is
             // inspecting the book locally...
             if (localAddrs.indexOf(document.location.hostname) === -1) {
@@ -321,7 +359,6 @@ repo: tutorial.kubebuilder.io/project
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
                 ga('create', 'UA-119864590-1', 'auto');
                 ga('send', 'pageview');
             }

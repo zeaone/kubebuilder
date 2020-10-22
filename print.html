@@ -43,7 +43,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -51,11 +51,9 @@
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
-
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
                 }
-
                 if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
                     localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
                 }
@@ -88,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="affix"><a href="introduction.html">引言</a></li><li class="affix"><a href="quick-start.html">快速入门</a></li><li class="spacer"></li><li><a href="cronjob-tutorial/cronjob-tutorial.html"><strong aria-hidden="true">1.</strong> 教程：构建 CronJob</a></li><li><ol class="section"><li><a href="cronjob-tutorial/basic-project.html"><strong aria-hidden="true">1.1.</strong> 基本项目中有什么？</a></li><li><a href="cronjob-tutorial/empty-main.html"><strong aria-hidden="true">1.2.</strong> 每一个旅程都需要一个起点，每个程序都需要一个 main 入口</a></li><li><a href="cronjob-tutorial/gvks.html"><strong aria-hidden="true">1.3.</strong> Groups、Versions 和 Kinds 之间的关系</a></li><li><a href="cronjob-tutorial/new-api.html"><strong aria-hidden="true">1.4.</strong> 创建一个API</a></li><li><a href="cronjob-tutorial/api-design.html"><strong aria-hidden="true">1.5.</strong> 设计一个API</a></li><li><ol class="section"><li><a href="cronjob-tutorial/other-api-files.html"><strong aria-hidden="true">1.5.1.</strong> 简要说明：剩下文件的作用？</a></li></ol></li><li><a href="cronjob-tutorial/controller-overview.html"><strong aria-hidden="true">1.6.</strong> controller 中有什么？</a></li><li><a href="cronjob-tutorial/controller-implementation.html"><strong aria-hidden="true">1.7.</strong> 实现一个 controller</a></li><li><ol class="section"><li><a href="cronjob-tutorial/main-revisited.html"><strong aria-hidden="true">1.7.1.</strong> main 的修改？</a></li></ol></li><li><a href="cronjob-tutorial/webhook-implementation.html"><strong aria-hidden="true">1.8.</strong> 实现 defaulting/validating webhooks</a></li><li><a href="cronjob-tutorial/running.html"><strong aria-hidden="true">1.9.</strong> 运行和部署 controller</a></li><li><ol class="section"><li><a href="cronjob-tutorial/cert-manager.html"><strong aria-hidden="true">1.9.1.</strong> 部署 cert manager</a></li><li><a href="cronjob-tutorial/running-webhook.html"><strong aria-hidden="true">1.9.2.</strong> 部署 webhooks</a></li></ol></li><li><a href="cronjob-tutorial/writing-tests.html"><strong aria-hidden="true">1.10.</strong> 编写测试</a></li><li><a href="cronjob-tutorial/epilogue.html"><strong aria-hidden="true">1.11.</strong> 结语</a></li></ol></li><li><a href="multiversion-tutorial/tutorial.html"><strong aria-hidden="true">2.</strong> 教程: Multi-Version API</a></li><li><ol class="section"><li><a href="multiversion-tutorial/api-changes.html"><strong aria-hidden="true">2.1.</strong> Changing things up</a></li><li><a href="multiversion-tutorial/conversion-concepts.html"><strong aria-hidden="true">2.2.</strong> Hubs, spokes, and other wheel metaphors</a></li><li><a href="multiversion-tutorial/conversion.html"><strong aria-hidden="true">2.3.</strong> 实现 conversion</a></li><li><ol class="section"><li><a href="multiversion-tutorial/webhooks.html"><strong aria-hidden="true">2.3.1.</strong> 配置 webhooks</a></li></ol></li><li><a href="multiversion-tutorial/deployment.html"><strong aria-hidden="true">2.4.</strong> Deployment 和 Testing</a></li><li class="spacer"></li></ol></li><li><a href="migrations.html"><strong aria-hidden="true">3.</strong> 迁移</a></li><li><ol class="section"><li><a href="migration/v1vsv2.html"><strong aria-hidden="true">3.1.</strong> Kubebuilder 从 v1 迁移到 v2 </a></li><li><ol class="section"><li><a href="migration/guide.html"><strong aria-hidden="true">3.1.1.</strong> 迁移指南</a></li></ol></li><li><a href="migration/multi-group.html"><strong aria-hidden="true">3.2.</strong> Single Group 到 Multi-Group</a></li><li class="spacer"></li></ol></li><li><a href="reference/reference.html"><strong aria-hidden="true">4.</strong> 参考</a></li><li><ol class="section"><li><a href="reference/generating-crd.html"><strong aria-hidden="true">4.1.</strong> 生成 CRDs</a></li><li><a href="reference/using-finalizers.html"><strong aria-hidden="true">4.2.</strong> 使用 Finalizers</a></li><li><a href="reference/kind.html"><strong aria-hidden="true">4.3.</strong> Kind 集群</a></li><li><a href="reference/webhook-overview.html"><strong aria-hidden="true">4.4.</strong> webhook 是什么?</a></li><li><ol class="section"><li><a href="reference/admission-webhook.html"><strong aria-hidden="true">4.4.1.</strong> 准入 webhook</a></li><li><a href="reference/webhook-for-core-types.html"><strong aria-hidden="true">4.4.2.</strong> 核心类型的 Webhooks</a></li></ol></li><li><a href="reference/markers.html"><strong aria-hidden="true">4.5.</strong> 用于配置/代码生成的标记</a></li><li><ol class="section"><li><a href="reference/markers/crd.html"><strong aria-hidden="true">4.5.1.</strong> CRD 生成</a></li><li><a href="reference/markers/crd-validation.html"><strong aria-hidden="true">4.5.2.</strong> CRD 验证</a></li><li><a href="reference/markers/crd-processing.html"><strong aria-hidden="true">4.5.3.</strong> CRD 处理</a></li><li><a href="reference/markers/webhook.html"><strong aria-hidden="true">4.5.4.</strong> Webhook</a></li><li><a href="reference/markers/object.html"><strong aria-hidden="true">4.5.5.</strong> Object/DeepCopy</a></li><li><a href="reference/markers/rbac.html"><strong aria-hidden="true">4.5.6.</strong> RBAC</a></li></ol></li><li><a href="reference/controller-gen.html"><strong aria-hidden="true">4.6.</strong> controller-gen 命令行界面</a></li><li><a href="reference/completion.html"><strong aria-hidden="true">4.7.</strong> shell 自动补全</a></li><li><a href="reference/artifacts.html"><strong aria-hidden="true">4.8.</strong> 制品包</a></li><li><a href="reference/envtest.html"><strong aria-hidden="true">4.9.</strong> 在集成测试中使用 envtest</a></li><li><a href="reference/metrics.html"><strong aria-hidden="true">4.10.</strong> 指标</a></li><li class="spacer"></li></ol></li><li><a href="TODO.html">附录: TODO 界面</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">引言</a></li><li class="chapter-item expanded affix "><a href="quick-start.html">快速入门</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="cronjob-tutorial/cronjob-tutorial.html"><strong aria-hidden="true">1.</strong> 教程：构建 CronJob</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cronjob-tutorial/basic-project.html"><strong aria-hidden="true">1.1.</strong> 基本项目中有什么？</a></li><li class="chapter-item expanded "><a href="cronjob-tutorial/empty-main.html"><strong aria-hidden="true">1.2.</strong> 每一个旅程都需要一个起点，每个程序都需要一个 main 入口</a></li><li class="chapter-item expanded "><a href="cronjob-tutorial/gvks.html"><strong aria-hidden="true">1.3.</strong> Groups、Versions 和 Kinds 之间的关系</a></li><li class="chapter-item expanded "><a href="cronjob-tutorial/new-api.html"><strong aria-hidden="true">1.4.</strong> 创建一个API</a></li><li class="chapter-item expanded "><a href="cronjob-tutorial/api-design.html"><strong aria-hidden="true">1.5.</strong> 设计一个API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cronjob-tutorial/other-api-files.html"><strong aria-hidden="true">1.5.1.</strong> 简要说明：剩下文件的作用？</a></li></ol></li><li class="chapter-item expanded "><a href="cronjob-tutorial/controller-overview.html"><strong aria-hidden="true">1.6.</strong> controller 中有什么？</a></li><li class="chapter-item expanded "><a href="cronjob-tutorial/controller-implementation.html"><strong aria-hidden="true">1.7.</strong> 实现一个 controller</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cronjob-tutorial/main-revisited.html"><strong aria-hidden="true">1.7.1.</strong> main 的修改？</a></li></ol></li><li class="chapter-item expanded "><a href="cronjob-tutorial/webhook-implementation.html"><strong aria-hidden="true">1.8.</strong> 实现 defaulting/validating webhooks</a></li><li class="chapter-item expanded "><a href="cronjob-tutorial/running.html"><strong aria-hidden="true">1.9.</strong> 运行和部署 controller</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cronjob-tutorial/cert-manager.html"><strong aria-hidden="true">1.9.1.</strong> 部署 cert manager</a></li><li class="chapter-item expanded "><a href="cronjob-tutorial/running-webhook.html"><strong aria-hidden="true">1.9.2.</strong> 部署 webhooks</a></li></ol></li><li class="chapter-item expanded "><a href="cronjob-tutorial/writing-tests.html"><strong aria-hidden="true">1.10.</strong> 编写测试</a></li><li class="chapter-item expanded "><a href="cronjob-tutorial/epilogue.html"><strong aria-hidden="true">1.11.</strong> 结语</a></li></ol></li><li class="chapter-item expanded "><a href="multiversion-tutorial/tutorial.html"><strong aria-hidden="true">2.</strong> 教程: Multi-Version API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="multiversion-tutorial/api-changes.html"><strong aria-hidden="true">2.1.</strong> Changing things up</a></li><li class="chapter-item expanded "><a href="multiversion-tutorial/conversion-concepts.html"><strong aria-hidden="true">2.2.</strong> Hubs, spokes, and other wheel metaphors</a></li><li class="chapter-item expanded "><a href="multiversion-tutorial/conversion.html"><strong aria-hidden="true">2.3.</strong> 实现 conversion</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="multiversion-tutorial/webhooks.html"><strong aria-hidden="true">2.3.1.</strong> 配置 webhooks</a></li></ol></li><li class="chapter-item expanded "><a href="multiversion-tutorial/deployment.html"><strong aria-hidden="true">2.4.</strong> Deployment 和 Testing</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="migrations.html"><strong aria-hidden="true">3.</strong> 迁移</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="migration/v1vsv2.html"><strong aria-hidden="true">3.1.</strong> Kubebuilder 从 v1 迁移到 v2 </a></li><li><ol class="section"><li class="chapter-item expanded "><a href="migration/guide.html"><strong aria-hidden="true">3.1.1.</strong> 迁移指南</a></li></ol></li><li class="chapter-item expanded "><a href="migration/multi-group.html"><strong aria-hidden="true">3.2.</strong> Single Group 到 Multi-Group</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="reference/reference.html"><strong aria-hidden="true">4.</strong> 参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/generating-crd.html"><strong aria-hidden="true">4.1.</strong> 生成 CRDs</a></li><li class="chapter-item expanded "><a href="reference/using-finalizers.html"><strong aria-hidden="true">4.2.</strong> 使用 Finalizers</a></li><li class="chapter-item expanded "><a href="reference/kind.html"><strong aria-hidden="true">4.3.</strong> Kind 集群</a></li><li class="chapter-item expanded "><a href="reference/webhook-overview.html"><strong aria-hidden="true">4.4.</strong> webhook 是什么?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/admission-webhook.html"><strong aria-hidden="true">4.4.1.</strong> 准入 webhook</a></li><li class="chapter-item expanded "><a href="reference/webhook-for-core-types.html"><strong aria-hidden="true">4.4.2.</strong> 核心类型的 Webhooks</a></li></ol></li><li class="chapter-item expanded "><a href="reference/markers.html"><strong aria-hidden="true">4.5.</strong> 用于配置/代码生成的标记</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/markers/crd.html"><strong aria-hidden="true">4.5.1.</strong> CRD 生成</a></li><li class="chapter-item expanded "><a href="reference/markers/crd-validation.html"><strong aria-hidden="true">4.5.2.</strong> CRD 验证</a></li><li class="chapter-item expanded "><a href="reference/markers/crd-processing.html"><strong aria-hidden="true">4.5.3.</strong> CRD 处理</a></li><li class="chapter-item expanded "><a href="reference/markers/webhook.html"><strong aria-hidden="true">4.5.4.</strong> Webhook</a></li><li class="chapter-item expanded "><a href="reference/markers/object.html"><strong aria-hidden="true">4.5.5.</strong> Object/DeepCopy</a></li><li class="chapter-item expanded "><a href="reference/markers/rbac.html"><strong aria-hidden="true">4.5.6.</strong> RBAC</a></li></ol></li><li class="chapter-item expanded "><a href="reference/controller-gen.html"><strong aria-hidden="true">4.6.</strong> controller-gen 命令行界面</a></li><li class="chapter-item expanded "><a href="reference/completion.html"><strong aria-hidden="true">4.7.</strong> shell 自动补全</a></li><li class="chapter-item expanded "><a href="reference/artifacts.html"><strong aria-hidden="true">4.8.</strong> 制品包</a></li><li class="chapter-item expanded "><a href="reference/envtest.html"><strong aria-hidden="true">4.9.</strong> 在集成测试中使用 envtest</a></li><li class="chapter-item expanded "><a href="reference/metrics.html"><strong aria-hidden="true">4.10.</strong> 指标</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="TODO.html">附录: TODO 界面</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -209,7 +207,7 @@
 </ul>
 <h2><a class="header" href="#依赖组件" id="依赖组件">依赖组件</a></h2>
 <ul>
-<li><a href="https://golang.org/dl/">go</a> version v1.13+.</li>
+<li><a href="https://golang.org/dl/">go</a> version v1.15+.</li>
 <li><a href="https://docs.docker.com/install/">docker</a> version 17.03+.</li>
 <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">kubectl</a> version v1.11.3+.</li>
 <li><a href="https://sigs.k8s.io/kustomize/docs/INSTALL.md">kustomize</a> v3.1.0+</li>
@@ -222,9 +220,11 @@ arch=$(go env GOARCH)
 
 # 下载 kubebuilder 并解压到 tmp 目录中
 curl -L https://go.kubebuilder.io/dl/2.3.1/${os}/${arch} | tar -xz -C /tmp/
-
-# 将 kubebuilder 移动到一个长期的路径，并将其加入环境变量 path 中 
+</code></pre>
+<p>If you are using a Kubebuilder plugin version less than version <code>v3+</code>, you must configure the Kubernetes binaries required for the <a href="https://book.kubebuilder.io/reference/testing/envtest.html">envtest</a>, run: </p>
+<pre><code class="language-bash"># 将 kubebuilder 移动到一个长期的路径，并将其加入环境变量 path 中 
 # （如果你把 kubebuilder 放在别的地方，你需要额外设置 KUBEBUILDER_ASSETS 环境变量）
+
 sudo mv /tmp/kubebuilder_2.3.1_${os}_${arch} /usr/local/kubebuilder
 export PATH=$PATH:/usr/local/kubebuilder/bin
 </code></pre>
@@ -232,8 +232,6 @@ export PATH=$PATH:/usr/local/kubebuilder/bin
 <h1><a class="header" href="#请使用-master-分支的-kubebuilder-进行构建" id="请使用-master-分支的-kubebuilder-进行构建">请使用 master 分支的 kubebuilder 进行构建</a></h1>
 <p>另外，你可以从 <code>https://go.kubebuilder.io/dl/latest/${os}/${arch}</code> 下载安装包</p>
 </aside>
-<aside class="note">
-<h1><a class="header" href="#enabling-shell-autocompletion" id="enabling-shell-autocompletion">Enabling shell autocompletion</a></h1>
 <p>Kubebuilder 通过 <code>kubebuilder completion &lt;bash|zsh&gt;</code> 命令为 Bash 和 Zsh 提供了自动完成的支持，这可以节省你大量的重复编码工作。更多信息请参见 <a href="./reference/completion.html">completion</a> 文档。</p>
 </aside>
 <h2><a class="header" href="#创建一个项目" id="创建一个项目">创建一个项目</a></h2>
@@ -368,19 +366,18 @@ kubebuilder init --domain tutorial.kubebuilder.io
 <details> <summary>`go.mod`: 我们的项目的 Go mod 配置文件，记录依赖库信息。</summary>
 <pre><code class="language-go">module tutorial.kubebuilder.io/project
 
-go 1.13
+go 1.15
 
 require (
 	github.com/go-logr/logr v0.1.0
-	github.com/onsi/ginkgo v1.11.0
-	github.com/onsi/gomega v1.8.1
+	github.com/onsi/ginkgo v1.12.1
+	github.com/onsi/gomega v1.10.1
 	github.com/robfig/cron v1.2.0
-	k8s.io/api v0.18.2
-	k8s.io/apimachinery v0.18.2
-	k8s.io/client-go v0.18.2
-	sigs.k8s.io/controller-runtime v0.6.0
+	k8s.io/api v0.18.6
+	k8s.io/apimachinery v0.18.6
+	k8s.io/client-go v0.18.6
+	sigs.k8s.io/controller-runtime v0.6.2
 )
-
 </code></pre>
 </details>
 <details><summary>`Makefile`: 用于控制器构建和部署的 Makefile 文件</summary>
@@ -390,32 +387,50 @@ IMG ?= controller:latest
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= &quot;crd:trivialVersions=true&quot;
 
+# Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
+ifeq (,$(shell go env GOBIN))
+GOBIN=$(shell go env GOPATH)/bin
+else
+GOBIN=$(shell go env GOBIN)
+endif
+
 all: manager
 
 # Run tests
+ENVTEST_ASSETS_DIR=$(shell pwd)/testbin
 test: generate fmt vet manifests
-	go test ./api/... ./controllers/... -coverprofile cover.out
+	mkdir -p ${ENVTEST_ASSETS_DIR}
+	test -f ${ENVTEST_ASSETS_DIR}/setup-envtest.sh || curl -sSLo ${ENVTEST_ASSETS_DIR}/setup-envtest.sh https://raw.githubusercontent.com/kubernetes-sigs/controller-runtime/master/hack/setup-envtest.sh
+	source ${ENVTEST_ASSETS_DIR}/setup-envtest.sh; fetch_envtest_tools $(ENVTEST_ASSETS_DIR); setup_envtest_env $(ENVTEST_ASSETS_DIR); go test ./... -coverprofile cover.out
 
 # Build manager binary
 manager: generate fmt vet
 	go build -o bin/manager main.go
 
 # Run against the configured Kubernetes cluster in ~/.kube/config
-run: generate fmt vet
+run: generate fmt vet manifests
 	go run ./main.go
 
 # Install CRDs into a cluster
-install: manifests
-	kubectl apply -f config/crd/bases
+install: manifests kustomize
+	$(KUSTOMIZE) build config/crd | kubectl apply -f -
+
+# Uninstall CRDs from a cluster
+uninstall: manifests kustomize
+	$(KUSTOMIZE) build config/crd | kubectl delete -f -
 
 # Deploy controller in the configured Kubernetes cluster in ~/.kube/config
-deploy: manifests
-	kubectl apply -f config/crd/bases
-	kustomize build config/default | kubectl apply -f -
+deploy: manifests kustomize
+	cd config/manager &amp;&amp; $(KUSTOMIZE) edit set image controller=${IMG}
+	$(KUSTOMIZE) build config/default | kubectl apply -f -
+
+# UnDeploy controller from the configured Kubernetes cluster in ~/.kube/config
+undeploy:
+	$(KUSTOMIZE) build config/default | kubectl delete -f -
 
 # Generate manifests e.g. CRD, RBAC etc.
 manifests: controller-gen
-	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=manager-role webhook paths=&quot;./api/...;./controllers/...&quot; output:crd:artifacts:config=config/crd/bases
+	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=manager-role webhook paths=&quot;./...&quot; output:crd:artifacts:config=config/crd/bases
 
 # Run go fmt against code
 fmt:
@@ -427,13 +442,11 @@ vet:
 
 # Generate code
 generate: controller-gen
-	$(CONTROLLER_GEN) object:headerFile=./hack/boilerplate.go.txt paths=./api/...
+	$(CONTROLLER_GEN) object:headerFile=&quot;hack/boilerplate.go.txt&quot; paths=&quot;./...&quot;
 
 # Build the docker image
 docker-build: test
 	docker build . -t ${IMG}
-	@echo &quot;updating kustomize image patch file for manager resource&quot;
-	sed -i'' -e 's@image: .*@image: '&quot;${IMG}&quot;'@' ./config/default/manager_image_patch.yaml
 
 # Push the docker image
 docker-push:
@@ -443,19 +456,45 @@ docker-push:
 # download controller-gen if necessary
 controller-gen:
 ifeq (, $(shell which controller-gen))
-	go get sigs.k8s.io/controller-tools/cmd/controller-gen@v0.2.0-rc.0
-CONTROLLER_GEN=$(shell go env GOPATH)/bin/controller-gen
+	@{ \
+	set -e ;\
+	CONTROLLER_GEN_TMP_DIR=$$(mktemp -d) ;\
+	cd $$CONTROLLER_GEN_TMP_DIR ;\
+	go mod init tmp ;\
+	go get sigs.k8s.io/controller-tools/cmd/controller-gen@v0.3.0 ;\
+	rm -rf $$CONTROLLER_GEN_TMP_DIR ;\
+	}
+CONTROLLER_GEN=$(GOBIN)/controller-gen
 else
 CONTROLLER_GEN=$(shell which controller-gen)
 endif
 
+kustomize:
+ifeq (, $(shell which kustomize))
+	@{ \
+	set -e ;\
+	KUSTOMIZE_GEN_TMP_DIR=$$(mktemp -d) ;\
+	cd $$KUSTOMIZE_GEN_TMP_DIR ;\
+	go mod init tmp ;\
+	go get sigs.k8s.io/kustomize/kustomize/v3@v3.5.4 ;\
+	rm -rf $$KUSTOMIZE_GEN_TMP_DIR ;\
+	}
+KUSTOMIZE=$(GOBIN)/kustomize
+else
+KUSTOMIZE=$(shell which kustomize)
+endif
 </code></pre>
 </details>
 <details><summary>`PROJECT`: 用于生成组件的 Kubebuilder 元数据</summary>
-<pre><code class="language-yaml">version: &quot;2&quot;
-domain: tutorial.kubebuilder.io
+<pre><code class="language-yaml">domain: tutorial.kubebuilder.io
+layout: go.kubebuilder.io/v3-alpha
+projectName: project
 repo: tutorial.kubebuilder.io/project
-
+resources:
+- group: batch
+  kind: CronJob
+  version: v1
+version: 3-alpha
 </code></pre>
 </details>
 <h2><a class="header" href="#启动配置" id="启动配置">启动配置</a></h2>
@@ -685,6 +724,7 @@ type CronJobList struct {
 <p>还有一个我们使用的特殊类型：<code>metav1.Time</code>。 它有一个稳定的、可移植的序列化格式的功能，其他与 <code>time.Time</code> 相同。</p>
 <p>说完了这些，让我们来看看我们的 CronJob 对象是什么样子的吧！</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1/cronjob_types.go">project/api/v1/cronjob_types.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -695,10 +735,11 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-</details><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Imports</span></pre></summary>
+</details>
 <pre><code class="language-go">package v1
-
-import (
+</code></pre>
+<details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Imports</span></pre></summary>
+<pre><code class="language-go">import (
 	batchv1beta1 &quot;k8s.io/api/batch/v1beta1&quot;
 	corev1 &quot;k8s.io/api/core/v1&quot;
 	metav1 &quot;k8s.io/apimachinery/pkg/apis/meta/v1&quot;
@@ -841,6 +882,7 @@ func init() {
 <h2><a class="header" href="#groupversion_infogo" id="groupversion_infogo"><code>groupversion_info.go</code></a></h2>
 <p><code>groupversion_info.go</code> 包含了关于 group-version 的一些元数据:</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1/groupversion_info.go">project/api/v1/groupversion_info.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -979,6 +1021,7 @@ needed to run.  As we add more functionality, we’ll need to revisit these.</p>
 </li>
 </ol>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/controllers/cronjob_controller.go">project/controllers/cronjob_controller.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -1448,6 +1491,7 @@ func (r *CronJobReconciler) SetupWithManager(mgr ctrl.Manager) error {
 <h1><a class="header" href="#你还记得关于-main-函数的一些要点吗" id="你还记得关于-main-函数的一些要点吗">你还记得关于 main 函数的一些要点吗？</a></h1>
 <p>但首先，还记得我们之前说过的 <a href="cronjob-tutorial//cronjob-tutorial/empty-main.html">再次回顾 <code>main.go</code></a> 吗？让我们看一下哪些地方改变了，哪些是需要添加的。</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/main.go">project/main.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -1466,6 +1510,7 @@ import (
 	&quot;os&quot;
 
 	&quot;k8s.io/apimachinery/pkg/runtime&quot;
+	utilruntime &quot;k8s.io/apimachinery/pkg/util/runtime&quot;
 	clientgoscheme &quot;k8s.io/client-go/kubernetes/scheme&quot;
 	_ &quot;k8s.io/client-go/plugin/pkg/client/auth/gcp&quot;
 	ctrl &quot;sigs.k8s.io/controller-runtime&quot;
@@ -1485,9 +1530,9 @@ import (
 )
 
 func init() {
-	_ = clientgoscheme.AddToScheme(scheme)
+	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	_ = batchv1.AddToScheme(scheme)
+	utilruntime.Must(batchv1.AddToScheme(scheme))
 	// +kubebuilder:scaffold:scheme
 }
 </code></pre>
@@ -1499,7 +1544,8 @@ func init() {
 	var enableLeaderElection bool
 	flag.StringVar(&amp;metricsAddr, &quot;metrics-addr&quot;, &quot;:8080&quot;, &quot;The address the metric endpoint binds to.&quot;)
 	flag.BoolVar(&amp;enableLeaderElection, &quot;enable-leader-election&quot;, false,
-		&quot;Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.&quot;)
+		&quot;Enable leader election for controller manager. &quot;+
+			&quot;Enabling this will ensure there is only one active controller manager.&quot;)
 	flag.Parse()
 
 	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
@@ -1507,8 +1553,9 @@ func init() {
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:             scheme,
 		MetricsBindAddress: metricsAddr,
-		LeaderElection:     enableLeaderElection,
 		Port:               9443,
+		LeaderElection:     enableLeaderElection,
+		LeaderElectionID:   &quot;80807133.tutorial.kubebuilder.io&quot;,
 	})
 	if err != nil {
 		setupLog.Error(err, &quot;unable to start manager&quot;)
@@ -1518,10 +1565,14 @@ func init() {
 </details>
 <pre><code class="language-go">	if err = (&amp;controllers.CronJobReconciler{
 		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName(&quot;controllers&quot;).WithName(&quot;Captain&quot;),
+		Log:    ctrl.Log.WithName(&quot;controllers&quot;).WithName(&quot;CronJob&quot;),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, &quot;unable to create controller&quot;, &quot;controller&quot;, &quot;Captain&quot;)
+		setupLog.Error(err, &quot;unable to create controller&quot;, &quot;controller&quot;, &quot;CronJob&quot;)
+		os.Exit(1)
+	}
+	if err = (&amp;batchv1.CronJob{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, &quot;unable to create webhook&quot;, &quot;webhook&quot;, &quot;CronJob&quot;)
 		os.Exit(1)
 	}
 </code></pre>
@@ -1563,6 +1614,7 @@ func init() {
 </code></pre>
 <p>这里会在你的 <code>main.go</code> 中搭建一个 webhook 函数的支架并用 manager 注册你的 webhook。</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1/cronjob_webhook.go">project/api/v1/cronjob_webhook.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -1584,7 +1636,7 @@ import (
 	validationutils &quot;k8s.io/apimachinery/pkg/util/validation&quot;
 	&quot;k8s.io/apimachinery/pkg/util/validation/field&quot;
 	ctrl &quot;sigs.k8s.io/controller-runtime&quot;
-	logf &quot;sigs.k8s.io/controller-runtime/pkg/runtime/log&quot;
+	logf &quot;sigs.k8s.io/controller-runtime/pkg/log&quot;
 	&quot;sigs.k8s.io/controller-runtime/pkg/webhook&quot;
 )
 </code></pre>
@@ -1755,7 +1807,6 @@ spec:
             - -c
             - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
-
 </code></pre>
 <pre><code class="language-bash">kubectl create -f config/samples/batch_v1_cronjob.yaml
 </code></pre>
@@ -1790,7 +1841,6 @@ metadata:
   name: validating-webhook-configuration
   annotations:
     cert-manager.io/inject-ca-from: $(CERTIFICATE_NAMESPACE)/$(CERTIFICATE_NAME)
-
 </code></pre>
 <h1><a class="header" href="#部署-admission-webhooks" id="部署-admission-webhooks">部署 Admission Webhooks</a></h1>
 <h2><a class="header" href="#kind-cluster" id="kind-cluster">Kind Cluster</a></h2>
@@ -1876,7 +1926,6 @@ vars:
     kind: Service
     version: v1
     name: webhook-service
-
 </code></pre>
 <p>现在你可以通过下面的命令把它部署到你的集群中了：</p>
 <pre><code class="language-bash">make deploy IMG=&lt;some-registry&gt;/&lt;project-name&gt;:tag
@@ -1926,6 +1975,7 @@ import (
 	ctrl &quot;sigs.k8s.io/controller-runtime&quot;
 	&quot;sigs.k8s.io/controller-runtime/pkg/client&quot;
 	&quot;sigs.k8s.io/controller-runtime/pkg/envtest&quot;
+	&quot;sigs.k8s.io/controller-runtime/pkg/envtest/printer&quot;
 	logf &quot;sigs.k8s.io/controller-runtime/pkg/log&quot;
 	&quot;sigs.k8s.io/controller-runtime/pkg/log/zap&quot;
 
@@ -1942,7 +1992,7 @@ var k8sClient client.Client //  您将在你的测试代码中使用这个 clien
 var testEnv *envtest.Environment
 
 var _ = BeforeSuite(func(done Done) {
-	logf.SetLogger(zap.LoggerTo(GinkgoWriter, true))
+	logf.SetLogger(zap.New(zap.WriteTo(GinkgoWriter), zap.UseDevMode(true)))
 </code></pre>
 <p>首先， envtest 集群将从 Kubebuilder 为您生成的 CRD 目录下读取 CRD 信息。</p>
 <pre><code class="language-go">	By(&quot;bootstrapping test environment&quot;)
@@ -2012,7 +2062,7 @@ func TestAPIs(t *testing.T) {
 
 	RunSpecsWithDefaultAndCustomReporters(t,
 		&quot;Controller Suite&quot;,
-		[]Reporter{envtest.NewlineReporter{}})
+		[]Reporter{printer.NewlineReporter{}})
 }
 </code></pre>
 <p>现在，您已经在测试集群上运行了控制器，并且客户端已经准备好对 CronJob 执行操作，我们可以开始编写集成测试了!</p>
@@ -2062,7 +2112,7 @@ import (
 	// 定义对象名称、测试超时时间、持续时间以及测试间隔等常量。
 	const (
 		CronjobName      = &quot;test-cronjob&quot;
-		CronjobNamespace = &quot;test-cronjob-namespace&quot;
+		CronjobNamespace = &quot;default&quot;
 		JobName          = &quot;test-job&quot;
 
 		timeout  = time.Second * 10
@@ -2262,6 +2312,7 @@ Tutorial</a>，学习如何给项目添加新API。</p>
 </code></pre>
 <p>现在，让我们复制已经存在的类型，并做一些改变：</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/api/v2/cronjob_types.go">project/api/v2/cronjob_types.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -2420,6 +2471,7 @@ func init() {
 </details></div>
 <h2><a class="header" href="#存储版本" id="存储版本">存储版本</a></h2>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/api/v1/cronjob_types.go">project/api/v1/cronjob_types.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -2827,6 +2879,7 @@ func (dst *CronJob) ConvertFrom(srcRaw conversion.Hub) error {
 <p>来搭建起 webhook 设置。然而，当我们已经创建好默认和验证过的 webhook 时，我们就已经设置好 webhook。</p>
 <h2><a class="header" href="#webhook-设置" id="webhook-设置">Webhook 设置...</a></h2>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/api/v1/cronjob_webhook.go">project/api/v1/cronjob_webhook.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -2848,7 +2901,7 @@ import (
 	validationutils &quot;k8s.io/apimachinery/pkg/util/validation&quot;
 	&quot;k8s.io/apimachinery/pkg/util/validation/field&quot;
 	ctrl &quot;sigs.k8s.io/controller-runtime&quot;
-	logf &quot;sigs.k8s.io/controller-runtime/pkg/runtime/log&quot;
+	logf &quot;sigs.k8s.io/controller-runtime/pkg/log&quot;
 	&quot;sigs.k8s.io/controller-runtime/pkg/webhook&quot;
 )
 </code></pre>
@@ -2866,7 +2919,9 @@ import (
 }
 </code></pre>
 <details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Existing Defaulting and Validation</span></pre></summary>
-<pre><code class="language-go">var _ webhook.Defaulter = &amp;CronJob{}
+<pre><code class="language-go">// +kubebuilder:webhook:path=/mutate-batch-tutorial-kubebuilder-io-v1-cronjob,mutating=true,failurePolicy=fail,groups=batch.tutorial.kubebuilder.io,resources=cronjobs,verbs=create;update,versions=v1,name=mcronjob.kb.io
+
+var _ webhook.Defaulter = &amp;CronJob{}
 
 // Default 实现 webhook.Defaulter 使这类型的 webhook 被成功注册
 func (r *CronJob) Default() {
@@ -2964,6 +3019,7 @@ func (r *CronJob) validateCronJobName() *field.Error {
 <h2><a class="header" href="#以及-maingo" id="以及-maingo">...以及 <code>main.go</code></a></h2>
 <p>同样地，我们的 main 文件也已就绪：</p>
 <div class="literate"><cite class="literate-source"><a href="https://sigs.k8s.io/kubebuilder/docs/book/src/multiversion-tutorial/testdata/project/main.go">project/main.go</a></cite><details class="collapse-code"><summary class="hljs"><pre class="hljs"><span class="hljs-comment">Apache License</span></pre></summary>
+<p>Copyright 2020 The Kubernetes authors.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at</p>
@@ -2983,6 +3039,7 @@ import (
 
 	kbatchv1 &quot;k8s.io/api/batch/v1&quot;
 	&quot;k8s.io/apimachinery/pkg/runtime&quot;
+	utilruntime &quot;k8s.io/apimachinery/pkg/util/runtime&quot;
 	clientgoscheme &quot;k8s.io/client-go/kubernetes/scheme&quot;
 	_ &quot;k8s.io/client-go/plugin/pkg/client/auth/gcp&quot;
 	ctrl &quot;sigs.k8s.io/controller-runtime&quot;
@@ -3001,8 +3058,7 @@ import (
 )
 
 func init() {
-	_ = clientgoscheme.AddToScheme(scheme)
-
+	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 	_ = kbatchv1.AddToScheme(scheme) // 我们自己添加的
 	_ = batchv1.AddToScheme(scheme)
 	_ = batchv2.AddToScheme(scheme)
@@ -3017,7 +3073,8 @@ func init() {
 	var enableLeaderElection bool
 	flag.StringVar(&amp;metricsAddr, &quot;metrics-addr&quot;, &quot;:8080&quot;, &quot;The address the metric endpoint binds to.&quot;)
 	flag.BoolVar(&amp;enableLeaderElection, &quot;enable-leader-election&quot;, false,
-		&quot;Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.&quot;)
+		&quot;Enable leader election for controller manager. &quot;+
+			&quot;Enabling this will ensure there is only one active controller manager.&quot;)
 	flag.Parse()
 
 	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
@@ -3025,7 +3082,9 @@ func init() {
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:             scheme,
 		MetricsBindAddress: metricsAddr,
+		Port:               9443,
 		LeaderElection:     enableLeaderElection,
+		LeaderElectionID:   &quot;80807133.tutorial.kubebuilder.io&quot;,
 	})
 	if err != nil {
 		setupLog.Error(err, &quot;unable to start manager&quot;)
@@ -3034,17 +3093,21 @@ func init() {
 
 	if err = (&amp;controllers.CronJobReconciler{
 		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName(&quot;controllers&quot;).WithName(&quot;Captain&quot;),
-		Scheme: mgr.GetScheme(), // we've added this ourselves
+		Log:    ctrl.Log.WithName(&quot;controllers&quot;).WithName(&quot;CronJob&quot;),
+		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, &quot;unable to create controller&quot;, &quot;controller&quot;, &quot;Captain&quot;)
+		setupLog.Error(err, &quot;unable to create controller&quot;, &quot;controller&quot;, &quot;CronJob&quot;)
 		os.Exit(1)
 	}
 </code></pre>
 </details>
 <p>我们现在调用 SetupWebhookWithManager 来注册我们的 conversion webhook 到管理器，如此。</p>
 <pre><code class="language-go">	if err = (&amp;batchv1.CronJob{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, &quot;unable to create webhook&quot;, &quot;webhook&quot;, &quot;Captain&quot;)
+		setupLog.Error(err, &quot;unable to create webhook&quot;, &quot;webhook&quot;, &quot;CronJob&quot;)
+		os.Exit(1)
+	}
+	if err = (&amp;batchv2.CronJob{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, &quot;unable to create webhook&quot;, &quot;webhook&quot;, &quot;CronJob&quot;)
 		os.Exit(1)
 	}
 	// +kubebuilder:scaffold:builder
@@ -3114,7 +3177,6 @@ spec:
             - -c
             - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
-
 </code></pre>
 <p>然后，我们可以在集群中创建它：</p>
 <pre><code class="language-shell">kubectl apply -f config/samples/batch_v2_cronjob.yaml
@@ -3143,7 +3205,6 @@ spec:
             - -c
             - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
-
 </code></pre>
 <p>v1 资源</p>
 <pre><code class="language-shell">kubectl get cronjobs.v1.batch.tutorial.kubebuilder.io -o yaml
@@ -3168,7 +3229,6 @@ spec:
             - -c
             - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
-
 </code></pre>
 <p>两者都应填写，并分别看起来等同于的 v2 和 v1 示例。注意，每个都有不同的 API 版本。</p>
 <p>最后，如果稍等片刻，我们应该注意到，即使我们的控制器是根据 v1 API 版本编写的，我们的 CronJob 仍在继续协调。</p>
@@ -3250,7 +3310,7 @@ group-version-resource。为此，它使用 <em>discovery API</em> 来找出 <co
 <p>迁移 v1 项目的推荐方法是创建一个新的 v2 项目，然后将 API 和 reconciliation 代码拷贝过来。
 这种转换就像一个原生的 v2 项目。然后，在某些情况下，是可以进行就地升级的（比如，复用 v1 项目
 的层级结构，升级 controller-runtime 和 controller-tools）。</p>
-<p>让我们来看一个<a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/migration/testdata/gopath/project-v1">v1 项目例子</a>并且将其迁移至 Kubebuilder v2。最后，我们会有一些
+<p>让我们来看一个[v1 项目例子][v1-project]并且将其迁移至 Kubebuilder v2。最后，我们会有一些
 东西看起来像<a href="https://github.com/kubernetes-sigs/kubebuilder/tree/master/docs/book/src/cronjob-tutorial/testdata/project">v2 项目例子</a>。</p>
 <h2><a class="header" href="#准备" id="准备">准备</a></h2>
 <p>我们将需要明确 group，vresion，kind 和 domain 都是什么。</p>
@@ -3403,8 +3463,7 @@ mv controllers/* controllers/batch/
 <p>最后，我们将运行在项目中启用 Multi-group 模式的命令：</p>
 <pre><code>kubebuilder edit --multigroup=true
 </code></pre>
-<p>执行 <code>kubebuilder edit --multigroup=true</code> 命令后，KubeBuilder 将会在 <code>PROJECT</code> 中新增一行，标记该项目是一个 Multi-group 项目:
-</p>
+<p>执行 <code>kubebuilder edit --multigroup=true</code> 命令后，KubeBuilder 将会在 <code>PROJECT</code> 中新增一行，标记该项目是一个 Multi-group 项目:</p>
 <pre><code class="language-yaml">version: &quot;2&quot;
 domain: tutorial.kubebuilder.io
 repo: tutorial.kubebuilder.io/project
@@ -3648,7 +3707,6 @@ import (
 				// 以便可以重试
 				return ctrl.Result{}, err
 			}
-
 			// 从列表中删除我们的 finalizer 并进行更新。
 			cronJob.ObjectMeta.Finalizers = removeString(cronJob.ObjectMeta.Finalizers, myFinalizerName)
 			if err := r.Update(context.Background(), cronJob); err != nil {
@@ -3701,14 +3759,7 @@ func removeString(slice []string, s string) (result []string) {
 <pre><code class="language-bash">kind create cluster
 </code></pre>
 <p>要定制你的集群，你可以提供额外的配置。比如，下面的例子是一个 <code>kind</code> 配置的例子。</p>
-<pre><code class="language-yaml">kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-  - role: control-plane
-  - role: worker
-  - role: worker
-  - role: worker
-
+<pre><code class="language-yaml">{{#include ../cronjob-tutorial/testdata/project/hack/kind-config.yaml}}
 </code></pre>
 <p>使用上面的配置来运行下面的命令会创建一个 k8s v1.17.2 的集群，包含了 1 个 master 节点和 3 个 worker 节点。</p>
 <pre><code class="language-bash">kind create cluster --config hack/kind-config.yaml --image=kindest/node:v1.17.2
@@ -3857,19 +3908,19 @@ Strings, ints, and bools follow their Go syntax:</p>
 <h1><a class="header" href="#crd-生成" id="crd-生成">CRD 生成</a></h1>
 <p>这些标记描述了如何从一系列 Go 类型和包中构建出一个 CRD。而<a href="reference/markers/./crd-validation.html">验证标记</a>则描述了实际验证模式的生成。</p>
 <p>从 <a href="reference/markers//reference/generating-crd.html">生成 CRDs</a> 查看示例。</p>
-<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CRD"></input><label class="markers-summarize" for="markers-summarize-CRD">Show Detailed Argument Help</label><dl class="markers"><div class="anonymous marker" data-target="package"><dt class="literal name">groupName</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the API group name for this package.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:printcolumn</dt><dd class="args"><dl class="args summary"><dt class="argument literal">JSONPath</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="argument literal optional">description</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">format</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal">name</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="literal optional argument">priority</dt><dd class="argument type optional"><span class="optional">int</span></dd><dt class="argument literal">type</dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">adds a column to &#34;kubectl get&#34; output for this CRD.</summary></details><dl class="args"><dt class="argument literal">JSONPath</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the jsonpath expression used to extract the value of the column.</summary></details></dd><dt class="argument literal optional">description</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the help/description for this column.</summary></details></dd><dt class="argument literal optional">format</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">specifies the format of the column. </summary>
+<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CRD"></input><label class="markers-summarize" for="markers-summarize-CRD">Show Detailed Argument Help</label><dl class="markers"><div class="marker anonymous" data-target="package"><dt class="literal name">groupName</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the API group name for this package.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:printcolumn</dt><dd class="args"><dl class="args summary"><dt class="argument literal">JSONPath</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="literal optional argument">description</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">format</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal">name</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="literal optional argument">priority</dt><dd class="argument type optional"><span class="optional">int</span></dd><dt class="argument literal">type</dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">adds a column to &#34;kubectl get&#34; output for this CRD.</summary></details><dl class="args"><dt class="argument literal">JSONPath</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the jsonpath expression used to extract the value of the column.</summary></details></dd><dt class="argument literal optional">description</dt><dd class="optional argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the help/description for this column.</summary></details></dd><dt class="argument literal optional">format</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">specifies the format of the column. </summary>
 <p>It may be any OpenAPI data format corresponding to the type, listed at https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types.</p>
 </details></dd><dt class="argument literal">name</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the name of the column.</summary></details></dd><dt class="argument literal optional">priority</dt><dd class="argument type optional"><span class="optional">int</span></dd><dd class="description"><details ><summary class="">indicates how important it is that this column be displayed. </summary>
 <p>Lower priority (<em>higher</em> numbered) columns will be hidden if the terminal width is too small.</p>
-</details></dd><dt class="argument literal">type</dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">indicates the type of the column. </summary>
+</details></dd><dt class="argument literal">type</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">indicates the type of the column. </summary>
 <p>It may be any OpenAPI data type listed at https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types.</p>
-</details></dd></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:resource</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">categories</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="argument literal optional">path</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">scope</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">shortName</dt><dd class="optional argument type"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="argument literal optional">singular</dt><dd class="optional argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">configures naming and scope for a CRD.</summary></details><dl class="args"><dt class="literal optional argument">categories</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies which group aliases this resource is part of. </summary>
+</details></dd></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:resource</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">categories</dt><dd class="optional argument type"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="literal optional argument">path</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">scope</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">shortName</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="literal optional argument">singular</dt><dd class="optional argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">configures naming and scope for a CRD.</summary></details><dl class="args"><dt class="argument literal optional">categories</dt><dd class="optional argument type"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies which group aliases this resource is part of. </summary>
 <p>Group aliases are used to work with groups of resources at once. The most common one is “all“ which covers about a third of the base resources in Kubernetes, and is generally used for “user-facing“ resources.</p>
-</details></dd><dt class="literal optional argument">path</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">specifies the plural &#34;resource&#34; for this CRD. </summary>
+</details></dd><dt class="optional argument literal">path</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">specifies the plural &#34;resource&#34; for this CRD. </summary>
 <p>It generally corresponds to a plural, lower-cased version of the Kind. See https://book.kubebuilder.io/cronjob-tutorial/gvks.html.</p>
-</details></dd><dt class="literal optional argument">scope</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">overrides the scope of the CRD (Cluster vs Namespaced). </summary>
+</details></dd><dt class="argument literal optional">scope</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">overrides the scope of the CRD (Cluster vs Namespaced). </summary>
 <p>Scope defaults to “Namespaced“.  Cluster-scoped (“Cluster“) resources don‘t exist in namespaces.</p>
-</details></dd><dt class="argument literal optional">shortName</dt><dd class="type optional argument"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies aliases for this CRD. </summary>
+</details></dd><dt class="literal optional argument">shortName</dt><dd class="optional argument type"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies aliases for this CRD. </summary>
 <p>Short names are often used when people have work with your resource over and over again.  For instance, “rs“ for “replicaset“ or “crd“ for customresourcedefinition.</p>
 </details></dd><dt class="argument literal optional">singular</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">overrides the singular form of your resource. </summary>
 <p>The singular form is otherwise defaulted off the plural (path).</p>
@@ -3877,9 +3928,9 @@ Strings, ints, and bools follow their Go syntax:</p>
 <p>This is useful if you need to skip generating and listing version entries for ‘internal‘ resource versions, which typically exist if using the Kubernetes upstream conversion-gen tool.</p>
 </details><dl class="args"></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:storageversion</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">marks this version as the &#34;storage version&#34; for the CRD for conversion. </summary>
 <p>When conversion is enabled for a CRD (i.e. it‘s not a trivial-versions/single-version CRD), one version is set as the “storage version“ to be stored in etcd.  Attempting to store any other version will result in conversion to the storage version via a conversion webhook.</p>
-</details><dl class="args"></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:subresource:scale</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">selectorpath</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal">specpath</dt><dd class="type argument"><span class="optional">string</span></dd><dt class="argument literal">statuspath</dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables the &#34;/scale&#34; subresource on a CRD.</summary></details><dl class="args"><dt class="argument literal optional">selectorpath</dt><dd class="optional argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">specifies the jsonpath to the pod label selector field for the scale&#39;s status. </summary>
+</details><dl class="args"></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:subresource:scale</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">selectorpath</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal">specpath</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="argument literal">statuspath</dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables the &#34;/scale&#34; subresource on a CRD.</summary></details><dl class="args"><dt class="optional argument literal">selectorpath</dt><dd class="type optional argument"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">specifies the jsonpath to the pod label selector field for the scale&#39;s status. </summary>
 <p>The selector field must be the <em>string</em> form (serialized form) of a selector. Setting a pod label selector is necessary for your type to work with the HorizontalPodAutoscaler.</p>
-</details></dd><dt class="argument literal">specpath</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the jsonpath to the replicas field for the scale&#39;s spec.</summary></details></dd><dt class="argument literal">statuspath</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the jsonpath to the replicas field for the scale&#39;s status.</summary></details></dd></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:subresource:status</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">enables the &#34;/status&#34; subresource on a CRD.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:unservedversion</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">does not serve this version. </summary>
+</details></dd><dt class="argument literal">specpath</dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the jsonpath to the replicas field for the scale&#39;s spec.</summary></details></dd><dt class="literal argument">statuspath</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the jsonpath to the replicas field for the scale&#39;s status.</summary></details></dd></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:subresource:status</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">enables the &#34;/status&#34; subresource on a CRD.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:unservedversion</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">does not serve this version. </summary>
 <p>This is useful if you need to drop support for a version in favor of a newer version.</p>
 </details><dl class="args"></dl></dd></div><div class="marker anonymous" data-target="package"><dt class="literal name">versionName</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">overrides the API group version for this package (defaults to the package name).</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div></dl></div>
 <h1><a class="header" href="#crd-validation" id="crd-validation">CRD Validation</a></h1>
@@ -3888,21 +3939,21 @@ types and fields they modify.  Each corresponds roughly to an OpenAPI/JSON
 schema option.
 这些标记修改了如何为其修改的类型和字段生成 CRD 验证框架。每个标记大致对应一个 OpenAPI/JSON 模式选项。</p>
 <p>有关示例，请参见<a href="reference/markers//reference/generating-crd.html">生成 CRDs</a>。</p>
-<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CRD-validation"></input><label class="markers-summarize" for="markers-summarize-CRD-validation">Show Detailed Argument Help</label><dl class="markers"><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:default</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">any</span></dd></dl></dd><dd class="description"><details ><summary class="">sets the default value for this field. </summary>
+<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CRD-validation"></input><label class="markers-summarize" for="markers-summarize-CRD-validation">Show Detailed Argument Help</label><dl class="markers"><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:default</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">any</span></dd></dl></dd><dd class="description"><details ><summary class="">sets the default value for this field. </summary>
 <p>A default value will be accepted as any value valid for the field. Formatting for common types include: boolean: <code>true</code>, string: <code>Cluster</code>, numerical: <code>1.24</code>, array: <code>{1,2}</code>, object: <code>{policy: &amp;#34;delete&amp;#34;}</code>). Defaults should be defined in pruned form, and only best-effort validation will be performed. Full validation of a default requires submission of the containing CRD to an apiserver.</p>
 </details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">any</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">kubebuilder:validation:EmbeddedResource</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">EmbeddedResource marks a fields as an embedded resource with apiVersion, kind and metadata fields. </summary>
 <p>An embedded resource is a value that has apiVersion, kind and metadata fields. They are validated implicitly according to the semantics of the currently running apiserver. It is not necessary to add any additional schema for these field, yet it is possible. This can be combined with PreserveUnknownFields.</p>
-</details><dl class="args"></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Enum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">any</span></span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this (scalar) field is restricted to the *exact* values specified here.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">any</span></span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Enum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">any</span></span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this (scalar) field is restricted to the *exact* values specified here.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">any</span></span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:ExclusiveMaximum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">indicates that the maximum is &#34;up to&#34; but not including that value.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:validation:ExclusiveMaximum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">indicates that the maximum is &#34;up to&#34; but not including that value.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:validation:ExclusiveMinimum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">indicates that the minimum is &#34;up to&#34; but not including that value.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">kubebuilder:validation:ExclusiveMinimum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">indicates that the minimum is &#34;up to&#34; but not including that value.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Format</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies additional &#34;complex&#34; formatting for this field. </summary>
+</details><dl class="args"></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:validation:Enum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">any</span></span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this (scalar) field is restricted to the *exact* values specified here.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">any</span></span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Enum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">any</span></span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this (scalar) field is restricted to the *exact* values specified here.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">any</span></span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:ExclusiveMaximum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">indicates that the maximum is &#34;up to&#34; but not including that value.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">kubebuilder:validation:ExclusiveMaximum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">indicates that the maximum is &#34;up to&#34; but not including that value.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:validation:ExclusiveMinimum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">indicates that the minimum is &#34;up to&#34; but not including that value.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">kubebuilder:validation:ExclusiveMinimum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">indicates that the minimum is &#34;up to&#34; but not including that value.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Format</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies additional &#34;complex&#34; formatting for this field. </summary>
 <p>For example, a date-time field would be marked as “type: string“ and “format: date-time“.</p>
-</details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Format</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies additional &#34;complex&#34; formatting for this field. </summary>
+</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:validation:Format</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies additional &#34;complex&#34; formatting for this field. </summary>
 <p>For example, a date-time field would be marked as “type: string“ and “format: date-time“.</p>
-</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:validation:MaxItems</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="type argument"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum length for this list.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">kubebuilder:validation:MaxItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum length for this list.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:MaxLength</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum length for this string.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MaxLength</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum length for this string.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Maximum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum numeric value that this field can have.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Maximum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum numeric value that this field can have.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MinItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimun length for this list.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:MinItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimun length for this list.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MinLength</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimum length for this string.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:MinLength</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimum length for this string.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Minimum</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimum numeric value that this field can have.</summary></details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Minimum</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="type argument"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimum numeric value that this field can have.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MultipleOf</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this field must have a numeric value that&#39;s a multiple of this one.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:MultipleOf</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this field must have a numeric value that&#39;s a multiple of this one.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">kubebuilder:validation:Optional</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">specifies that all fields in this package are optional by default.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">kubebuilder:validation:Optional</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this field is optional, if fields are required by default.</summary></details><dl class="args"></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Pattern</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this string must match the given regular expression.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Pattern</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this string must match the given regular expression.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">kubebuilder:validation:Required</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this field is required, if fields are optional by default.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">kubebuilder:validation:Required</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">specifies that all fields in this package are required by default.</summary></details><dl class="args"></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Type</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">overrides the type for this field (which defaults to the equivalent of the Go type). </summary>
+</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">kubebuilder:validation:MaxItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum length for this list.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MaxItems</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum length for this list.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MaxLength</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum length for this string.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:MaxLength</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum length for this string.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Maximum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum numeric value that this field can have.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Maximum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the maximum numeric value that this field can have.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MinItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimun length for this list.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:MinItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimun length for this list.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MinLength</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimum length for this string.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:MinLength</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimum length for this string.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">kubebuilder:validation:Minimum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimum numeric value that this field can have.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Minimum</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies the minimum numeric value that this field can have.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:MultipleOf</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this field must have a numeric value that&#39;s a multiple of this one.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:MultipleOf</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this field must have a numeric value that&#39;s a multiple of this one.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">int</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">kubebuilder:validation:Optional</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">specifies that all fields in this package are optional by default.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">kubebuilder:validation:Optional</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this field is optional, if fields are required by default.</summary></details><dl class="args"></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Pattern</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this string must match the given regular expression.</summary></details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Pattern</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this string must match the given regular expression.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">kubebuilder:validation:Required</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">specifies that this field is required, if fields are optional by default.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">kubebuilder:validation:Required</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">specifies that all fields in this package are required by default.</summary></details><dl class="args"></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:Type</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">overrides the type for this field (which defaults to the equivalent of the Go type). </summary>
 <p>This generally must be paired with custom serialization.  For example, the metav1.Time field would be marked as “type: string“ and “format: date-time“.</p>
-</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:Type</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">overrides the type for this field (which defaults to the equivalent of the Go type). </summary>
+</details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:validation:Type</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">overrides the type for this field (which defaults to the equivalent of the Go type). </summary>
 <p>This generally must be paired with custom serialization.  For example, the metav1.Time field would be marked as “type: string“ and “format: date-time“.</p>
-</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:UniqueItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that all items in this list must be unique.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">kubebuilder:validation:UniqueItems</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that all items in this list must be unique.</summary></details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">kubebuilder:validation:XEmbeddedResource</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">EmbeddedResource marks a fields as an embedded resource with apiVersion, kind and metadata fields. </summary>
+</details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:validation:UniqueItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that all items in this list must be unique.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">kubebuilder:validation:UniqueItems</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies that all items in this list must be unique.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:validation:XEmbeddedResource</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">EmbeddedResource marks a fields as an embedded resource with apiVersion, kind and metadata fields. </summary>
 <p>An embedded resource is a value that has apiVersion, kind and metadata fields. They are validated implicitly according to the semantics of the currently running apiserver. It is not necessary to add any additional schema for these field, yet it is possible. This can be combined with PreserveUnknownFields.</p>
-</details><dl class="args"></dl></dd></div><div class="marker" data-target="type"><dt class="literal name">kubebuilder:validation:XEmbeddedResource</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">EmbeddedResource marks a fields as an embedded resource with apiVersion, kind and metadata fields. </summary>
+</details><dl class="args"></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">kubebuilder:validation:XEmbeddedResource</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">EmbeddedResource marks a fields as an embedded resource with apiVersion, kind and metadata fields. </summary>
 <p>An embedded resource is a value that has apiVersion, kind and metadata fields. They are validated implicitly according to the semantics of the currently running apiserver. It is not necessary to add any additional schema for these field, yet it is possible. This can be combined with PreserveUnknownFields.</p>
 </details><dl class="args"></dl></dd></div><div class="marker" data-target="field"><dt class="literal name">nullable</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">marks this field as allowing the &#34;null&#34; value. </summary>
 <p>This is often not necessary, but may be helpful with custom serialization.</p>
@@ -3918,20 +3969,20 @@ schema option.
 <p>By default the apiserver drops unknown fields from the request payload during the decoding step. This marker stops the API server from doing so. It affects fields recursively, but switches back to normal pruning behaviour if nested  properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.</p>
 </details><dl class="args"></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">listMapKey</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the keys to map listTypes. </summary>
 <p>It indicates the index of a map list. They can be repeated if multiple keys must be used. It can only be used when ListType is set to map, and the keys should be scalar types.</p>
-</details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">listType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the type of data-structure that the list represents (map, set, atomic). </summary>
+</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">listType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the type of data-structure that the list represents (map, set, atomic). </summary>
 <p>Possible data-structure types of a list are: </p>
 <ul>
 <li>“map“: it needs to have a key field, which will be used to build an   associative list. A typical example is a the pod container list,   which is indexed by the container name. </li>
 <li>“set“: Fields need to be “scalar“, and there can be only one   occurrence of each. </li>
 <li>“atomic“: All the fields in the list are treated as a single value,   are typically manipulated together by the same actor.</li>
 </ul>
-</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">mapType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the level of atomicity of the map; i.e. whether each item in the map is independent of the others, or all fields are treated as a single unit. </summary>
+</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">mapType</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="type argument"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the level of atomicity of the map; i.e. whether each item in the map is independent of the others, or all fields are treated as a single unit. </summary>
 <p>Possible values: </p>
 <ul>
 <li>“granular“: items in the map are independent of each other,   and can be manipulated by different actors.   This is the default behavior. </li>
 <li>“atomic“: all fields are treated as one unit.   Any changes have to replace the entire map.</li>
 </ul>
-</details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="field"><dt class="literal name">structType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the level of atomicity of the struct; i.e. whether each field in the struct is independent of the others, or all fields are treated as a single unit. </summary>
+</details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="field"><dt class="literal name">structType</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">specifies the level of atomicity of the struct; i.e. whether each field in the struct is independent of the others, or all fields are treated as a single unit. </summary>
 <p>Possible values: </p>
 <ul>
 <li>“granular“: fields in the struct are independent of each other,   and can be manipulated by different actors.   This is the default behavior. </li>
@@ -3941,23 +3992,23 @@ schema option.
 <h1><a class="header" href="#webhook-1" id="webhook-1">Webhook</a></h1>
 <p>这些标记描述了<a href="reference/markers/../webhook-overview.html">webhook配置</a>如何生成。
 使用这些使你的 webhook 描述与实现它们的代码保持一致。</p>
-<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-Webhook"></input><label class="markers-summarize" for="markers-summarize-Webhook">Show Detailed Argument Help</label><dl class="markers"><div class="marker" data-target="package"><dt class="literal name">kubebuilder:webhook</dt><dd class="args"><dl class="args summary"><dt class="argument literal">failurePolicy</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="argument literal">groups</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dt class="argument literal optional">matchPolicy</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal">mutating</dt><dd class="argument type"><span class="optional">bool</span></dd><dt class="argument literal">name</dt><dd class="type argument"><span class="optional">string</span></dd><dt class="argument literal">path</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="literal argument">resources</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dt class="argument literal optional">sideEffects</dt><dd class="type optional argument"><span class="optional">string</span></dd><dt class="argument literal">verbs</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dt class="argument literal">versions</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd></dl></dd><dd class="description"><details ><summary class="">specifies how a webhook should be served. </summary>
+<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-Webhook"></input><label class="markers-summarize" for="markers-summarize-Webhook">Show Detailed Argument Help</label><dl class="markers"><div class="marker" data-target="package"><dt class="literal name">kubebuilder:webhook</dt><dd class="args"><dl class="args summary"><dt class="argument literal">failurePolicy</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="argument literal">groups</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dt class="argument literal optional">matchPolicy</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal">mutating</dt><dd class="argument type"><span class="optional">bool</span></dd><dt class="literal argument">name</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="argument literal">path</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="argument literal">resources</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dt class="optional argument literal">sideEffects</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal">verbs</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dt class="argument literal">versions</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd></dl></dd><dd class="description"><details ><summary class="">specifies how a webhook should be served. </summary>
 <p>It specifies only the details that are intrinsic to the application serving it (e.g. the resources it can handle, or the path it serves on).</p>
 </details><dl class="args"><dt class="argument literal">failurePolicy</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="">specifies what should happen if the API server cannot reach the webhook. </summary>
 <p>It may be either “ignore“ (to skip the webhook and continue on) or “fail“ (to reject the object in question).</p>
-</details></dd><dt class="literal argument">groups</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API groups that this webhook receives requests for.</summary></details></dd><dt class="argument literal optional">matchPolicy</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">defines how the &#34;rules&#34; list is used to match incoming requests. Allowed values are &#34;Exact&#34; (match only if it exactly matches the specified rule) or &#34;Equivalent&#34; (match a request if it modifies a resource listed in rules, even via another API group or version).</summary></details></dd><dt class="argument literal">mutating</dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"><details ><summary class="">marks this as a mutating webhook (it&#39;s validating only if false) </summary>
+</details></dd><dt class="literal argument">groups</dt><dd class="type argument"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API groups that this webhook receives requests for.</summary></details></dd><dt class="argument literal optional">matchPolicy</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">defines how the &#34;rules&#34; list is used to match incoming requests. Allowed values are &#34;Exact&#34; (match only if it exactly matches the specified rule) or &#34;Equivalent&#34; (match a request if it modifies a resource listed in rules, even via another API group or version).</summary></details></dd><dt class="argument literal">mutating</dt><dd class="type argument"><span class="optional">bool</span></dd><dd class="description"><details ><summary class="">marks this as a mutating webhook (it&#39;s validating only if false) </summary>
 <p>Mutating webhooks are allowed to change the object in their response, and are called <em>before</em> all validating webhooks.  Mutating webhooks may choose to reject an object, similarly to a validating webhook.</p>
-</details></dd><dt class="literal argument">name</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">indicates the name of this webhook configuration. Should be a domain with at least three segments separated by dots</summary></details></dd><dt class="argument literal">path</dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies that path that the API server should connect to this webhook on. Must be prefixed with a &#39;/validate-&#39; or &#39;/mutate-&#39; depending on the type, and followed by $GROUP-$VERSION-$KIND where all values are lower-cased and the periods in the group are substituted for hyphens. For example, a validating webhook path for type batch.tutorial.kubebuilder.io/v1,Kind=CronJob would be /validate-batch-tutorial-kubebuilder-io-v1-cronjob</summary></details></dd><dt class="argument literal">resources</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API resources that this webhook receives requests for.</summary></details></dd><dt class="argument literal optional">sideEffects</dt><dd class="optional argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specify whether calling the webhook will have side effects. This has an impact on dry runs and `kubectl diff`: if the sideEffect is &#34;Unknown&#34; (the default) or &#34;Some&#34;, then the API server will not call the webhook on a dry-run request and fails instead. If the value is &#34;None&#34;, then the webhook has no side effects and the API server will call it on dry-run. If the value is &#34;NoneOnDryRun&#34;, then the webhook is responsible for inspecting the &#34;dryRun&#34; property of the AdmissionReview sent in the request, and avoiding side effects if that value is &#34;true.&#34;</summary></details></dd><dt class="argument literal">verbs</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies the Kubernetes API verbs that this webhook receives requests for. </summary>
+</details></dd><dt class="argument literal">name</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">indicates the name of this webhook configuration. Should be a domain with at least three segments separated by dots</summary></details></dd><dt class="argument literal">path</dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies that path that the API server should connect to this webhook on. Must be prefixed with a &#39;/validate-&#39; or &#39;/mutate-&#39; depending on the type, and followed by $GROUP-$VERSION-$KIND where all values are lower-cased and the periods in the group are substituted for hyphens. For example, a validating webhook path for type batch.tutorial.kubebuilder.io/v1,Kind=CronJob would be /validate-batch-tutorial-kubebuilder-io-v1-cronjob</summary></details></dd><dt class="argument literal">resources</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API resources that this webhook receives requests for.</summary></details></dd><dt class="argument literal optional">sideEffects</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specify whether calling the webhook will have side effects. This has an impact on dry runs and `kubectl diff`: if the sideEffect is &#34;Unknown&#34; (the default) or &#34;Some&#34;, then the API server will not call the webhook on a dry-run request and fails instead. If the value is &#34;None&#34;, then the webhook has no side effects and the API server will call it on dry-run. If the value is &#34;NoneOnDryRun&#34;, then the webhook is responsible for inspecting the &#34;dryRun&#34; property of the AdmissionReview sent in the request, and avoiding side effects if that value is &#34;true.&#34;</summary></details></dd><dt class="argument literal">verbs</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies the Kubernetes API verbs that this webhook receives requests for. </summary>
 <p>Only modification-like verbs may be specified. May be “create“, “update“, “delete“, “connect“, or “*“ (for all).</p>
 </details></dd><dt class="argument literal">versions</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API versions that this webhook receives requests for.</summary></details></dd></dl></dd></div></dl></div>
 <h1><a class="header" href="#objectdeepcopy" id="objectdeepcopy">Object/DeepCopy</a></h1>
 <p>这些标记控制何时生成 <code>DeepCopy</code> 和 <code>runtime.Object</code> 实现方法。</p>
-<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-object"></input><label class="markers-summarize" for="markers-summarize-object">Show Detailed Argument Help</label><dl class="markers"><div class="marker deprecated anonymous" data-target="package" data-deprecated="kubebuilder:object:generate"><dt class="literal name">k8s:deepcopy-gen</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">raw</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables or disables object interface &amp; deepcopy implementation generation for this package</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">raw</span></dd><dd class="description"></dd></dl></dd></div><div class="marker deprecated anonymous" data-target="type" data-deprecated="kubebuilder:object:generate"><dt class="literal name">k8s:deepcopy-gen</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">raw</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">overrides enabling or disabling deepcopy generation for this type</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">raw</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker deprecated" data-target="type" data-deprecated="kubebuilder:object:root"><dt class="literal name">k8s:deepcopy-gen:interfaces</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables object interface implementation generation for this type</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="package"><dt class="literal name">kubebuilder:object:generate</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables or disables object interface &amp; deepcopy implementation generation for this package</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:object:generate</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">overrides enabling or disabling deepcopy generation for this type</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="anonymous marker" data-target="type"><dt class="literal name">kubebuilder:object:root</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables object interface implementation generation for this type</summary></details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div></dl></div>
+<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-object"></input><label class="markers-summarize" for="markers-summarize-object">Show Detailed Argument Help</label><dl class="markers"><div class="anonymous marker deprecated" data-target="package" data-deprecated="kubebuilder:object:generate"><dt class="literal name">k8s:deepcopy-gen</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">raw</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables or disables object interface &amp; deepcopy implementation generation for this package</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">raw</span></dd><dd class="description"></dd></dl></dd></div><div class="marker deprecated anonymous" data-target="type" data-deprecated="kubebuilder:object:generate"><dt class="literal name">k8s:deepcopy-gen</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">raw</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">overrides enabling or disabling deepcopy generation for this type</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">raw</span></dd><dd class="description"></dd></dl></dd></div><div class="marker deprecated anonymous" data-target="type" data-deprecated="kubebuilder:object:root"><dt class="literal name">k8s:deepcopy-gen:interfaces</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables object interface implementation generation for this type</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="package"><dt class="literal name">kubebuilder:object:generate</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables or disables object interface &amp; deepcopy implementation generation for this package</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:object:generate</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">overrides enabling or disabling deepcopy generation for this type</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div><div class="marker anonymous" data-target="type"><dt class="literal name">kubebuilder:object:root</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">enables object interface implementation generation for this type</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">bool</span></dd><dd class="description"></dd></dl></dd></div></dl></div>
 <h1><a class="header" href="#rbac" id="rbac">RBAC</a></h1>
 <p>这些标签会导致生成一个 <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole">RBAC 的 ClusterRole</a>。这可以让您描述控制器所需要的权限，以及使用这些权限的代码。</p>
-<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-RBAC"></input><label class="markers-summarize" for="markers-summarize-RBAC">Show Detailed Argument Help</label><dl class="markers"><div class="marker" data-target="package"><dt class="literal name">kubebuilder:rbac</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">groups</dt><dd class="optional argument type"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="optional argument literal">namespace</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">resourceNames</dt><dd class="optional argument type"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="optional argument literal">resources</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="argument literal optional">urls</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="literal argument">verbs</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies an RBAC rule to all access to some resources or non-resource URLs.</summary></details><dl class="args"><dt class="argument literal optional">groups</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API groups that this rule encompasses.</summary></details></dd><dt class="argument literal optional">namespace</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the scope of the Rule. If not set, the Rule belongs to the generated ClusterRole. If set, the Rule belongs to a Role, whose namespace is specified by this field.</summary></details></dd><dt class="literal optional argument">resourceNames</dt><dd class="argument type optional"><span class="optional slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies the names of the API resources that this rule encompasses. </summary>
+<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-RBAC"></input><label class="markers-summarize" for="markers-summarize-RBAC">Show Detailed Argument Help</label><dl class="markers"><div class="marker" data-target="package"><dt class="literal name">kubebuilder:rbac</dt><dd class="args"><dl class="args summary"><dt class="literal optional argument">groups</dt><dd class="type optional argument"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="argument literal optional">namespace</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">resourceNames</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="argument literal optional">resources</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="argument literal optional">urls</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="literal argument">verbs</dt><dd class="type argument"><span class="slice"><span class="optional">string</span></span></dd></dl></dd><dd class="description"><details ><summary class="no-details">specifies an RBAC rule to all access to some resources or non-resource URLs.</summary></details><dl class="args"><dt class="optional argument literal">groups</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API groups that this rule encompasses.</summary></details></dd><dt class="argument literal optional">namespace</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the scope of the Rule. If not set, the Rule belongs to the generated ClusterRole. If set, the Rule belongs to a Role, whose namespace is specified by this field.</summary></details></dd><dt class="argument literal optional">resourceNames</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies the names of the API resources that this rule encompasses. </summary>
 <p>Create requests cannot be restricted by resourcename, as the object‘s name is not known at authorization time.</p>
-</details></dd><dt class="argument literal optional">resources</dt><dd class="optional argument type"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API resources that this rule encompasses.</summary></details></dd><dt class="literal optional argument">urls</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">URL specifies the non-resource URLs that this rule encompasses.</summary></details></dd><dt class="argument literal">verbs</dt><dd class="type argument"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the (lowercase) kubernetes API verbs that this rule encompasses.</summary></details></dd></dl></dd></div></dl></div>
+</details></dd><dt class="literal optional argument">resources</dt><dd class="optional argument type"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the API resources that this rule encompasses.</summary></details></dd><dt class="argument literal optional">urls</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">URL specifies the non-resource URLs that this rule encompasses.</summary></details></dd><dt class="argument literal">verbs</dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="no-details">specifies the (lowercase) kubernetes API verbs that this rule encompasses.</summary></details></dd></dl></dd></div></dl></div>
 <h1><a class="header" href="#controller-gen-cli" id="controller-gen-cli">controller-gen CLI</a></h1>
 <p>KubeBuilder 使用了一个称为 <a href="https://sigs.k8s.io/controller-tools/cmd/controller-gen">controller-gen</a>
 用于生成通用代码和 Kubernetes YAML。 代码和配置的生成规则是被 Go 代码中的一些特殊<a href="reference//reference/markers.html">标记注释</a>控制的。</p>
@@ -3971,22 +4022,22 @@ RBAC 规则默认输出到(<code>config/rbac</code>)。 主要考虑到当前目
 (按照 go <code>...</code> 的通配符规则)。</p>
 <h2><a class="header" href="#生成器" id="生成器">生成器</a></h2>
 <p>每个不同的生成器都是通过 CLI 选项配置的。controller-gen 一次运行也可以指定多个生成器。</p>
-<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CLI:-generators"></input><label class="markers-summarize" for="markers-summarize-CLI:-generators">Show Detailed Argument Help</label><dl class="markers"><div class="marker" data-target="package"><dt class="literal name">webhook</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">generates (partial) {Mutating,Validating}WebhookConfiguration objects.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">schemapatch</dt><dd class="args"><dl class="args summary"><dt class="argument literal">manifests</dt><dd class="type argument"><span class="optional">string</span></dd><dt class="argument literal optional">maxDescLen</dt><dd class="type optional argument"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="">patches existing CRDs with new schemata. </summary>
+<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CLI:-generators"></input><label class="markers-summarize" for="markers-summarize-CLI:-generators">Show Detailed Argument Help</label><dl class="markers"><div class="marker" data-target="package"><dt class="literal name">webhook</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">generates (partial) {Mutating,Validating}WebhookConfiguration objects.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">schemapatch</dt><dd class="args"><dl class="args summary"><dt class="argument literal">manifests</dt><dd class="argument type"><span class="optional">string</span></dd><dt class="literal optional argument">maxDescLen</dt><dd class="argument type optional"><span class="optional">int</span></dd></dl></dd><dd class="description"><details ><summary class="">patches existing CRDs with new schemata. </summary>
 <p>For legacy (v1beta1) single-version CRDs, it will simply replace the global schema. 
 For legacy (v1beta1) multi-version CRDs, and any v1 CRDs, it will replace schemata of existing versions and <em>clear the schema</em> from any versions not specified in the Go code.  It will <em>not</em> add new versions, or remove old ones. 
 For legacy multi-version CRDs with identical schemata, it will take care of lifting the per-version schema up to the global schema. 
 It will generate output for each “CRD Version“ (API version of the CRD type itself) , e.g. apiextensions/v1beta1 and apiextensions/v1) available.</p>
-</details><dl class="args"><dt class="argument literal">manifests</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">contains the CustomResourceDefinition YAML files.</summary></details></dd><dt class="argument literal optional">maxDescLen</dt><dd class="argument type optional"><span class="optional">int</span></dd><dd class="description"><details ><summary class="">specifies the maximum description length for fields in CRD&#39;s OpenAPI schema. </summary>
+</details><dl class="args"><dt class="argument literal">manifests</dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">contains the CustomResourceDefinition YAML files.</summary></details></dd><dt class="argument literal optional">maxDescLen</dt><dd class="argument type optional"><span class="optional">int</span></dd><dd class="description"><details ><summary class="">specifies the maximum description length for fields in CRD&#39;s OpenAPI schema. </summary>
 <p>0 indicates drop the description for all fields completely. n indicates limit the description to at most n characters and truncate the description to closest sentence boundary if it exceeds n characters.</p>
-</details></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">rbac</dt><dd class="args"><dl class="args summary"><dt class="argument literal">roleName</dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">generates ClusterRole objects.</summary></details><dl class="args"><dt class="argument literal">roleName</dt><dd class="type argument"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">sets the name of the generated ClusterRole.</summary></details></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">object</dt><dd class="args"><dl class="args summary"><dt class="literal optional argument">headerFile</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">year</dt><dd class="argument type optional"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">generates code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.</summary></details><dl class="args"><dt class="optional argument literal">headerFile</dt><dd class="optional argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the header text (e.g. license) to prepend to generated files.</summary></details></dd><dt class="argument literal optional">year</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the year to substitute for &#34; YEAR&#34; in the header file.</summary></details></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">crd</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">crdVersions</dt><dd class="argument type optional"><span class="optional slice"><span class="optional">string</span></span></dd><dt class="optional argument literal">maxDescLen</dt><dd class="argument type optional"><span class="optional">int</span></dd><dt class="argument literal optional">preserveUnknownFields</dt><dd class="argument type optional"><span class="optional">bool</span></dd><dt class="argument literal optional">trivialVersions</dt><dd class="argument type optional"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">generates CustomResourceDefinition objects.</summary></details><dl class="args"><dt class="argument literal optional">crdVersions</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies the target API versions of the CRD type itself to generate.  Defaults to v1beta1. </summary>
+</details></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">rbac</dt><dd class="args"><dl class="args summary"><dt class="argument literal">roleName</dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">generates ClusterRole objects.</summary></details><dl class="args"><dt class="argument literal">roleName</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">sets the name of the generated ClusterRole.</summary></details></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">object</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">headerFile</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal optional">year</dt><dd class="argument type optional"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">generates code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.</summary></details><dl class="args"><dt class="literal optional argument">headerFile</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the header text (e.g. license) to prepend to generated files.</summary></details></dd><dt class="argument literal optional">year</dt><dd class="type optional argument"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">specifies the year to substitute for &#34; YEAR&#34; in the header file.</summary></details></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">crd</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">crdVersions</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dt class="argument literal optional">maxDescLen</dt><dd class="argument type optional"><span class="optional">int</span></dd><dt class="argument literal optional">preserveUnknownFields</dt><dd class="argument type optional"><span class="optional">bool</span></dd><dt class="argument literal optional">trivialVersions</dt><dd class="argument type optional"><span class="optional">bool</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">generates CustomResourceDefinition objects.</summary></details><dl class="args"><dt class="argument literal optional">crdVersions</dt><dd class="argument type optional"><span class="slice optional"><span class="optional">string</span></span></dd><dd class="description"><details ><summary class="">specifies the target API versions of the CRD type itself to generate.  Defaults to v1beta1. </summary>
 <p>The first version listed will be assumed to be the “default“ version and will not get a version suffix in the output filename. 
 You‘ll need to use “v1“ to get support for features like defaulting, along with an API server that supports it (Kubernetes 1.16+).</p>
-</details></dd><dt class="optional argument literal">maxDescLen</dt><dd class="argument type optional"><span class="optional">int</span></dd><dd class="description"><details ><summary class="">specifies the maximum description length for fields in CRD&#39;s OpenAPI schema. </summary>
+</details></dd><dt class="literal optional argument">maxDescLen</dt><dd class="argument type optional"><span class="optional">int</span></dd><dd class="description"><details ><summary class="">specifies the maximum description length for fields in CRD&#39;s OpenAPI schema. </summary>
 <p>0 indicates drop the description for all fields completely. n indicates limit the description to at most n characters and truncate the description to closest sentence boundary if it exceeds n characters.</p>
 </details></dd><dt class="argument literal optional">preserveUnknownFields</dt><dd class="argument type optional"><span class="optional">bool</span></dd><dd class="description"><details ><summary class="">indicates whether or not we should turn off pruning. </summary>
 <p>Left unspecified, it‘ll default to true when only a v1beta1 CRD is generated (to preserve compatibility with older versions of this tool), or false otherwise. 
 It‘s required to be false for v1 CRDs.</p>
-</details></dd><dt class="argument literal optional">trivialVersions</dt><dd class="type optional argument"><span class="optional">bool</span></dd><dd class="description"><details ><summary class="">indicates that we should produce a single-version CRD. </summary>
+</details></dd><dt class="argument literal optional">trivialVersions</dt><dd class="argument type optional"><span class="optional">bool</span></dd><dd class="description"><details ><summary class="">indicates that we should produce a single-version CRD. </summary>
 <p>Single “trivial-version“ CRDs are compatible with older (pre 1.13) Kubernetes API servers.  The storage version‘s schema will be used as the CRD‘s schema. 
 Only works with the v1beta1 CRD version.</p>
 </details></dd></dl></dd></div></dl></div>
@@ -4005,11 +4056,11 @@ Only works with the v1beta1 CRD version.</p>
 <p>为简便起见，每个生成器的输出规则(<code>output:&lt;generator&gt;:&lt;rule&gt;</code>)默认省略。 相当于这里列出的全局备用选项。</p>
 <div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CLI:-output-rules-(optionally-as-output:<generator>:...)"></input><label class="markers-summarize" for="markers-summarize-CLI:-output-rules-(optionally-as-output:<generator>:...)">Show Detailed Argument Help</label><dl class="markers"><div class="marker" data-target="package"><dt class="literal name">output:artifacts</dt><dd class="args"><dl class="args summary"><dt class="argument literal optional">code</dt><dd class="argument type optional"><span class="optional">string</span></dd><dt class="argument literal">config</dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="">outputs artifacts to different locations, depending on whether they&#39;re package-associated or not. </summary>
 <p>Non-package associated artifacts are output to the Config directory, while package-associated ones are output to their package‘s source files‘ directory, unless an alternate path is specified in Code.</p>
-</details><dl class="args"><dt class="optional argument literal">code</dt><dd class="optional argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">overrides the directory in which to write new code (defaults to where the existing code lives).</summary></details></dd><dt class="argument literal">config</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">points to the directory to which to write configuration.</summary></details></dd></dl></dd></div><div class="marker anonymous" data-target="package"><dt class="literal name">output:dir</dt><dd class="args"><dl class="args summary"><dt class="argument literal"></dt><dd class="type argument"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">outputs each artifact to the given directory, regardless of if it&#39;s package-associated or not.</summary></details><dl class="args"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">output:none</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">skips outputting anything.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">output:stdout</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">outputs everything to standard-out, with no separation. </summary>
+</details><dl class="args"><dt class="argument literal optional">code</dt><dd class="argument type optional"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">overrides the directory in which to write new code (defaults to where the existing code lives).</summary></details></dd><dt class="literal argument">config</dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"><details ><summary class="no-details">points to the directory to which to write configuration.</summary></details></dd></dl></dd></div><div class="marker anonymous" data-target="package"><dt class="literal name">output:dir</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="optional">string</span></dd></dl></dd><dd class="description"><details ><summary class="no-details">outputs each artifact to the given directory, regardless of if it&#39;s package-associated or not.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="optional">string</span></dd><dd class="description"></dd></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">output:none</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="no-details">skips outputting anything.</summary></details><dl class="args"></dl></dd></div><div class="marker" data-target="package"><dt class="literal name">output:stdout</dt><dd class="args"><dl class="args summary"></dl></dd><dd class="description"><details ><summary class="">outputs everything to standard-out, with no separation. </summary>
 <p>Generally useful for single-artifact outputs.</p>
 </details><dl class="args"></dl></dd></div></dl></div>
 <h2><a class="header" href="#其他选项" id="其他选项">其他选项</a></h2>
-<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CLI:-generic"></input><label class="markers-summarize" for="markers-summarize-CLI:-generic">Show Detailed Argument Help</label><dl class="markers"><div class="anonymous marker" data-target="package"><dt class="literal name">paths</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd></dl></dd><dd class="description"><details ><summary class="no-details">represents paths and go-style path patterns to use as package roots.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"></dd></dl></dd></div></dl></div>
+<div><input checked type="checkbox" class="markers-summarize" id="markers-summarize-CLI:-generic"></input><label class="markers-summarize" for="markers-summarize-CLI:-generic">Show Detailed Argument Help</label><dl class="markers"><div class="marker anonymous" data-target="package"><dt class="literal name">paths</dt><dd class="args"><dl class="args summary"><dt class="literal argument"></dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd></dl></dd><dd class="description"><details ><summary class="no-details">represents paths and go-style path patterns to use as package roots.</summary></details><dl class="args"><dt class="argument literal"></dt><dd class="argument type"><span class="slice"><span class="optional">string</span></span></dd><dd class="description"></dd></dl></dd></div></dl></div>
 <h1><a class="header" href="#开启-shell-自动补全" id="开启-shell-自动补全">开启 shell 自动补全</a></h1>
 <p>Kubebuilder 的 Bash 补全脚本可以通过命令 <code>kubebuilder completion bash</code> 来自动生成，Kubebuilder 的 Zsh 补全脚本可以通过命令 <code>kubebuilder completion zsh</code> 来自动生成。需要注意的是在你的 shell 环境中用 source 运行一下补全脚本就会开启 Kubebuilder 自动补全。</p>
 <aside class="note">
@@ -4082,6 +4133,29 @@ err = testEnv.Stop()
 </tbody></table>
 <h4><a class="header" href="#标记位" id="标记位">标记位</a></h4>
 <p>下面是一个在你的集成测试中通过修改标记位来启动 API server 的例子，和 <code>envtest.DefaultKubeAPIServerFlags</code> 中的默认值相对比：</p>
+<pre><code class="language-go">var _ = BeforeSuite(func(done Done) {
+	Expect(os.Setenv(&quot;TEST_ASSET_KUBE_APISERVER&quot;, &quot;../testbin/bin/kube-apiserver&quot;)).To(Succeed())
+	Expect(os.Setenv(&quot;TEST_ASSET_ETCD&quot;, &quot;../testbin/bin/etcd&quot;)).To(Succeed())
+	Expect(os.Setenv(&quot;TEST_ASSET_KUBECTL&quot;, &quot;../testbin/bin/kubectl&quot;)).To(Succeed())
+
+	logf.SetLogger(zap.New(zap.WriteTo(GinkgoWriter), zap.UseDevMode(true)))
+	testenv = &amp;envtest.Environment{}
+
+	_, err := testenv.Start()
+	Expect(err).NotTo(HaveOccurred())
+
+	close(done)
+}, 60)
+
+var _ = AfterSuite(func() {
+	Expect(testenv.Stop()).To(Succeed())
+
+	Expect(os.Unsetenv(&quot;TEST_ASSET_KUBE_APISERVER&quot;)).To(Succeed())
+	Expect(os.Unsetenv(&quot;TEST_ASSET_ETCD&quot;)).To(Succeed())
+	Expect(os.Unsetenv(&quot;TEST_ASSET_KUBECTL&quot;)).To(Succeed())
+
+})
+</code></pre>
 <pre><code class="language-go">customApiServerFlags := []string{
 	&quot;--secure-port=6884&quot;,
 	&quot;--admission-control=MutatingAdmissionWebhook&quot;,
@@ -4190,7 +4264,6 @@ func init() {
         <!-- Google Analytics Tag -->
         <script type="text/javascript">
             var localAddrs = ["localhost", "127.0.0.1", ""];
-
             // make sure we don't activate google analytics if the developer is
             // inspecting the book locally...
             if (localAddrs.indexOf(document.location.hostname) === -1) {
@@ -4198,7 +4271,6 @@ func init() {
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
                 ga('create', 'UA-119864590-1', 'auto');
                 ga('send', 'pageview');
             }
