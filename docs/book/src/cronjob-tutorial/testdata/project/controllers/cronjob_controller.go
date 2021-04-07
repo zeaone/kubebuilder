@@ -254,7 +254,7 @@ func (r *CronJobReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	*/
 
 	// 注意: 删除操作采用的“尽力而为”策略
-	// 如果个别job删除失败了，不会将其重新排队，直接结束删除操作
+	// 如果个别 job 删除失败了，不会将其重新排队，直接结束删除操作
 	if cronJob.Spec.FailedJobsHistoryLimit != nil {
 		sort.Slice(failedJobs, func(i, j int) bool {
 			if failedJobs[i].Status.StartTime == nil {
@@ -355,10 +355,10 @@ func (r *CronJobReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 		starts := 0
 		for t := sched.Next(earliestTime); !t.After(now); t = sched.Next(t) {
 			lastMissed = t
-			// 一个 CronJob 可能会遗漏多次执行。举个例子，周五5:00pm技术人员下班后，
-			// 控制器在5:01pm发生了异常。然后直到周二早上才有技术人员发现问题并
+			// 一个 CronJob 可能会遗漏多次执行。举个例子，周五 5:00pm 技术人员下班后，
+			// 控制器在 5:01pm 发生了异常。然后直到周二早上才有技术人员发现问题并
 			// 重启控制器。那么所有的以1小时为周期执行的定时任务，在没有技术人员
-			// 进一步的干预下，都会有80多个 job 在恢复正常后一并启动（如果 job 允许
+			// 进一步的干预下，都会有 80 多个 job 在恢复正常后一并启动（如果 job 允许
 			// 多并发和延迟启动）
 
 			// 如果 CronJob 的某些地方出现异常，控制器或 apiservers (用于设置任务创建时间)
@@ -395,7 +395,7 @@ func (r *CronJobReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	/*
 		### 6: 如果 job 符合执行时机，并且没有超出截止时间，且不被并发策略阻塞，执行该 job
 
-		如果 job 遗漏了一次执行，且还没超出截止时间，把遗漏的这次执行也不上
+		如果 job 遗漏了一次执行，且还没超出截止时间，把遗漏的这次执行也补上
 
 	*/
 	if missedRun.IsZero() {
@@ -417,7 +417,7 @@ func (r *CronJobReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 
 	/*
 		如果确认 job 需要实际执行。我们有三种策略执行该 job。要么先等待现有的 job 执行完后，在启动本次 job；
-		或是直接覆盖取代现有的job；或是不考虑现有的 job，直接作为新的 job 执行。因为缓存导致的信息有所延迟，
+		或是直接覆盖取代现有的 job；或是不考虑现有的 job，直接作为新的 job 执行。因为缓存导致的信息有所延迟，
 		当更新信息后需要重新排队。
 
 	*/
