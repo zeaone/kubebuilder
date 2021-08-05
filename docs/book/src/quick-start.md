@@ -27,8 +27,7 @@ arch=$(go env GOARCH)
 curl -L https://go.kubebuilder.io/dl/2.3.1/${os}/${arch} | tar -xz -C /tmp/
 ```
 
-If you are using a Kubebuilder plugin version less than version `v3+`, you must configure the Kubernetes binaries required for the [envtest][envtest], run:
-
+如果您使用的Kubebuilder插件版本低于`v3+`，则必须配置envtest所需的Kubernetes二进制文件，执行如下命令：
 ```bash
 # 将 kubebuilder 移动到一个长期的路径，并将其加入环境变量 path 中
 # （如果你把 kubebuilder 放在别的地方，你需要额外设置 KUBEBUILDER_ASSETS 环境变量）
